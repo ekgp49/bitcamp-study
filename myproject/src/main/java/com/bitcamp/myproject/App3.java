@@ -9,8 +9,8 @@ public class App3 {
     Scanner keyboard = new Scanner(System.in);
     
     Date createdDate = new Date(System.currentTimeMillis()); 
-    
-    
+  
+  
     System.out.println("리뷰");
     
     
