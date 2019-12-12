@@ -1,6 +1,5 @@
 package com.eomcs.lms;
 
-
 import java.util.Scanner;
 import java.sql.Date;
 public class App3 {
@@ -20,8 +19,6 @@ public class App3 {
     
     Date today = new Date(System.currentTimeMillis()); 
 //    java.util.Date today = new java.util.Date();    java.util 안하면 java.sql로 간주 
-    
-    
     int viewCount = 0;
     
     System.out.println();
