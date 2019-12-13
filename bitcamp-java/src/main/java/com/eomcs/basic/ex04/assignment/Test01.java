@@ -5,47 +5,47 @@ import java.util.Scanner;
 
 public class Test01 {
   public static void main(String[] args) {
+    Scanner keyScan = new Scanner(System.in);
 
-    Scanner scanner = new Scanner(System.in);
+    System.out.print("값1? : ");
+    int a = keyScan.nextInt();
 
-    System.out.println("계산기");
-    System.out.println("사칙연산만 가능합니다. (+, -, *, /) ex)1+1");
+    System.out.print("값2? : ");
+    int b = keyScan.nextInt();
 
+    System.out.print("연산자(+, -, *, /)? ");
+    String op = keyScan.next(); // 토큰 : 앞뒤 공백으로 구분되는 하나의 단어
 
-      System.out.print(">");
-
-
-      String input = scanner.nextLine();
-      String[] array = input.split("[+|/|-|*]");
-      
-      double num1 = Double.parseDouble(array[0]);
-      double num2 = Double.parseDouble(array[1]);
-
-      double result = 0;
-      String operator = "";
-      
-      if (input.contains("+")) {
-        result = num1 + num2;
-        operator = "+";
-      } else if (input.contains("-")) {
-        result = num1 - num2;
-        operator = "-";
-      } else if (input.contains("*")) {
-        result = num1 * num2;
-        operator = "*";
-      } else if (input.contains("/")) {
-        result = num1 / num2;
-        operator = "/";
-      };
-
-
-      System.out.printf("%s %s %s = %s\n", num1, operator, num2, result);
-
-
-      scanner.close();
-
+    int result = 0;
     
+    if (op.contentEquals("+")) {
+      result = a + b;
+    } else {
+      System.out.println("하하");
+      System.out.println("하하");
+      System.out.println("하하");
+      System.out.println("하하");
+      System.out.println("하하");
+      if (op.contentEquals("-")) {
+        result = a - b;
+      } else {
+        if (op.contentEquals("*")) {
+          result = a * b;
+        } else {
+          if (op.contentEquals("/")) {
+            result = a / b;
+          } else {
+            System.out.println("=> 사용할 수 없는 연산자 입니다");
+            return; //  System.out.printf("=> %d %s %d = %d\n", a, op, b, result); 안나오도록 할라면 
+            //return함
+          }
+        }
+      }
+    } //원래 if else는 이런 구조임 첫번째 else 안에 새로운 if가 있는 구조
+    
+    keyScan.close();
 
+    System.out.printf("=> %d %s %d = %d\n", a, op, b, result);
   }
 
 }

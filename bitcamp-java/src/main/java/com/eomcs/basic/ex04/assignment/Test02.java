@@ -16,67 +16,44 @@ import java.util.Scanner;
 public class Test02 {
   public static void main(String[] args) {
     System.out.print("가위, 바위, 보? :");
+    Scanner keyScan = new Scanner(System.in);
 
-    Scanner scanner = new Scanner(System.in);
-    String me = scanner.nextLine();
+    String user = keyScan.nextLine();
 
-    int computer = (int) (Math.random() * 3); // 0,1,2 중 랜덤
-    String computerHand = "";
+    System.out.printf("사용자 :%s\n", user);
 
-    if (computer == 0) {
-      computerHand = "가위";
-    } else if (computer == 1) {
-      computerHand = "바위";
-    } else if (computer == 2) {
-      computerHand = "보";
-    } ;
+    int random = (int)(Math.random() * 3);
+    String computer;
+    if (random == 0) 
+      computer = "가위";
+    else if (random == 1)
+      computer = "바위";
+    else
+      computer = "보";
+    
+    System.out.printf("컴퓨터 : %s\n", computer);
+    
 
-    if (computerHand.equals(me)) {
-      System.out.println("컴퓨터: " + computerHand + "\n=> 비겼습니다.");
-    } else if (me.equals("바위")) {
-      switch (computerHand) {
-        case "바위":
-          System.out.println("컴퓨터: " + computerHand + "\n=> 졌습니다.");
-          break;
-        case "보":
-          System.out.println("컴퓨터: " + computerHand + "\n=> 이겼습니다.");
-          break;
+    if (user.equals("가위")) {
+      if (computer.equals("보")) {
+        System.out.println("당신이 이겼습니다.");
+        return;
       }
-    } else if (me.equals("가위")) {
-      switch (computerHand) {
-        case "바위":
-          System.out.println("컴퓨터: " + computerHand + "\n=> 졌습니다.");
-          break;
-        case "보":
-          System.out.println("컴퓨터: " + computerHand + "\n=> 이겼습니다.");
-          break;
-      }
-    } else if (me.equals("보")) {
-      switch (computerHand) {
-        case "바위":
-          System.out.println("컴퓨터: " + computerHand + "\n=> 이겼습니다.");
-          break;
-        case "가위":
-          System.out.println("컴퓨터: " + computerHand + "\n=> 졌습니다.");
-          break;
+    } else if (user.equals("보")) {
+      if (computer.equals("바위")) {
+        System.out.println("당신이 이겼습니다.");
+        return;
       }
     } else {
-      System.out.println("??");
-    };
+      if (computer.equals("가위")) {
+        System.out.println("당신이 이겼습니다.");
+        return;
+      }
+    }
+    
+    System.out.println("당신은 비기거나 졌습니다");
 
-
-
-
-    // 가위 바위
-    // 가위 보
-    // 가위 가위
-    // 바위 가위
-    // 바위 보
-    // 등등 총 7가지 경우의 수 가위가위 보보 바위바위는 하나로 퉁침
-
-
-
-    scanner.close();
+    keyScan.close();
   }
 }
 

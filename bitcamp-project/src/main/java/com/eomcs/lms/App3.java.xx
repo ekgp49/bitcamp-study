@@ -1,0 +1,63 @@
+package com.eomcs.lms;
+
+
+import java.util.Scanner;
+import java.sql.Date;
+
+//메소드 사용법
+public class App3 {
+
+  static final int size = 5735;
+  
+  static Board[] boards = new Board[size]; //배식카임(식판아님)
+
+  static int count = 0;
+
+  
+  public static void main(String[] args) {
+    inputBoards();
+    
+    System.out.println();
+    
+    printBoards();
+  }
+
+  static void inputBoards() {
+    Scanner keyboard = new Scanner(System.in);
+
+    String response = "";
+
+    for (int i = 0; i < size; i++) {
+      Board b = new Board(); //Board 설계도에 따라 메모리 준비 후 리턴한다. 식판임
+      System.out.print("번호? ");
+      b.no = keyboard.nextInt();
+      keyboard.nextLine(); // 줄바꿈 기호 제거용
+
+      System.out.print("내용? ");
+      b.title = keyboard.nextLine();
+
+      b.date = new Date(System.currentTimeMillis());
+      b.viewCount = 0;
+
+      boards[i] = b;
+      count++;
+
+      System.out.println("계속 입력하시겠습니까?(Y / N)");
+      response = keyboard.nextLine();
+
+      if (!response.equalsIgnoreCase("y")) {
+        break;
+      }
+    }
+
+    keyboard.close();
+  }
+
+  static void printBoards() {
+    for (int i = 0; i < count; i++) {
+      Board b = boards[i];
+      System.out.printf("%d, %s, %s, %d\n", b.no, b.title, b.date, b.viewCount);
+    }
+  }
+
+}
