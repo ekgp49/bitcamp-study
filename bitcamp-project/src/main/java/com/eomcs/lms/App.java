@@ -15,7 +15,8 @@ public class App {
     System.out.print("설명? ");
     String description = keyboard.next();
     System.out.print("시작일? ");
-    Date startDate = Date.valueOf(keyboard.next()); //형식에 오류가 나면 실행 안됨
+    Date startDate = Date.valueOf(keyboard.next()); //0000-00-00 <-형식에 오류가 나면 실행 안됨
+// 문법 :    Date date = Date.valueOf("date_string");
     System.out.print("종료일? ");
     Date endDate = Date.valueOf(keyboard.next());
     System.out.print("총수업시간? ");

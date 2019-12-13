@@ -14,13 +14,26 @@ public class App2 {
     System.out.print("이메일? ");
     String email = keyboard.nextLine();
     System.out.print("암호? ");
-    int password = keyboard.nextInt();
-    keyboard.nextLine();
-    
+    String password = keyboard.nextLine();
+   
+ 
     System.out.print("사진? ");
     String picture = keyboard.nextLine();
-    System.out.print("전화? ");
-    String call = keyboard.nextLine();
+    
+    
+    System.out.print("전화? 000 0000 0000 형식으로 입력 \n");
+    
+    String str;
+    String num1 = keyboard.next();
+    
+    String num2 = keyboard.next();
+    
+    String num3 = keyboard.next();
+    
+    str = String.format("%s-%s-%s", num1, num2, num3);
+   
+    keyboard.nextLine();
+    
     System.out.print("가입일? ");
     String registeredDate = keyboard.nextLine();
     
@@ -31,9 +44,9 @@ public class App2 {
     System.out.printf("번호: %d\n", no);
     System.out.printf("이름: %s\n", name);
     System.out.printf("이메일: %s\n", email);
-    System.out.printf("암호: %d\n", password);
+    System.out.printf("암호: %s\n", password);
     System.out.printf("사진: %s\n", picture);
-    System.out.printf("전화: %s\n", call);
+    System.out.printf("전화: %s\n", str);
     System.out.printf("가입일: %s\n", registeredDate);
     
    
