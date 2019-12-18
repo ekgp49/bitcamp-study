@@ -16,7 +16,7 @@ public class Exam4_1 {
       System.out.println(i);
       i++; 
     }
-
+    
     System.out.println("----------------------");
     int i = 1;
     for (; i <= 5;) {

@@ -9,8 +9,13 @@ public class App3 {
     Scanner keyboard = new Scanner(System.in);
     
     Date createdDate = new Date(System.currentTimeMillis()); 
+   
+    java.util.Date today = new java.util.Date(); 
+   
+    String time;
+    time = String.format("%1$tp %1$tH:%1$tM:%1$tS ", today);
     
-    
+  
     System.out.println("리뷰");
     
     
@@ -33,7 +38,7 @@ public class App3 {
     System.out.printf("상호 : %s\n", cafeName);
     System.out.printf("고객 : %s\n", customer);
     System.out.printf("별점 : %s\n", starRate);
-    System.out.printf("업로드 시간 : %s\n", createdDate);
+    System.out.printf("업로드 시간 : %s %s\n", createdDate, time);
     System.out.printf("조회수 : %s\n", viewCount);
     System.out.printf("내용 : %s\n", content);
     
