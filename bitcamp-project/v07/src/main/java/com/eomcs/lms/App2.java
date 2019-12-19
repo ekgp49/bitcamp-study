@@ -1,29 +1,33 @@
 package com.eomcs.lms;
+
 import java.sql.Date;
 import java.util.Scanner;
+
 public class App2 { 
   public static void main(String[] args) {
     Scanner keyboard = new Scanner(System.in);
 
     final int SIZE = 100;
-    class Member{
-    int no;
-    String name;
-    String email;
-    String password;
-    String photo;
-    String tel;
-    Date registeredDate;
+
+    class Member {
+      int no;
+      String name;
+      String email;
+      String password;
+      String photo;
+      String tel;
+      Date registeredDate;
     }
-    
+
     Member[] members = new Member[SIZE];
-    
+
+
     int count = 0;
     for (int i = 0; i < SIZE; i++) {
       count++;
-      
+
       Member member = new Member();
-      
+
       System.out.print("번호? ");
       member.no = keyboard.nextInt();
       keyboard.nextLine(); // 줄바꿈 기호 제거용
@@ -55,7 +59,7 @@ public class App2 {
     keyboard.close();
 
     System.out.println();
- 
+
     for(int i = 0; i < count; i++) {
       Member member = members[i];
       System.out.printf("%d, %s, %s, %s, %s\n",

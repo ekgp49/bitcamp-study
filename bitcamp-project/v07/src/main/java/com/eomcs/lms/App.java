@@ -5,6 +5,9 @@ public class App {
   public static void main(String[] args) {
     Scanner keyboard = new Scanner(System.in); 
     final int SIZE = 100;
+    
+    // 클래스?
+    // 클래스는 사용 정의 데이터 타입을 만들 때 사용하는 문법이다.
     class Lesson {
       int no;
       String title;
@@ -14,14 +17,18 @@ public class App {
       int totalHours;
       int dayHours;
     }
-    
+
     Lesson[] lessons = new Lesson[SIZE];
-    
+    for (int i = 0; i < SIZE; i++) {
+      lessons[i] = new Lesson();
+    }
+
     int count = 0;
     for (int i = 0; i < SIZE; i++) {
       count++;
-      Lesson lesson = new Lesson();
-      
+
+      Lesson lesson = lessons[i];
+
       System.out.print("번호? ");
       lesson.no = keyboard.nextInt();
       System.out.print("수업명? ");
@@ -37,8 +44,7 @@ public class App {
       lesson.totalHours = keyboard.nextInt();
       System.out.print("일수업시간? ");
       lesson.dayHours = keyboard.nextInt();
-      
-      lessons[i] = lesson;
+
       keyboard.nextLine();
 
       System.out.print("계속 입력하시겠습니까?(Y/n) ");

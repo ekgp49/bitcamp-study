@@ -9,9 +9,9 @@
 
 ## 실습 소스 및 결과
 
-- src/main/java/com/eomcs/lms/Lesson.java 추가  <= 아직 안함
-- src/main/java/com/eomcs/lms/Member.java 추가 <= 아직 안함
-- src/main/java/com/eomcs/lms/Board.java 추가 <= 아직 안함
+- src/main/java/com/eomcs/lms/Lesson.java 추가
+- src/main/java/com/eomcs/lms/Member.java 추가
+- src/main/java/com/eomcs/lms/Board.java 추가
 - src/main/java/com/eomcs/lms/App.java 변경
 - src/main/java/com/eomcs/lms/App2.java 변경
 - src/main/java/com/eomcs/lms/App3.java 변경

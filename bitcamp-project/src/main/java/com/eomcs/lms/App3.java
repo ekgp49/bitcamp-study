@@ -1,36 +1,39 @@
 package com.eomcs.lms;
-
-
 import java.util.Scanner;
 import java.sql.Date;
-
-// 반복문 사용
 public class App3 {
   public static void main(String[] args) {
     Scanner keyboard = new Scanner(System.in);
-
-    int[] no = new int[100];
-    String[] title = new String[100];
-    Date[] date = new Date[100];
-    int[] viewCount = new int[100];
-    String response = "";
-
+    class Board {
+    int no;
+    String title;
+    Date date;
+    int viewCount;
+    }
+    
+    Board[] boards = new Board[100];
+    
     int count = 0;
     for (int i = 0; i < 100 ; i++) {
+      
+      Board board = new Board();
+      
       System.out.print("번호? ");
-      no[i] = keyboard.nextInt();
+      board.no = keyboard.nextInt();
       keyboard.nextLine(); // 줄바꿈 기호 제거용
       
       System.out.print("내용? ");
-      title[i] = keyboard.nextLine();
+      board.title = keyboard.nextLine();
 
-      date[i] = new Date(System.currentTimeMillis());
-      viewCount[i] = 0;
+      board.date = new Date(System.currentTimeMillis());
+      board.viewCount = 0;
+      
+      boards[i] = board;
       
       count++;
       
       System.out.println("계속 입력하시겠습니까?(Y / N)");
-      response = keyboard.nextLine();
+      String response = keyboard.nextLine();
     
       if (!response.equalsIgnoreCase("y")) {
         break;
@@ -47,7 +50,9 @@ public class App3 {
     System.out.println();
 
     for (int i = 0; i < count; i++) {
-      System.out.printf("%d, %s, %s, %d\n", no[i], title[i], date[i], viewCount[i]);
+      Board board = boards[i];
+      System.out.printf("%d, %s, %s, %d\n",
+          board.no, board.title, board.date, board.viewCount);
     }
 
     // System.out.printf("번호: %d\n", no);
