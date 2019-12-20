@@ -31,8 +31,6 @@ public class App {
       int viewCount;
       }
       
-      
-
     final int LESSON_SIZE = 100;
     final int MEMBER_SIZE = 200;
     final int BOARD_SIZE = 400;
