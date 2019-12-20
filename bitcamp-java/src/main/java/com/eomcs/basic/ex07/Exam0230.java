@@ -14,7 +14,10 @@ public class Exam0230 {
   static String hello() {
     // 값을 리턴하는 문법
     // return 값;
-    return "안녕하세요!";
+    return "안녕하세요!"; // 리턴 명령을 실행하면 메서드 실행을 종료한다.
+    
+    //int a;
+    //System.out.println(i);
   }
 
   public static void main(String[] args) {

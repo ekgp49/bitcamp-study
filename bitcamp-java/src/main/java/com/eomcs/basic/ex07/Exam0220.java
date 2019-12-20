@@ -14,6 +14,8 @@ public class Exam0220 {
     System.out.printf("%d살 %s님 반갑습니다.\n", age, name);
 
     //System.out.println(name + "살 " + name + "님 반갑습니다.");
+    
+    //while (true);
   }
 
   public static void main(String[] args) {
@@ -21,7 +23,7 @@ public class Exam0220 {
     System.out.println("main()11111");
 
     // hello 메서드 호출하기
-    hello("홍길동", 20);
+    hello("김다혜", 26);
     // hello 메서드 실행이 완료되면 다시 이리로 되돌아 와서
     // 다음 명령을 실행한다.
 
