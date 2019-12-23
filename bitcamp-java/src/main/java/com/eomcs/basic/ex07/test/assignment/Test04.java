@@ -23,7 +23,7 @@ public class Test04 {
       nums[i] = i + 1;
     }
     
-    for (int j = 0; j <nums.length - 1; j++) {
+    for (int j = 0; j < nums.length - 1; j++) {
       s += " * " + (nums[j] + 1);
     }
     
