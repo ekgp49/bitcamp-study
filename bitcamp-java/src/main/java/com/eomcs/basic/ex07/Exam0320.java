@@ -7,6 +7,7 @@ public class Exam0320 {
   static void swap(int[] arr) {
     System.out.printf("swap(): arr[0]=%d, arr[1]=%d\n", arr[0], arr[1]);
     int temp = arr[0];
+    System.out.println(temp);
     arr[0] = arr[1];
     arr[1] = temp;
     System.out.printf("swap(): arr[0]=%d, arr[1]=%d\n", arr[0], arr[1]);

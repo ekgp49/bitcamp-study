@@ -1,5 +1,6 @@
 package com.eomcs.basic.ex07.test.assignment;
 
+
 public class Test02 {
   public static void main(String[] args) {
     int[] values = {34, 4, -3, 78, 12, 22, 45, 0, -22};
@@ -12,19 +13,19 @@ public class Test02 {
     }
   }
 
-  static int[] sort(int[] value) {
-    for (int i = 0; i < value.length; i++) {
+  static int[] sort(int[] values) {
+    for (int i = 0; i < values.length; i++) {
       int temp;
-      for (int j = 0; j < value.length; j++) {
-        if (value[i] < value[j]) {
-          temp = value[i];
-          value[i] = value[j];
-          value[j] = temp;
+      for (int j = 0; j < values.length; j++) {
+        if (values[i] < values[j]) {
+          temp = values[i];
+          values[i] = values[j];
+          values[j] = temp;
         }
       }
     }
     
-    return value;
+    return values;
   }
   
 }

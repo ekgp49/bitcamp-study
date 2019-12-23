@@ -7,9 +7,7 @@ public class Test03 {
     // 배열에 들어 있는 값을 거꾸로 변경하라.
     // => 출력결과 : -22, 0 45, 22, 12, 78, -3, 4, 34
     reverse(values); 
-    for (int value : values) {
-      System.out.println(value);
-    }
+    printValues(values);
   }
   
   static int[] reverse(int[] value) {
@@ -24,5 +22,10 @@ public class Test03 {
     return value;
   }
   
-  
+  static void printValues(int[] values) {
+    for (int i = 0; i < values.length; i++) {
+      System.out.printf("%3d ", values[i]);
+    }
+    System.out.println();
+  }
 }
