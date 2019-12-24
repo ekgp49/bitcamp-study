@@ -1,4 +1,4 @@
-package com.eomcs.lms;
+package com.eomcs.lms.handler;
 
 import java.sql.Date;
 import java.util.Scanner;
@@ -16,17 +16,18 @@ public class LessonHandler {
   static final int LESSON_SIZE = 100;
   static Lesson[] lessons = new Lesson[LESSON_SIZE];
   static int lessonCount = 0;
-  static Scanner keyboard;
+  public static Scanner keyboard;
   
-  static void addLesson() {
+  public static void addLesson() {
     Lesson lesson = new Lesson();
 
     System.out.print("번호? ");
     lesson.no = keyboard.nextInt();
+    keyboard.nextLine();
     System.out.print("수업명? ");
-    lesson.title = keyboard.next();
+    lesson.title = keyboard.nextLine();
     System.out.print("설명? ");
-    lesson.description = keyboard.next();
+    lesson.description = keyboard.nextLine();
     System.out.print("시작일? ");
     lesson.startDate = Date.valueOf(keyboard.next()); //0000-00-00 <-형식에 오류가 나면 실행 안됨
     // 문법 :    Date date = Date.valueOf("date_string");
@@ -42,7 +43,7 @@ public class LessonHandler {
     System.out.println("저장하였습니다.");
   }
 
-  static void listLesson() {
+  public static void listLesson() {
     for (int i = 0; i < lessonCount; i++) {
       Lesson l = lessons[i];
       System.out.printf("%d, %s, %s ~ %s, %d\n", 

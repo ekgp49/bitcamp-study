@@ -1,80 +1,75 @@
-# eomcs-java-project-1.4
+# 01 - 자바 애플리케이션 프로젝트 만들기
 
-변수와 키보드 입력 다루기
+## 학습 목표
 
-- 키보드로부터 값을 입력 받는 방법
-- 값을 저장하기 위해 변수를 이용하는 방법
+- `그레이들`을 이용하여 프로젝트 디렉토리를 구성할 수 있다.
+- `그레이들`로 프로젝트를 빌드하고 실행할 수 있다.
+- `아파치 메이븐` 프로젝트의 디렉토리 구조를 이해한다.
 
-## 프로젝트 - 수업관리 시스템  
+## 실습 소스 및 결과
 
-### 과제 1: 한 개의 수업 내용을 입력 받아 출력하라.
-
-- App.java
-    - main()에 코드를 작성한다.
-
-실행 결과
+자바 애플리케이션 프로젝트 폴더를 준비한다.
 
 ```
-번호? 1
-수업명? 자바 프로젝트 실습
-수업내용? 자바 프로젝트를 통한 자바 언어 활용법 익히기
-시작일? 2019-01-02
-종료일? 2019-05-28
-총수업시간? 1000
-일수업시간? 8
-
-번호: 1
-수업명: 자바 프로젝트 실습
-수업내용: 자바 프로젝트를 통한 자바 언어 활용법 익히기
-기간: 2019-01-02 ~ 2019-05-28
-총수업시간: 1000 시간
-일수업시간: 8 시간
+src/
+  main/
+    java/
+    resources/
+  test/
+    java/
+    resources/
+gradle/
+build.gradle
+settings.gradle
+gradlew
+gradlew.bat
 ```
 
-### 과제 2: 한 명의 회원 정보를 입력 받아 출력하라.
+## 실습
 
-- App2.java
-    - main()에 코드를 작성한다.
+### 작업1) 프로젝트 디렉토리를 준비하라.
 
-실행 결과
-
-```
-번호? 1
-이름? 홍길동
-이메일? hong@test.com
-암호? 1111
-사진? hong.png
-전화? 1111-2222
-
-번호: 1
-이름: 홍길동
-이메일: hong@test.com
-암호: 1111
-사진: hong.png
-전화: 1111-2222
-가입일: 2019-01-01
-```
-
-### 과제 3: 한 개의 게시글을 입력 받아 출력하라.
-
-- App3.java
-    - main()에 코드를 작성한다.
-
-실행 결과
+로컬 Git 저장소에 자바 프로젝트 폴더를 생성한다.
 
 ```
-번호? 1
-내용? 게시글입니다.
-
-번호: 1
-내용: 게시글입니다.
-작성일: 2019-01-01
-조회수: 0
+[~/git/eomcs-study]$ mkdir java-project
+[~/git/eomcs-study]$ cd eomcs-java-project
 ```
 
+프로젝트 폴더를 자바 애플리케이션 프로젝트로 초기화시킨다.
+```
+[~/git/eomcs-study/eomcs-java-project]$ gradle init
+```
 
-## 실습 소스
+자바 소스 파일 외의 기타 파일을 보관할 디렉토리 생성
 
-- src/main/java/App.java 변경
-- src/main/java/App2.java 변경
-- src/main/java/App3.java 변경
+```
+[~/git/eomcs-study/eomcs-java-project]$ cd src/main
+[~/git/eomcs-study/eomcs-java-project/src/main]$ mkdir resources
+[~/git/eomcs-study/eomcs-java-project/src/main]$ cd ../test
+[~/git/eomcs-study/eomcs-java-project/src/test]$ mkdir resources
+```
+
+### 작업2) '그레이들'의 빌드 스크립트 파일을 편집하라.
+
+build.gradle 파일에 다음 설정을 추가한다.
+
+```
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+    sourceCompatibility = '1.8'
+    targetCompatibility = '1.8'
+}
+```
+
+### 작업3) 프로젝트를 빌드하라.
+
+```
+[~/git/eomcs-study/eomcs-java-project]$ gradle build
+```
+
+### 작업4) 프로젝트를 실행하라.
+
+```
+[~/git/eomcs-study/eomcs-java-project]$ gradle run
+```
