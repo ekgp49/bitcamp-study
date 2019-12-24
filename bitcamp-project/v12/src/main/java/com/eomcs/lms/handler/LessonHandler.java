@@ -5,13 +5,12 @@ import java.util.Scanner;
 import com.eomcs.lms.domain.Lesson;
 public class LessonHandler {
   
-  Lesson[] lessons = new Lesson[LESSON_SIZE];
-  int lessonCount = 0;
-
-  public static Scanner keyboard;
   static final int LESSON_SIZE = 100;
+  static Lesson[] lessons = new Lesson[LESSON_SIZE];
+  static int lessonCount = 0;
+  public static Scanner keyboard;
   
-  public static void addLesson(LessonHandler lessonHandler) {
+  public static void addLesson() {
     Lesson lesson = new Lesson();
 
     System.out.print("번호? ");
@@ -32,13 +31,13 @@ public class LessonHandler {
     lesson.dayHours = keyboard.nextInt();
     keyboard.nextLine();
 
-    lessonHandler.lessons[lessonHandler.lessonCount++] = lesson;
+    lessons[lessonCount++] = lesson;
     System.out.println("저장하였습니다.");
   }
 
-  public static void listLesson(LessonHandler lessonHandler) {
-    for (int i = 0; i < lessonHandler.lessonCount; i++) {
-      Lesson l = lessonHandler.lessons[i];
+  public static void listLesson() {
+    for (int i = 0; i < lessonCount; i++) {
+      Lesson l = lessons[i];
       System.out.printf("%d, %s, %s ~ %s, %d\n", 
           l.no, l.title, l.startDate, l.endDate, l.totalHours);
     }

@@ -11,7 +11,7 @@ import java.util.Scanner;
 // ****
 // *****
 //
-public class Test05 {
+public class Test05_teacher {
 
 
   public static void main(String[] args) {
@@ -19,24 +19,22 @@ public class Test05 {
     Scanner keyboard = new Scanner(System.in);
     System.out.print("밑변의 길이? ");
     int base = keyboard.nextInt();
+    keyboard.close();
 
     // 직삼각형을 출력한다.
     printTriangle(base);
-    
-    keyboard.close();
   }
-  static int count = 0;
 
   static void printTriangle(int base) {
-    count++;
     // 코드를 완성하시오!
-    if (count != 0 && count <= base) {
-      for (int i = 0; i < count; i++) {
-        System.out.print("*");
-      }
-      System.out.println();
-      printTriangle(base);
+    if(base == 0) {
+      return;
     }
+    printTriangle(base - 1); // 재귀호출을 sysout출력전에 놓으면 깊숙히 들어가면서 먼저 출력함.
+    for (int i = 0; i < base; i++) {
+      System.out.print("*");
+    }
+    System.out.println();
   }
 }
 

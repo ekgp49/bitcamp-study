@@ -1,6 +1,11 @@
 package com.eomcs.lms;
 import java.util.Scanner;
 import com.eomcs.lms.handler.BoardHandler;
+import com.eomcs.lms.handler.BoardHandler2;
+import com.eomcs.lms.handler.BoardHandler3;
+import com.eomcs.lms.handler.BoardHandler4;
+import com.eomcs.lms.handler.BoardHandler5;
+import com.eomcs.lms.handler.BoardHandler6;
 import com.eomcs.lms.handler.LessonHandler;
 import com.eomcs.lms.handler.MemberHandler;
 public class App {
@@ -12,15 +17,11 @@ public class App {
     LessonHandler.keyboard = keyboard;
     MemberHandler.keyboard = keyboard;
     BoardHandler.keyboard = keyboard;
-    
-    LessonHandler 정규수업 = new LessonHandler();
-    MemberHandler 일반회원 = new MemberHandler();
-    BoardHandler 게시판1 = new BoardHandler();
-    BoardHandler 게시판2 = new BoardHandler();
-    BoardHandler 게시판3 = new BoardHandler();
-    BoardHandler 게시판4 = new BoardHandler();
-    BoardHandler 게시판5 = new BoardHandler();
-    BoardHandler 게시판6 = new BoardHandler();
+    BoardHandler2.keyboard = keyboard;
+    BoardHandler3.keyboard = keyboard;
+    BoardHandler4.keyboard = keyboard;
+    BoardHandler5.keyboard = keyboard;
+    BoardHandler6.keyboard = keyboard;
     
     String command;
 
@@ -31,70 +32,61 @@ public class App {
       switch (command) {
         // 분리된 코드(메서드)를 실행(호출)시킨다.
         case "/lesson/add" :
-          LessonHandler.addLesson(정규수업);
+          LessonHandler.addLesson();
           break;
         case "/lesson/list" :
-          LessonHandler.listLesson(정규수업);
+          LessonHandler.listLesson();
           break;
         case "/member/add" :
-          MemberHandler.addMember(일반회원);
+          MemberHandler.addMember();
           break;
         case "/member/list" :
-          MemberHandler.listMember(일반회원);
+          MemberHandler.listMember();
           break;
         case "/board/add" :
-          BoardHandler.addBoard(게시판1);
+          BoardHandler.addBoard();
           break;
         case "/board/list" :
-          BoardHandler.listBoard(게시판1);
+          BoardHandler.listBoard();
           break;
         case "/board/detail" :
-          BoardHandler.detailBoard(게시판1);
+          BoardHandler.detailBoard();
           break;
         case "/board2/add" :
-          BoardHandler.addBoard(게시판2);
+          BoardHandler2.addBoard();
           break;
         case "/board2/list" :
-          BoardHandler.listBoard(게시판2);
+          BoardHandler2.listBoard();
           break;
         case "/board2/detail" :
-          BoardHandler.detailBoard(게시판2);
+          BoardHandler2.detailBoard();
           break;
         case "/board3/add" :
-          BoardHandler.addBoard(게시판3);
+          BoardHandler3.addBoard();
           break;
         case "/board3/list" :
-          BoardHandler.listBoard(게시판3);
+          BoardHandler3.listBoard();
           break;
         case "/board3/detail" :
-          BoardHandler.detailBoard(게시판3);
-          break;
-        case "/board4/add" :
-          BoardHandler.addBoard(게시판4);
+          BoardHandler3.detailBoard();
           break;
         case "/board4/list" :
-          BoardHandler.listBoard(게시판4);
+          BoardHandler4.listBoard();
           break;
         case "/board4/detail" :
-          BoardHandler.detailBoard(게시판4);
-          break;
-        case "/board5/add" :
-          BoardHandler.addBoard(게시판5);
+          BoardHandler4.detailBoard();
           break;
         case "/board5/list" :
-          BoardHandler.listBoard(게시판5);
+          BoardHandler5.listBoard();
           break;
         case "/board5/detail" :
-          BoardHandler.detailBoard(게시판5);
-          break;
-        case "/board6/add" :
-          BoardHandler.addBoard(게시판6);
+          BoardHandler5.detailBoard();
           break;
         case "/board6/list" :
-          BoardHandler.listBoard(게시판6);
+          BoardHandler6.listBoard();
           break;
         case "/board6/detail" :
-          BoardHandler.detailBoard(게시판6);
+          BoardHandler6.detailBoard();
           break;
         
         default :
