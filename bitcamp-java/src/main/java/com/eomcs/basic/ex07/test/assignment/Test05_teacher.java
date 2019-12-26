@@ -27,7 +27,7 @@ public class Test05_teacher {
 
   static void printTriangle(int base) {
     // 코드를 완성하시오!
-    if(base == 0) {
+    if (base == 0) {
       return;
     }
     printTriangle(base - 1); // 재귀호출을 sysout출력전에 놓으면 깊숙히 들어가면서 먼저 출력함.
