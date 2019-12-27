@@ -4,15 +4,15 @@ package com.eomcs.oop.ex03;
 public class Exam0160 {
     
     static class Member {
-        // => 모든 인스턴스가 다음의 변수에 대해 같은 값을 가질 경우,
-        //    글래스 변수로 만드는 것이 바람직하다.
         // => 만약 값을 저장하는 것이 아닌 조회하는 용도로만 사용하는 변수라면
         //    대문자로 선언하여 상수임을 표현하라!
+        // => 모든 인스턴스가 다음의 변수에 대해 같은 값을 가질 경우,
+        //    클래스 변수로 만드는 것이 바람직하다.
         // => 조회 용도로만 사용하기로 했으면 문법적으로 값을 변경하는 것을 막아라!
         // => 보통 조회용으로 사용하는 변수는 공개해도 되기 때문에 public으로 선언한다!
-        public final static int GUEST = 0;
-        public final static int MEMBER = 1;
-        public final static int MANAGER = 2;
+        public static final int GUEST = 0;
+        public static final int MEMBER = 1;
+        public static final int MANAGER = 2;
         
         String id;
         String password;

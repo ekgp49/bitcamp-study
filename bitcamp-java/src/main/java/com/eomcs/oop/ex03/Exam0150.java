@@ -42,6 +42,7 @@ public class Exam0150 {
         System.out.println(s1.count);
         System.out.println(s2.count);
         System.out.println(s3.count);
+        System.out.println(Student.count); // <=이게 정석
     }
 }
 
