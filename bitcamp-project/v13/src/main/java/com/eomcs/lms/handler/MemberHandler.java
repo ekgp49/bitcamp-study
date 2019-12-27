@@ -6,33 +6,28 @@ import com.eomcs.lms.domain.Member;
 
 public class MemberHandler {
     
-  Member[] members;
+  Member[] members = new Member[MEMBER_SIZE];
   int memberCount = 0;
-  public Scanner input;
 
+  public static Scanner keyboard;
   static final int MEMBER_SIZE = 200;
-  
-  public MemberHandler(Scanner input) {
-    this.input = input;
-    this.members = new Member[MEMBER_SIZE];
-  }
   
   public void addMember() {
     Member member = new Member();
 
     System.out.print("번호? ");
-    member.no = input.nextInt();
-    input.nextLine(); // 줄바꿈 기호 제거용
+    member.no = keyboard.nextInt();
+    keyboard.nextLine(); // 줄바꿈 기호 제거용
     System.out.print("이름? ");
-    member.name = input.nextLine();
+    member.name = keyboard.nextLine();
     System.out.print("이메일? ");
-    member.email = input.nextLine();
+    member.email = keyboard.nextLine();
     System.out.print("암호? ");
-    member.password = input.nextLine();
+    member.password = keyboard.nextLine();
     System.out.print("사진? ");
-    member.photo = input.nextLine();
+    member.photo = keyboard.nextLine();
     System.out.print("전화? ");
-    member.tel = input.nextLine();
+    member.tel = keyboard.nextLine();
     member.registeredDate = new Date(System.currentTimeMillis());
 
     this.members[this.memberCount++] = member;

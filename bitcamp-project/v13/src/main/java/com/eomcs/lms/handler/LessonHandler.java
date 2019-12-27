@@ -5,37 +5,32 @@ import java.util.Scanner;
 import com.eomcs.lms.domain.Lesson;
 public class LessonHandler {
   
-  Lesson[] lessons;
+  Lesson[] lessons = new Lesson[LESSON_SIZE];
   int lessonCount = 0;
-  public Scanner input;
 
+  public static Scanner keyboard;
   static final int LESSON_SIZE = 100;
-
-  public LessonHandler(Scanner input) {
-    this.input = input;
-    this.lessons = new Lesson[LESSON_SIZE];
-  }
   
   public void addLesson() {
     Lesson lesson = new Lesson();
 
     System.out.print("번호? ");
-    lesson.no = input.nextInt();
-    input.nextLine();
+    lesson.no = keyboard.nextInt();
+    keyboard.nextLine();
     System.out.print("수업명? ");
-    lesson.title = input.nextLine();
+    lesson.title = keyboard.nextLine();
     System.out.print("설명? ");
-    lesson.description = input.nextLine();
+    lesson.description = keyboard.nextLine();
     System.out.print("시작일? ");
-    lesson.startDate = Date.valueOf(input.next()); //0000-00-00 <-형식에 오류가 나면 실행 안됨
+    lesson.startDate = Date.valueOf(keyboard.next()); //0000-00-00 <-형식에 오류가 나면 실행 안됨
     // 문법 :    Date date = Date.valueOf("date_string");
     System.out.print("종료일? ");
-    lesson.endDate = Date.valueOf(input.next());
+    lesson.endDate = Date.valueOf(keyboard.next());
     System.out.print("총수업시간? ");
-    lesson.totalHours = input.nextInt();
+    lesson.totalHours = keyboard.nextInt();
     System.out.print("일수업시간? ");
-    lesson.dayHours = input.nextInt();
-    input.nextLine();
+    lesson.dayHours = keyboard.nextInt();
+    keyboard.nextLine();
 
     this.lessons[this.lessonCount++] = lesson;
     System.out.println("저장하였습니다.");
