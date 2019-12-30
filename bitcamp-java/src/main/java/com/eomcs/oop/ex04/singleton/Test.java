@@ -10,7 +10,9 @@ public class Test {
         Car c2 = new Car();
         Car c3 = new Car();
         // 이렇게 인스턴스 생성에 제한이 없다.
-        
+        System.out.println(c1 == c2);
+        System.out.println(c3 == c2);
+        System.out.println(c3 == c1);
         System.out.println("----------------");
         
         // Car2 클래스의 생성자를 접근할 수 없기 때문에 호출할 수 없다.
@@ -21,6 +23,7 @@ public class Test {
         Car2 x3 = Car2.getInstance();
         if (x1 == x2) System.out.println("x1 == x2");
         if (x2 == x3) System.out.println("x2 == x3");
+        if (x2 == x3) System.out.println("x1 == x3");
     }
 
 }
