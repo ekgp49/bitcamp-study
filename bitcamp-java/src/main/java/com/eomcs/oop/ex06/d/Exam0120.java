@@ -34,7 +34,8 @@ public class Exam0120 {
     
     public static void main(String[] args) {
         Score s1 = new Score("홍길동", 100, 100, 100);
-        System.out.println(s1.toString());
+        String str = s1.toString();
+        System.out.println(str);
         // toString()을 오버라이딩 했기 때문에 다른 결과가 출력된다.
         
         // println()에 String이 아닌 객체를 넘기면,

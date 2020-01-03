@@ -1,7 +1,7 @@
 // 메서드 오버로딩(overloading) - 정의하는 규칙과 사용 규칙
 package com.eomcs.oop.ex06.b;
 
-public class Exam01 {
+public class Exam0210 {
     public static void main(String[] args) {
         // 메서드 사용하기
         // => 같은 이름의 메서드가 여러 개 있을 경우, 
@@ -23,9 +23,9 @@ public class Exam01 {
         // => 다음은 String과 int 값을 순서대로 받는 m()을 호출한다.
         A.m("Hello", 100);
         
-        // => float 타입의 값을 받는 m()은 없기 때문에 컴파일 오류!
+        // => 해당 아규먼트 타입의 값을 받는 m()은 없기 때문에 컴파일 오류!
         //A.m(3.14f);
-        
+//        A.m(100L);
         // 메서드를 찾을 때 아규먼트의 타입과 일치하는 메서드를 찾기 때문에
         // 메서드의 파라미터 이름은 아무 상관이 없다.
     }
