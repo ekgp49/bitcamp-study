@@ -1,0 +1,18 @@
+package com.eomcs.util;
+
+public class ArrayList {
+  Object[] elementData; // 여기에 초기화하면 배열 크기가 고정된채로 시작하기 때문에 메모리가 낭비될수가 있다(가비지 생김)
+  int size;
+  
+  public ArrayList() {
+    super();
+    this.elementData = new Object[100]; 
+    // 생성자로 초기화 시킬때 컴파일러가 이렇게 넣음.위에서 초기화해도 생성자로 컴파일러가 붙여놓음
+  }
+  
+  public ArrayList(int initialCapacity) {
+    super();
+    this.elementData = new Object[initialCapacity];
+  }
+  
+}
