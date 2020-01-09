@@ -2,16 +2,21 @@
 package com.eomcs.lms.handler;
 
 import com.eomcs.lms.domain.Lesson;
-import com.eomcs.util.LinkedList;
+import com.eomcs.util.ArrayList;
 import com.eomcs.util.Prompt;
 public class LessonHandler {
 
   Prompt prompt;
-  LinkedList<Lesson> lessonList;
+  ArrayList<Lesson> lessonList;
 
   public LessonHandler(Prompt prompt) {
     this.prompt = prompt;
-    this.lessonList = new LinkedList<>();
+    this.lessonList = new ArrayList<>();
+  }
+
+  public LessonHandler(Prompt prompt, int capacity) {
+    this.prompt = prompt;
+    this.lessonList = new ArrayList<>(capacity);
   }
 
   public void addLesson() {

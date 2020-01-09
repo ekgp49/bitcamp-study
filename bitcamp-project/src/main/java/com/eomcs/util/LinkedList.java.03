@@ -1,0 +1,14 @@
+package com.eomcs.util;
+
+public class LinkedList {
+  
+  // linked list의 첫번째 노드와 마지막 노드를 저장할 인스턴스 필드를 선언한다.
+  Node first;
+  
+  Node last;
+  
+  static class Node {
+    Object value;
+    Node next;
+  }
+}
