@@ -84,7 +84,7 @@ public class ArrayList<E> {
       int newValue = oldValue + (oldValue >> 1);
       this.list = Arrays.copyOf(this.list, newValue);
     }
-    System.arraycopy(this.list, index, this.list, index + 1, this.size);
+    System.arraycopy(this.list, index, this.list, index + 1, this.size - index);
     this.list[index] = e;
   }
 

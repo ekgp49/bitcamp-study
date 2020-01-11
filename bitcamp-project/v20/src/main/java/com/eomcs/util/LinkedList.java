@@ -28,15 +28,12 @@ public class LinkedList<E> {
     if (index < 0 || index >= size) {
       return;
     }
-
     Node<E> newNode = new Node<>();
     newNode.value = value;
-
     Node<E> cursor = first;
     for (int i = 0; i < index - 1; i++) {
       cursor = cursor.next;
     }
-
     if (index == 0) {
       newNode.next = cursor;
       first = newNode;
@@ -44,7 +41,6 @@ public class LinkedList<E> {
       newNode.next = cursor.next;
       cursor.next = newNode;
     }
-
     this.size++;
   }
   
@@ -77,12 +73,10 @@ public class LinkedList<E> {
     if (index < 0 || index >= size) {
       return null;
     }
-
     Node<E> cursor = first;
     for (int i = 0; i < index; i++) {
       cursor = cursor.next;
     }
-
     return cursor.value;
   }
   
@@ -90,21 +84,18 @@ public class LinkedList<E> {
     if (index < 0 || index >= size) {
       return null;
     }
-    
     Node<E> cursor = first;
     for (int i = 0; i < index; i++) {
       cursor = cursor.next;
     }
     E oldValue = cursor.value;
     cursor.value = value;
-    
     return oldValue;
   }
   
   public Object[] toArray() {
     Object[] arr = new Object[this.size];
     Node<E> cursor = first;
-    
     for (int i = 0; i < this.size; i++) {
       arr[i] = cursor.value;
       cursor = cursor.next;
@@ -114,18 +105,15 @@ public class LinkedList<E> {
   
   @SuppressWarnings("unchecked")
   public E[] toArray(E[] arr) {
-    
     if(arr.length < this.size) {
       arr = (E[]) Array.newInstance(arr.getClass().getComponentType(), this.size);
     }
-    
     Node<E> cursor = first;
-    
     for (int i = 0; i < this.size; i++) {
       arr[i] = cursor.value;
       cursor = cursor.next;
     }
-    return (E[]) arr;
+    return arr;
   }
   
   public int size() {
