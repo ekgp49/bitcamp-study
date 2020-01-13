@@ -116,6 +116,7 @@ public class App {
     int count = 0;
     while (historyQueue.size() > 0) {
       System.out.println(historyQueue.poll());
+      
       if ((++count % 5) == 0 && historyQueue.size() > 0) {
         System.out.print(":");
         String str = keyboard.nextLine();
@@ -124,5 +125,6 @@ public class App {
         }
       }
     }
+
   }
 }
