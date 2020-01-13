@@ -1,13 +1,12 @@
 package com.eomcs.basic.ex04;
 
 public class Exam81 {
-  
+  int a;
+
   public static void main(String[] args) {
     int a;
-    
     {
       a = 100;
-      
       int b;
       b = 200;
     }
