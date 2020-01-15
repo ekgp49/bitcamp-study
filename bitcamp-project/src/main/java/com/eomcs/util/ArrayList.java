@@ -87,7 +87,7 @@ public class ArrayList<E> extends AbstractList<E> {
       int newValue = oldValue + (oldValue >> 1);
       this.elementData = Arrays.copyOf(this.elementData, newValue);
     }
-    System.arraycopy(this.elementData, index, this.elementData, index + 1, this.size++ - index);
+    System.arraycopy(this.elementData, index, this.elementData, index + 1, this.size - index);
     this.elementData[index] = e;
   }
 

@@ -9,7 +9,7 @@ public abstract class Building {
     // 전체적인 논리 흐름(명령어 처리의 흐름)을 정의한다.
     // 서브 클래스들은 이 메서드를 그대로 상속 받기 때문에 재정의하지 않는 이상에는
     // 모든 서브 클래스들이 건물을 지을 때 동일한 방식으로 작업할 것이다.
-    public void build() {
+    protected void build() {
         System.out.println("건축하겠습니다!");
         startEffect();
         System.out.println("건축이 완료되었습니다!");

@@ -2,14 +2,15 @@ package com.eomcs.lms.handler;
 
 import java.sql.Date;
 import com.eomcs.lms.domain.Board;
-import com.eomcs.util.AbstractList;
+import com.eomcs.util.Iterator;
+import com.eomcs.util.List;
 import com.eomcs.util.Prompt;
 
 public class BoardHandler {
   Prompt prompt;
-  AbstractList<Board> boardList;
+  List<Board> boardList;
 
-  public BoardHandler(Prompt prompt, AbstractList<Board> list) {
+  public BoardHandler(Prompt prompt, List<Board> list) {
     this.prompt = prompt;
     this.boardList = list;
   }
@@ -27,10 +28,9 @@ public class BoardHandler {
   }
 
   public void listBoard() {
-    Board[] arr = new Board[this.boardList.size()];
-    arr = this.boardList.toArray(arr);
-
-    for (Board b : arr) {
+    Iterator<Board> list = boardList.iterator();
+    while (list.hasNext()){
+      Board b = list.next();
       System.out.printf("%d, %s, %s, %d\n", 
           b.getNo(), b.getTitle(), b.getDate(), b.getViewCount());
     }

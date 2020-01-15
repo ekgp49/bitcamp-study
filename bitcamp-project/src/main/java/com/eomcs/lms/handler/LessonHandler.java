@@ -1,15 +1,16 @@
-// 사용자 입력을 받는 코드를 별도의 메서드로 분리한다.
 package com.eomcs.lms.handler;
 
 import com.eomcs.lms.domain.Lesson;
-import com.eomcs.util.AbstractList;
+import com.eomcs.util.Iterator;
+import com.eomcs.util.List;
 import com.eomcs.util.Prompt;
 public class LessonHandler {
 
   Prompt prompt;
-  AbstractList<Lesson> lessonList;
+  List<Lesson> lessonList;
 
-  public LessonHandler(Prompt prompt, AbstractList<Lesson> list) {
+  public LessonHandler(Prompt prompt, List<Lesson> list) {
+    // List 파라미터는 List 인터페이스를 구현한 객체를 받는다.
     this.prompt = prompt;
     this.lessonList = list;
   }
@@ -30,8 +31,9 @@ public class LessonHandler {
   }
 
   public void listLesson() {
-    Lesson[] arr = this.lessonList.toArray(new Lesson[this.lessonList.size()]);
-    for (Lesson l : arr) {
+    Iterator<Lesson> list = lessonList.iterator();
+    while (list.hasNext()) {
+      Lesson l = list.next();
       System.out.printf("%d, %s, %s ~ %s, %d\n", 
           l.getNo(), l.getTitle(), l.getStartDate(), l.getEndDate(), l.getTotalHours());
     }

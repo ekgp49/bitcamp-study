@@ -2,14 +2,15 @@ package com.eomcs.lms.handler;
 
 import java.sql.Date;
 import com.eomcs.lms.domain.Member;
-import com.eomcs.util.AbstractList;
+import com.eomcs.util.List;
 import com.eomcs.util.Prompt;
 
 public class MemberHandler {
-  AbstractList<Member> memberList;
+  List<Member> memberList;
   Prompt prompt;
 
-  public MemberHandler(Prompt prompt, AbstractList<Member> list) {
+  public MemberHandler(Prompt prompt, List<Member> list) {
+    // List 파라미터는 List 인터페이스를 구현한 객체를 받는다.
     this.prompt = prompt; 
     this.memberList = list;
   }

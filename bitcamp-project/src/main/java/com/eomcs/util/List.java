@@ -25,5 +25,7 @@ public interface List<E> {
   E[] toArray(E[] arr);
   
   int size();
+  
+  Iterator<E> iterator();
 
 }
