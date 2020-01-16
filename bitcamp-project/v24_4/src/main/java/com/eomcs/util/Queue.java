@@ -19,17 +19,29 @@ public class Queue<E> extends LinkedList<E> implements Cloneable {
   }
   
   public Iterator<E> iterator() {
-    // anonymous class : 인스턴스를 한개만 생성할 경우 로컬 클래스는 익명 클래스로 정의하라
-    return new Iterator<E>() {
-      Queue<E> queue = Queue.this.clone();
+   
+    
+    // local class : 특정 메서드 안에서만 사용되는 중첩 클래스라면 로컬클래스로 정의하라
+    // 로컬 클래스는 인스턴스 멤버가 아니다. 따라서 로컬 클래스의 생성자를 호출할 때
+    // 앞에 this.를 붙이면 안된다.
+    class QueueIterator<T> implements Iterator<T> {
+      Queue<T> queue;
       
-      public E next() {
+      @SuppressWarnings("unchecked")
+      public QueueIterator() {
+        this.queue = (Queue<T>) Queue.this.clone();
+      }
+      
+      public T next() {
         return queue.poll();
       }
       
       public boolean hasNext() {
         return queue.size() > 0;
       }
-    };
+    }
+
+    return new QueueIterator<>();
   }
+  
 }

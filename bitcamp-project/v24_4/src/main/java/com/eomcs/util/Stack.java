@@ -67,22 +67,46 @@ public class Stack<E> implements Cloneable {
   }
   
   public Iterator<E> iterator() {
-    // anonymous class : 인스턴스를 한개만 생성한다면 로컬 클래스를 익명 클래스로 정의하라
-    // 익명 클래스를 리턴하는게 아니라 익명클래스의 객체를 만들어 그 객체주소를 리턴하는 것이다.
-    return new Iterator<E>() {
-      Stack<E> stack;
+    
+    // 로컬 클래스 : 특정 메서드 안에서만 사용되는 클래스라면 그 메서드 안에 로컬 클래스로 정의하라
+    
+    class StackIterator<T> implements Iterator<T> {
+      Stack<T> stack;
       
-      {
-        this.stack = Stack.this.clone();
+      @SuppressWarnings("unchecked")
+      public StackIterator() {
+        this.stack = (Stack<T>)Stack.this.clone();
       }
       
-      public E next() {
+      public T next() {
         return stack.pop();
       }
       
       public boolean hasNext() {
         return !stack.empty();
       }
-    };
+    }
+    // 로컬 클래스의 인스턴스를 생성할 때 바깥 클래스의 인스턴스 주소를 줘서는 안된다.
+    // 즉 생성자를 호출하는 앞쪽에 this.를 붙여서는 안된다.
+    return new StackIterator<>();
   }
+  
+  /*
+  static void m1() {
+    // static 메서드는 클래스 이름으로 바로 호출 할 수 있기 때문에 
+    // this 변수가 없다.
+    // 예 ) Stack.m1();
+    class A {
+      A() {
+        Stack s;
+//        s = Stack.this; // 컴파일 오류!
+        // 이 로컬 클래스는 m1()에서 사용할 것이다.
+        // m1()은 바깥 클래스의 인스턴스 주소를 모른다
+        // 그런데 로컬 클래스에서 위와 같이 바깥 클래스의 인스턴스를 사용하려 한다면
+        // 문제가 되는 것이다 => 컴파일 오류 발생
+        
+      }
+    }
+  }
+   */ 
 }
