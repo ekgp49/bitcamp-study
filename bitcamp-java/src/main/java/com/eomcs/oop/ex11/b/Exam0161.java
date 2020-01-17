@@ -9,14 +9,13 @@ public class Exam0161 {
 
     File dir = new File(".");
 
-    // anonymous class
-    //  => 메서드가 한개짜리 인터페이스라면 lambda 문법으로 작성하면 코드가 간단해진다.
-    String[] names = dir.list( (d, n) -> {
-      if (n.endsWith(".java")) 
-        return true; 
-      return false; 
-    }
-        );
+    // => 메서드가 한 개짜리 인터페이스라면 lambda 문법으로 작성하면 코드가 간결해진다.
+    String[] names = dir.list((d, n) -> {
+        if (n.endsWith(".java")) 
+          return true; 
+        return false; 
+      }
+    );
 
     for (String name : names) {
       System.out.println(name);
