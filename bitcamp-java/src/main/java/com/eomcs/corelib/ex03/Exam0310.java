@@ -14,6 +14,7 @@ public class Exam0310 {
     list.add(s3);
     print(list);
 
+    // ArrayList가 객체를 비교할 때 equals()를 사용한다.
     System.out.println(list.indexOf(s4));
   }
 
@@ -23,10 +24,6 @@ public class Exam0310 {
     }
     System.out.println();
   }
-}   
-
-
-
-
+}
 
 
