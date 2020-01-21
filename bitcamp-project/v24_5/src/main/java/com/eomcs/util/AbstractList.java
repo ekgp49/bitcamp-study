@@ -20,7 +20,7 @@ public abstract class AbstractList<E> implements List<E> {
       // 필드 선언에 바로 할당연산자를 사용할 수 있다.
       
       {
-        this.list = (List<E>) AbstractList.this; 
+        this.list = AbstractList.this; 
       }
 
       public E next() {
