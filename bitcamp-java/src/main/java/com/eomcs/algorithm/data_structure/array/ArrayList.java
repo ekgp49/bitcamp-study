@@ -14,7 +14,7 @@ public class ArrayList {
   public ArrayList(int capacity) {
     if (capacity > DEFAULT_SIZE)
       arr = new Object[capacity];
-    else 
+    else
       arr = new Object[DEFAULT_SIZE];
   }
 
@@ -27,7 +27,7 @@ public class ArrayList {
   }
 
   public void add(Object value) {
-    if (this.size == arr.length) 
+    if (this.size == arr.length)
       increase();
 
     arr[this.size++] = value;
@@ -37,7 +37,7 @@ public class ArrayList {
     if (index < 0 || index >= size)
       return -1;
 
-    if (this.size == arr.length) 
+    if (this.size == arr.length)
       increase();
 
     for (int i = size - 1; i >= index; i--)
@@ -71,8 +71,8 @@ public class ArrayList {
 
     Object old = this.arr[index];
 
-    for (int i = index; i < size - 1; i++) 
-      this.arr[i] = this.arr[i+1];
+    for (int i = index; i < size - 1; i++)
+      this.arr[i] = this.arr[i + 1];
 
     size--;
 
@@ -93,10 +93,5 @@ public class ArrayList {
     arr = temp;
   }
 }
-
-
-
-
-
 
 
