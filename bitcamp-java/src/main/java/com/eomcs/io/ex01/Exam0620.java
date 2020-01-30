@@ -8,9 +8,16 @@ public class Exam0620 {
 
 
   public static void main(String[] args) throws Exception {
+
     class JavaFilter implements FileFilter {
       @Override
       public boolean accept(File file) {
+        // 이 메서드는 listFiles() 메서드에서 호출한다.
+        // 지정한 폴더에 들어 있는 파일이나 디렉토리를 찾을 때 마다 호출한다.
+        // 리턴 값 File[] 에 찾은 파일 정보를 포함시킬지 여부를 결정한다.
+        // true 이면 배열에 포함시키고,
+        // false 이면 배열에서 제외한다.
+        //
         if (file.isFile() && file.getName().endsWith(".java"))
           return true; // 조회 결과에 포함시켜라!
         return false; // 조회 결과에서 제외하라!

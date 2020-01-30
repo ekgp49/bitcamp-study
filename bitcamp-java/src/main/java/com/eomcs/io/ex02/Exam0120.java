@@ -7,6 +7,9 @@ public class Exam0120 {
 
   public static void main(String[] args) throws Exception {
     // 1) 파일의 데이터를 읽을 객체를 준비한다.
+    // - new FileInputStream(파일경로)
+    // - 해당 경로에 파일이 존재하지 않으면 예외가 발생한다.
+    //
     FileInputStream in = new FileInputStream("temp/test1.data");
 
     // 2) 1바이트를 읽는다.

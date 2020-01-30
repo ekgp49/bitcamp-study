@@ -8,11 +8,17 @@ public class Exam0611 {
 
 
   public static void main(String[] args) throws Exception {
+
     class JavaFilter implements FilenameFilter {
       @Override
       public boolean accept(File dir, String name) {
 
+        // 해당 이름이 디렉토리 이름인지 파일 이름인지 알아내려면
+        // File 객체를 생성해야 한다.
+        //
         File file = new File(dir, name);
+        // 디렉토리 정보와 이름을 합쳐 파일 객체를 생성할 수 있다.
+
         if (file.isFile() && name.endsWith(".java"))
           return true; // 조회 결과에 포함시켜라!
         return false; // 조회 결과에서 제외하라!

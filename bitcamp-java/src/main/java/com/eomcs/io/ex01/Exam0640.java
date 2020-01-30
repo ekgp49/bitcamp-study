@@ -1,7 +1,8 @@
-// 익명 클래스로 파일 필터 만들기
+// 익명 클래스로 FileFilter 만들기
 package com.eomcs.io.ex01;
 
 import java.io.File;
+import java.io.FileFilter;
 
 public class Exam0640 {
 
@@ -10,12 +11,18 @@ public class Exam0640 {
 
     File dir = new File(".");
 
-    // => 확장자가 .java 인 파일의 이름만 추출하기
-
-    // 필터 객체를 한번만 만들거라면 익명클래스로 만드는게 낫다.
+    // 익명 클래스를 정의할 때
+    // 객체를 사용할 위치에 익명 클래스를 정의하는 것이
     // 코드를 더 읽기 쉽게 만든다.
-    File[] files =
-        dir.listFiles(file -> file.isFile() && file.getName().endsWith(".java") ? true : false);
+    //
+    File[] files = dir.listFiles(new FileFilter() {
+      @Override
+      public boolean accept(File file) {
+        if (file.isFile() && file.getName().endsWith(".java"))
+          return true;
+        return false;
+      }
+    });
 
     for (File file : files) {
       System.out.printf("%s %12d %s\n", file.isDirectory() ? "d" : "-", file.length(),

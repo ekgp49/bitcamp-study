@@ -9,8 +9,9 @@ public class Exam0322 {
 
     File dir = new File("temp2/a");
 
+    // 디렉토리를 생성할 때 존재하지 않는 중간 디렉토리도 만들고 싶다면, mkdirs()를 호출하라.
     // mkdirs()
-    // - 지정된 경로에 중간 디렉토리가 존재하지 않으면 그 디렉토리도 만든다.
+    // - 지정된 경로에 디렉토리가 존재하지 않으면 그 디렉토리도 만든다.
     //
     if (dir.mkdirs()) {
       System.out.println("temp2/a 디렉토리를 생성하였습니다.");
