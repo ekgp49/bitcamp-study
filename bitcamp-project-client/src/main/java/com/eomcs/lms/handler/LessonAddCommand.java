@@ -36,11 +36,11 @@ public class LessonAddCommand implements Command {
       if (response.equals("FAIL")) {
         System.out.println(in.readUTF());
         return;
+      } else {
+        System.out.println("저장했습니다.");
       }
-      System.out.println("저장했습니다.");
     } catch (Exception e) {
       System.out.println("통신 오류 발생!");
     }
-    System.out.println("저장하였습니다.");
   }
 }

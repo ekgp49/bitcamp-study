@@ -52,13 +52,12 @@ public class MemberUpdateCommand implements Command {
       }
 
       out.writeUTF("/member/update");
-      out.writeInt(no);
       out.writeObject(newMember);
       if (in.readUTF().equals("OK")) {
-        System.out.println("회원정보를 변경했습니다.");
+        System.out.println(in.readUTF());
         return;
       }
-      System.out.println("회원정보 변경 실패");
+      System.out.println(in.readUTF());
     } catch (Exception e) {
       System.out.println(e.getMessage());
     }

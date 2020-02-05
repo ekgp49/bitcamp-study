@@ -51,13 +51,13 @@ public class LessonUpdateCommand implements Command {
       }
 
       out.writeUTF("/lesson/update");
-      out.writeInt(no);
       out.writeObject(newLesson);
       if (in.readUTF().equals("OK")) {
         System.out.println("수업정보를 변경했습니다.");
         return;
+      } else {
+        System.out.println(in.readUTF());
       }
-      System.out.println("수업정보 변경 실패");
     } catch (Exception e) {
       System.out.println(e.getMessage());
     }

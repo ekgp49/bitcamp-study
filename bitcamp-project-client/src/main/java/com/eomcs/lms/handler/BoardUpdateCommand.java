@@ -47,13 +47,13 @@ public class BoardUpdateCommand implements Command {
       }
 
       out.writeUTF("/board/update");
-      out.writeInt(no);
       out.writeObject(newBoard);
       if (in.readUTF().equals("OK")) {
         System.out.println("게시글을 변경했습니다.");
         return;
+      } else {
+        System.out.println(in.readUTF());
       }
-      System.out.println("게시글 변경 실패");
     } catch (Exception e) {
       System.out.println(e.getMessage());
     }

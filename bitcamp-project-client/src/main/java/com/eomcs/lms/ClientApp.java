@@ -145,8 +145,5 @@ public class ClientApp {
 
     ClientApp app = new ClientApp();
     app.service();
-
-
-
   }
 }

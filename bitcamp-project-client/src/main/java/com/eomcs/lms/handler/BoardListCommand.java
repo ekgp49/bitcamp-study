@@ -20,10 +20,6 @@ public class BoardListCommand implements Command {
     try {
       out.writeUTF("/board/list");
       out.flush();
-      // ObjectOutputStream은 내부에 버퍼를 사용한다.
-      // 따라서 서버에 즉시 전송하고 싶다면 flush를 명시적으로 호출해야 한다.
-      // 참고!
-      // close()를 호출해도 자동 flush가 수행된다.
       String response = in.readUTF();
       if (response.equals("FAIL")) {
         System.out.println(in.readUTF());
