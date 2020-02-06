@@ -10,9 +10,9 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import com.eomcs.lms.context.ApplicationContextListener;
-import com.eomcs.lms.dao.BoardFileDao;
-import com.eomcs.lms.dao.LessonFileDao;
-import com.eomcs.lms.dao.MemberFileDao;
+import com.eomcs.lms.dao.BoardDao;
+import com.eomcs.lms.dao.LessonDao;
+import com.eomcs.lms.dao.MemberDao;
 import com.eomcs.lms.servlet.BoardAddServlet;
 import com.eomcs.lms.servlet.BoardDeleteServlet;
 import com.eomcs.lms.servlet.BoardDetailServlet;
@@ -62,9 +62,9 @@ public class ServerApp {
   public void service() {
     notifyApplicationInitailized();
 
-    BoardFileDao boardDao = (BoardFileDao) context.get("boardDao");
-    LessonFileDao lessonDao = (LessonFileDao) context.get("lessonDao");
-    MemberFileDao memberDao = (MemberFileDao) context.get("memberDao");
+    BoardDao boardDao = (BoardDao) context.get("boardDao");
+    LessonDao lessonDao = (LessonDao) context.get("lessonDao");
+    MemberDao memberDao = (MemberDao) context.get("memberDao");
 
     servletMap.put("/board/list", new BoardListServlet(boardDao));
     servletMap.put("/board/add", new BoardAddServlet(boardDao));

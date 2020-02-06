@@ -2,12 +2,12 @@ package com.eomcs.lms.servlet;
 
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import com.eomcs.lms.dao.BoardFileDao;
+import com.eomcs.lms.dao.BoardDao;
 
 public class BoardDeleteServlet implements Servlet {
-  BoardFileDao boardDao;
+  BoardDao boardDao;
 
-  public BoardDeleteServlet(BoardFileDao boardDao) {
+  public BoardDeleteServlet(BoardDao boardDao) {
     this.boardDao = boardDao;
   }
 

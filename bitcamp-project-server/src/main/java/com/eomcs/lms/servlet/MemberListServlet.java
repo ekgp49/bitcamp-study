@@ -2,12 +2,12 @@ package com.eomcs.lms.servlet;
 
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import com.eomcs.lms.dao.MemberFileDao;
+import com.eomcs.lms.dao.MemberDao;
 
 public class MemberListServlet implements Servlet {
-  MemberFileDao memberDao;
+  MemberDao memberDao;
 
-  public MemberListServlet(MemberFileDao memberDao) {
+  public MemberListServlet(MemberDao memberDao) {
     this.memberDao = memberDao;
   }
 
