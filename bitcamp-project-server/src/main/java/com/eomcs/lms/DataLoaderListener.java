@@ -20,5 +20,6 @@ public class DataLoaderListener implements ApplicationContextListener {
   @Override
   public void contextDestroyed(Map<String, Object> context) {
     System.out.println("데이터를 저장합니다.");
+
   }
 }

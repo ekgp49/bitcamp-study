@@ -1,5 +1,5 @@
 // stateful 방식 - 계산기 서버 만들기
-package com.eomcs.net.ex04;
+package com.eomcs.net.ex04.stateful;
 
 import java.io.DataInputStream;
 import java.io.PrintStream;
@@ -26,7 +26,7 @@ import java.net.Socket;
 //   텔렛 - 원격 제어 프로그램
 //   FTP - 파일 전송 프로그램
 //
-public class CalcServer2 {
+public class CalcServer {
   public static void main(String[] args) throws Exception {
     System.out.println("서버 실행 중...");
 
@@ -51,7 +51,7 @@ public class CalcServer2 {
         PrintStream out = new PrintStream(socket.getOutputStream());
         ) {
 
-      l1: while (true) {
+      loop: while (true) {
         int a = in.readInt();
         String op = in.readUTF();
         int b = in.readInt();
@@ -62,7 +62,7 @@ public class CalcServer2 {
           case "-": result = a - b; break;
           case "*": result = a * b; break;
           case "/": result = a / b; break;
-          case "quit": break l1;
+          case "quit": break loop;
         }
 
         out.printf("%d %s %d = %d\n", a, op, b, result);
