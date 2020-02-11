@@ -9,20 +9,24 @@ import java.util.Scanner;
 
 public class Client0210 {
   public static void main(String[] args) {
-    Scanner scan = new Scanner(System.in);
-    try (Socket socket = new Socket("192.168.1.49", 8888);
-        BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-        PrintWriter out = new PrintWriter(socket.getOutputStream())) {
+    Scanner keyScan = new Scanner(System.in);
+
+    try (Socket socket = new Socket("localhost", 8888);
+        PrintWriter out = new PrintWriter(socket.getOutputStream());
+        BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
 
       System.out.println("서버와 연결되었음!");
 
-      System.out.print("> ");
-      scan.nextLine();
+      // 서버에 데이터를 보내기 전에 잠깐 멈춤!
+      System.out.print(">");
+      keyScan.nextLine();
 
       out.println("ABC가각간");
       // out.flush();
-      // character stream 클래스의 경우 출력데이터를 내부버퍼에 저장하고 있다가
-      // flush()을 호출했을 때 비로소 출력을 수행한다.
+      // character stream 클래스의 경우
+      // 출력 데이터를 내부 버퍼에 보관하고 있다가
+      // flush()가 호출되면 비로서 출력을 수행한다.
+      // 따라서 위 출력 문자열은 서버에 보내지 않는다.
       System.out.println("서버에 데이터를 보냈음!");
 
       String str = in.readLine();
@@ -31,7 +35,8 @@ public class Client0210 {
     } catch (Exception e) {
       e.printStackTrace();
     }
-    scan.close();
+
+    keyScan.close();
   }
 }
 

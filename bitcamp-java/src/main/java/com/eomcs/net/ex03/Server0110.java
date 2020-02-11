@@ -33,8 +33,7 @@ public class Server0110 {
         // 서버는 한 줄의 문자열을 읽은 후에 응답해야 한다.
 
         System.out.println("클라이언트가 보낸 1바이트를 기다리고 있음!");
-
-        // => 클라이언트가 1바이트를 보낼때까지 리턴하지 않는다.
+        // => 클라이언트가 1바이트를 보낼 때까지 리턴하지 않는다.
         int request = in.read(); // blocking 모드로 작동한다.
         System.out.println(request);
 
@@ -46,6 +45,9 @@ public class Server0110 {
         // => 클라이언트에게 받은 문자열을 그대로 보낸다.
         // 물론 클라이언트가 보낸 데이터를 다 읽을 때까지 리턴하지 않는다.
         out.write(request);
+        // out.flush();
+        // byte stream 을 사용할 때는 바로 출력한다.
+        // 따라서 flush()를 호출하지 않아도 된다.
         System.out.println("클라인트에게 데이터를 보냈음.");
 
       }

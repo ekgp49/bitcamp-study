@@ -12,13 +12,15 @@ repositories {
     // Use jcenter for resolving dependencies.
     // You can declare any Maven/Ivy/file repository here.
     jcenter()
+    
+    
 }
 
 dependencies {
-    // This dependency is used by the application.
+    implementation group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.11'
+   
     implementation 'com.google.guava:guava:28.0-jre'
 
-    // Use JUnit test framework
     testImplementation 'junit:junit:4.12'
 }
 

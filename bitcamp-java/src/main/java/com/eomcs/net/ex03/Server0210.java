@@ -19,26 +19,28 @@ public class Server0210 {
           BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
           PrintWriter out = new PrintWriter(socket.getOutputStream())) {
 
-        System.out.println("대기열에서 클라이언트 정보를 꺼내 소켓을 생성하였음.");
-        System.out.println("클라이언트와 통신할 입출력 스트림이 준비되었음.");
-
-        System.out.println("클라이언트가 보낸 문자열을 기다리고 있음!");
+        System.out.println("클라이언트가 보낸 한 줄의 문자열을 기다리고 있음!");
 
         String str = in.readLine();
         System.out.println(str);
 
-        System.out.print("> ");
+        // 서버가 데이터를 보내지 않으면 클라이언트의 read()는 리턴하지 않는다.
+        // 이를 확인하기 위해 잠시 실행을 멈춘다.
+        System.out.print(">");
         keyboard.nextLine();
 
         out.println(str);
         // out.flush();
-        // character stream 클래스의 경우 출력데이터를 내부버퍼에 저장하고 있다가
-        // flush()을 호출했을 때 비로소 출력을 수행한다.
-        // 단, close()를 호출하면 close()내부에서 flush()를 수행한다.
+        // character stream 클래스의 경우
+        // 출력 데이터를 내부 버퍼에 보관하고 있다가
+        // flush()가 호출되면 비로서 출력을 수행한다.
+        // 따라서 위 출력 문자열은 클라이언트에 보내지 않는다.
+        // 주의!
+        // => 단 close()를 호출하면 close() 내부에서 flush()를 실행한다.
         System.out.println("클라인트에게 데이터를 보냈음.");
 
-        System.out.print("> ");
-        keyboard.nextLine();
+        // System.out.print(">");
+        // .nextLine();
 
       }
       System.out.println("클라이언트와의 연결을 끊었음.");
