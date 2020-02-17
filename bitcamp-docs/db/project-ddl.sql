@@ -14,15 +14,16 @@ drop table if exists lms_photo;
 drop table if exists lms_photo_file;
 
 -- 수업 테이블 생성
-create table lms_lesson (
-  lesson_id int not null auto_increment primary key comment '수업 데이터 식별 번호', 
-  sdt datetime not null comment '수업 시작일',
-  edt datetime not null comment '수업 종료일',
-  tot_hr int not null comment '총 수업 시간',
-  day_hr int not null comment '일 수업 시간',
-  titl varchar(255) not null comment '수업명',
-  conts text not null comment '수업 내용'
-) comment '수업'; 
+create table review (
+  review_id int not null auto_increment primary key comment '리뷰 식별 번호', 
+  name varchar(255) not null,
+  customer varchar(255) not null,
+  rate int,
+  conts text,
+  vw_cnt int default 0,
+  cdt datetime default now(),
+  time_fr_td varchar(255),
+) comment '정보'; 
 
 -- 회원 테이블 생성
 create table lms_member (
