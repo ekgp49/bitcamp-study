@@ -17,7 +17,7 @@ create table test1 (
 
 /* PK 컬럼 지정 */
 alter table test1
-  add constraint primary key (no);
+  add constraint test1_pk primary key (no);
 
 /* 자동 증가 컬럼 지정 */
 alter table test1
@@ -41,8 +41,8 @@ insert into test1(name,fax,tel,no,pstno,addr)
 
 - 값을 입력할 컬럼을 선택하기. 단 필수 입력 컬럼은 반드시 선택해야 한다.
 ```
-/* no 컬럼은 필수 입력 컬럼이지만, 
-  자동 증가 컬럼이기 때문에 값을 입력하지 않아도 된다.*/
+/* no 컬럼은 필수 입력 컬럼(not null 설정이라는 뜻)이지만, 
+  자동 증가 컬럼이기 때문에 값을 입력하지 않아도 된다. 아님 그냥 null로 해도 됨*/
 insert into test1(name,tel) values('ccc','333');
 ```
 
@@ -80,7 +80,7 @@ mysql은 autocommit의 기본 값이 true이다. 따라서 명령창에서 SQL�
 
 insert/update/delete을 수행한 후 승인을 해야만 실제 테이블에 적용된다.
 ```
-> commmit;
+> commit;
 ```
 
 마지막 commit 상태로 되돌리고 싶다면,

@@ -84,7 +84,7 @@ from test1
 where working='Y' or class='java100';
 
 /* java100기 학생 중에 재직자만 조회하라!*/
-select no, name, class, working
+select no, name
 from test1
 where working='Y' and class='java100';
 
