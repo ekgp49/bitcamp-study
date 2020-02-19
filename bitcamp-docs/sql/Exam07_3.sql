@@ -21,10 +21,16 @@ from room;
 select concat(name, '(', loc, ')') title
 from room;
 
+select concat(name, '(', loc, ')') as title
+from room;
+
 select count(*) 
 from room;
 
 select count(*) cnt
+from room;
+
+select count(*) as cnt
 from room;
 
 

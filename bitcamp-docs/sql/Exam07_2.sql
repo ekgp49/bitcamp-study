@@ -19,7 +19,7 @@ select rno, loc, name
 from room
 order by name desc;
 
-/* 이름은 오름차순, 지점명도 오름차순으로 정렬하기*/
+/* 이름으로 오름차순 하고, 지점명도 오름차순으로 정렬하기*/
 select rno, loc, name 
 from room
 order by name asc, loc asc;

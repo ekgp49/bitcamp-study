@@ -103,12 +103,20 @@ from lect l inner join room r on l.rno=r.rno;
    강의실이 아직 지정되지 않은 강의의 경우 강의실 테이블의 데이터와 연결하지 못해 
    결과로 출력되지 않는 문제가 있다. */
 
-
+-- inner join의 문제점 예2:
+-- 모든 강의장 이름을 출력하라.
+-- 단, 강의장에 강의에 배정된 경우 그 강의 이름도 출력하라.
+select 
+  r.rno,
+  r.name,
+  r.loc,
+  l.titl
+from room r inner join lect l on r.rno = l.rno; -- 헐 강의가 배정된 강의장만 출력됨
 
 /* => 만약 기준 컬럼의 값과 일치하는 데이터가 없어서 
       다른 테이블의 데이터와 연결되지 않았다 하더라도 
       결과로 뽑아내고 싶다면 outer join을 사용하라!*/
-/* 즉 아직 강의실이 배정되지 않은 강의 데이터도 출력하고 싶을 때
+/* 즉 아직 강의실이 배정되지 않은 강의 데이터도 출력하고 싶을 때(모든 강의 데이터를)
    출력하고 싶은 테이블을 바깥쪽 테이블로 지정하라!
  */
 select 
@@ -117,11 +125,20 @@ select
     r.rno, 
     r.loc, 
     r.name
-from lect l right outer join room r on l.rno=r.rno;
+from lect l left outer join room r on l.rno=r.rno;
 /* 왼쪽 테이블인 lect를 기준으로 room 데이터를 연결한다. 
  * 만약 lect와 일치하는 데이터가 room에 없더라도 
  * lect 데이터를 출력한다!
  */
+
+-- 모든 강의장을 출력하고 싶을 경우
+select 
+    l.lno, 
+    l.titl, 
+    r.rno, 
+    r.loc, 
+    r.name
+from lect l right outer join room r on l.rno=r.rno;
 
 
 /* 요구사항:
