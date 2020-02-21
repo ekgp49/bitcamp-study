@@ -1,7 +1,7 @@
 package com.eomcs.lms.servlet;
 
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.PrintStream;
+import java.util.Scanner;
 import com.eomcs.lms.dao.LessonDao;
 
 public class LessonDeleteServlet implements Servlet {
@@ -12,15 +12,14 @@ public class LessonDeleteServlet implements Servlet {
   }
 
   @Override
-  public void service(ObjectInputStream in, ObjectOutputStream out) throws Exception {
-    int no = in.readInt();
+  public void service(Scanner in, PrintStream out) throws Exception {
+    out.println("번호? \n!{}!");
+    int no = Integer.parseInt(in.nextLine());
 
     if (lessonDao.delete(no) > 0) {
-      out.writeUTF("OK");
-      out.writeUTF("수업정보를 삭제했습니다.");
+      out.println("삭제했습니다.");
     } else {
-      out.writeUTF("FAIL");
-      out.writeUTF("해당번호의 수업정보가 없습니다.");
+      out.println("해당번호의 수업이 없습니다.");
     }
   }
 }

@@ -1,37 +1,14 @@
 // LMS 클라이언트
 package com.eomcs.lms;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
+import java.io.PrintStream;
+import java.net.Socket;
 import java.util.ArrayDeque;
 import java.util.Deque;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Scanner;
-import com.eomcs.lms.dao.BoardDao;
-import com.eomcs.lms.dao.LessonDao;
-import com.eomcs.lms.dao.MemberDao;
-import com.eomcs.lms.dao.mariadb.BoardDaoImpl;
-import com.eomcs.lms.dao.mariadb.LessonDaoImpl;
-import com.eomcs.lms.dao.mariadb.MemberDaoImpl;
-import com.eomcs.lms.handler.BoardAddCommand;
-import com.eomcs.lms.handler.BoardDeleteCommand;
-import com.eomcs.lms.handler.BoardDetailCommand;
-import com.eomcs.lms.handler.BoardListCommand;
-import com.eomcs.lms.handler.BoardUpdateCommand;
-import com.eomcs.lms.handler.Command;
-import com.eomcs.lms.handler.LessonAddCommand;
-import com.eomcs.lms.handler.LessonDeleteCommand;
-import com.eomcs.lms.handler.LessonDetailCommand;
-import com.eomcs.lms.handler.LessonListCommand;
-import com.eomcs.lms.handler.LessonUpdateCommand;
-import com.eomcs.lms.handler.MemberAddCommand;
-import com.eomcs.lms.handler.MemberDeleteCommand;
-import com.eomcs.lms.handler.MemberDetailCommand;
-import com.eomcs.lms.handler.MemberListCommand;
-import com.eomcs.lms.handler.MemberUpdateCommand;
 import com.eomcs.lms.util.Prompt;
 
 public class ClientApp {
@@ -42,40 +19,9 @@ public class ClientApp {
   Deque<String> commandStack;
   Queue<String> commandQueue;
 
-  Connection con;
-
-  HashMap<String, Command> commandMap = new HashMap<>();
-
   public ClientApp() throws Exception {
     commandStack = new ArrayDeque<>();
     commandQueue = new LinkedList<>();
-
-    // DB 연결객체 준비
-    Class.forName("org.mariadb.jdbc.Driver");
-    con = DriverManager.getConnection("jdbc:mariadb://localhost:3306/studydb", "study", "1111");
-
-    BoardDao boardDao = new BoardDaoImpl(con);
-    MemberDao memberDao = new MemberDaoImpl(con);
-    LessonDao lessonDao = new LessonDaoImpl(con);
-
-    // DaoProxy 객체 준비
-    commandMap.put("/board/list", new BoardListCommand(boardDao));
-    commandMap.put("/board/add", new BoardAddCommand(boardDao, prompt));
-    commandMap.put("/board/detail", new BoardDetailCommand(boardDao, prompt));
-    commandMap.put("/board/update", new BoardUpdateCommand(boardDao, prompt));
-    commandMap.put("/board/delete", new BoardDeleteCommand(boardDao, prompt));
-
-    commandMap.put("/lesson/list", new LessonListCommand(lessonDao));
-    commandMap.put("/lesson/add", new LessonAddCommand(lessonDao, prompt));
-    commandMap.put("/lesson/detail", new LessonDetailCommand(lessonDao, prompt));
-    commandMap.put("/lesson/update", new LessonUpdateCommand(lessonDao, prompt));
-    commandMap.put("/lesson/delete", new LessonDeleteCommand(lessonDao, prompt));
-
-    commandMap.put("/member/list", new MemberListCommand(memberDao));
-    commandMap.put("/member/add", new MemberAddCommand(memberDao, prompt));
-    commandMap.put("/member/detail", new MemberDetailCommand(memberDao, prompt));
-    commandMap.put("/member/update", new MemberUpdateCommand(memberDao, prompt));
-    commandMap.put("/member/delete", new MemberDeleteCommand(memberDao, prompt));
   }
 
   public void service() {
@@ -103,21 +49,57 @@ public class ClientApp {
       processCommand(command);
     }
     keyboard.close();
-
-    try {
-      con.close();
-    } catch (Exception e) {
-    }
   }
 
   private void processCommand(String command) {
-    Command commandHandler = commandMap.get(command);
-    if (commandHandler == null) {
-      System.out.println("실행할 수 없는 입력입니다.");
-      return;
+    // 명령어 형식을 변경한다.
+    // 기존 방식 :
+    // 예) /board/list
+    // 새 방식
+    // 예) bitcamp://localhost/board/list
+    String host = null;
+    int port = 9999;
+    String servletPath = null;
+    // 명령어를 분석하여 서버주소, 포트번호, 실행시킬 작업명을 분리한다.
+    try {
+      if (!command.startsWith("bitcamp://")) {
+        throw new Exception("명령어 형식이 옳지 않습니다.");
+      }
+      String url = command.substring(10);
+      int index = url.indexOf("/");
+      String[] str = url.substring(0, index).split(":");
+      host = str[0];
+      if (str.length == 2) {
+        port = Integer.parseInt(str[1]);
+      }
+
+      servletPath = url.substring(index);
+    } catch (Exception e) {
+      System.out.println(e.getMessage());
     }
-    commandHandler.execute();
-    System.out.println("서버와 연결을 끊었음");
+
+    try (Socket socket = new Socket(host, port);
+        PrintStream out = new PrintStream(socket.getOutputStream());
+        Scanner in = new Scanner(socket.getInputStream())) {
+      // 서버에 명령을 보낸다.
+      out.println(servletPath);
+      out.flush();
+      while (true) {
+        String response = in.nextLine();
+        if (response.equals("!end!")) {
+          break;
+        } else if (response.equals("!{}!")) {
+          String input = prompt.inputString("");
+          out.println(input);
+          out.flush();
+        } else {
+          System.out.println(response);
+        }
+      }
+    } catch (Exception e) {
+      System.out.println(e.getMessage());
+    }
+
   }
 
   private void printCommandHistory(Iterator<String> command) {

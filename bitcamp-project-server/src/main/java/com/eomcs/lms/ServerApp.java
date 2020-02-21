@@ -1,13 +1,13 @@
 package com.eomcs.lms;
 
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.PrintStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Scanner;
 import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -34,14 +34,11 @@ import com.eomcs.lms.servlet.Servlet;
 
 public class ServerApp {
 
-  // 옵저버 관련 코드
   Set<ApplicationContextListener> listeners = new HashSet<>();
   Map<String, Object> context = new HashMap<>();
 
-  // 커맨드 디자인 패턴 관련 코드
   Map<String, Servlet> servletMap = new HashMap<>();
 
-  // 스레드 풀
   ExecutorService executorService = Executors.newCachedThreadPool();
 
   public void addApplicationContextListener(ApplicationContextListener listener) {
@@ -77,13 +74,13 @@ public class ServerApp {
     servletMap.put("/board/detail", new BoardDetailServlet(boardDao));
     servletMap.put("/board/update", new BoardUpdateServlet(boardDao));
     servletMap.put("/board/delete", new BoardDeleteServlet(boardDao));
-
+    //
     servletMap.put("/lesson/list", new LessonListServlet(lessonDao));
     servletMap.put("/lesson/add", new LessonAddServlet(lessonDao));
     servletMap.put("/lesson/detail", new LessonDetailServlet(lessonDao));
     servletMap.put("/lesson/update", new LessonUpdateServlet(lessonDao));
     servletMap.put("/lesson/delete", new LessonDeleteServlet(lessonDao));
-
+    //
     servletMap.put("/member/list", new MemberListServlet(memberDao));
     servletMap.put("/member/add", new MemberAddServlet(memberDao));
     servletMap.put("/member/detail", new MemberDetailServlet(memberDao));
@@ -118,16 +115,16 @@ public class ServerApp {
 
   int processRequest(Socket clientSocket) {
     try (Socket socket = clientSocket;
-        ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
-        ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream())) {
+        Scanner in = new Scanner(socket.getInputStream());
+        PrintStream out = new PrintStream(socket.getOutputStream())) {
 
       System.out.println("통신을 위한 입출력 스트림을 준비하였음!");
 
-      String request = in.readUTF();
+      String request = in.nextLine();
       System.out.println("클라이언트가 보낸 메시지를 수신하였음!");
+      System.out.printf("=> %s\n", request);
 
       if (request.equalsIgnoreCase("/server/stop")) {
-        quit(out);
         return 9;
       }
 
@@ -136,14 +133,16 @@ public class ServerApp {
         try {
           servlet.service(in, out);
         } catch (Exception e) {
-          out.writeUTF("FAIL");
-          out.writeUTF(e.getMessage());
+          out.println("요청 처리 중 오류 발생");
+          out.println(e.getMessage());
           System.out.println("클라이언트 요청 처리 중 오류발생");
           e.printStackTrace();
         }
       } else {
         notFount(out);
       }
+
+      out.println("!end!");
       out.flush();
       System.out.println("클라이언트에게 응답하였음");
     } catch (Exception e) {
@@ -154,13 +153,12 @@ public class ServerApp {
     return 0;
   }
 
-  private void notFount(ObjectOutputStream out) throws IOException {
-    out.writeUTF("FAIL");
-    out.writeUTF("요청한 명령을 처리할 수 없습니다");
+  private void notFount(PrintStream out) throws IOException {
+    out.println("요청한 명령을 처리할 수 없습니다");
   }
 
-  private void quit(ObjectOutputStream out) throws IOException {
-    out.writeUTF("OK");
+  private void quit(PrintStream out) throws IOException {
+    out.println("OK");
     out.flush();
   }
 

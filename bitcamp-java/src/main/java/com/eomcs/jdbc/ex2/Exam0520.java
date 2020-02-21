@@ -69,7 +69,7 @@ public class Exam0520 {
           "insert into x_board_file(file_path,board_id) values(?,?)")) {
         stmt2.setString(1, filename);
         stmt2.setInt(2, no);
-        stmt2.execute();
+        stmt2.executeUpdate();
         System.out.println("첨부파일 등록 완료!");
 
         // 트랜잭션 작업 승인 - 서버의 요청한 작업을 처리할 것을 명령한다.

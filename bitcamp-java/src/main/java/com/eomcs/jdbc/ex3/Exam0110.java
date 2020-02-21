@@ -31,6 +31,12 @@ public class Exam0110 {
       BoardDao boardDao = new BoardDao();
       int count = boardDao.insert(board);
       System.out.printf("%d 개 입력 성공!", count);
+
+      // 이렇게 DBMS 작업을 별도의 클래스로 분리하여 캡슐화하면
+      // 데이터 처리를 요구하는 쪽에서는
+      // 데이터의 구체적인 처리방식을 몰라도 되기 때문에
+      // 코드가 간결해진다.
+      // 또한 데이터 처리 방식이 바뀌더라도 영향을 받지 않는다.
     } catch (Exception e) {
       e.printStackTrace();
     }
