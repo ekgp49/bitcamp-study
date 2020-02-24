@@ -14,7 +14,7 @@ drop table if exists lms_photo;
 drop table if exists lms_photo_file;
 
 -- 수업 테이블 생성
-create table review (
+create table lesson (
   review_id int not null auto_increment primary key comment '리뷰 식별 번호', 
   name varchar(255) not null,
   customer varchar(255) not null,
