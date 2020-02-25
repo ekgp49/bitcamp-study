@@ -61,7 +61,7 @@ public class ClientApp {
     // 기존 방식 :
     // 예) /board/list
     // 새 방식
-    // 예) bitcamp://localhost/board/list
+    // 예) bitcamp://localhost/photoboard/list
     String host = null;
     int port = 9999;
     String servletPath = null;
