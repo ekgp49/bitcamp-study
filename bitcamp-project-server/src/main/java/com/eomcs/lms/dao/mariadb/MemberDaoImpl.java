@@ -1,164 +1,77 @@
 package com.eomcs.lms.dao.mariadb;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
 import com.eomcs.lms.dao.MemberDao;
 import com.eomcs.lms.domain.Member;
 import com.eomcs.sql.DataSource;
 
 public class MemberDaoImpl implements MemberDao {
   DataSource dataSource;
+  SqlSessionFactory sqlSessionFactory;
 
-  public MemberDaoImpl(DataSource dataSource) {
+  public MemberDaoImpl(DataSource dataSource, SqlSessionFactory sqlSessionFactory) {
     this.dataSource = dataSource;
+    this.sqlSessionFactory = sqlSessionFactory;
   }
 
   @Override
   public List<Member> findAll() throws Exception {
-    try (Connection con = dataSource.getConnection();
-        PreparedStatement stmt = con.prepareStatement(
-            "select member_id, name, email, pwd, photo, tel, cdt from lms_member");
-        ResultSet rs = stmt.executeQuery()) {
-
-      ArrayList<Member> list = new ArrayList<>();
-      while (rs.next()) {
-        Member member = new Member();
-        member.setNo(rs.getInt("member_id"));
-        member.setName(rs.getString("name"));
-        member.setEmail(rs.getString("email"));
-        member.setPassword(rs.getString("pwd"));
-        member.setPhoto(rs.getString("photo"));
-        member.setTel(rs.getString("tel"));
-        member.setRegisteredDate(rs.getDate("cdt"));
-        list.add(member);
-      }
-      return list;
+    try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
+      return sqlSession.selectList("MemberMapper.selectMember");
     }
   }
 
   @Override
   public int insert(Member member) throws Exception {
-    try (Connection con = dataSource.getConnection();
-        PreparedStatement stmt = con.prepareStatement(
-            "insert into lms_member(name, email, pwd, photo, tel) values(?, ?, password(?), ?, ?)")) {
-      stmt.setString(1, member.getName());
-      stmt.setString(2, member.getEmail());
-      stmt.setString(3, member.getPassword());
-      stmt.setString(4, member.getPhoto());
-      stmt.setString(5, member.getTel());
-
-      return stmt.executeUpdate();
+    try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
+      int count = sqlSession.insert("MemberMapper.insertMember", member);
+      sqlSession.commit();
+      return count;
     }
   }
 
   @Override
   public Member findByNo(int no) throws Exception {
-    try (Connection con = dataSource.getConnection();
-        PreparedStatement stmt =
-            con.prepareStatement("select member_id, name, email, pwd, photo, tel, cdt"//
-                + " from lms_member where member_id=?")) {
-      stmt.setInt(1, no);
-      try (ResultSet rs = stmt.executeQuery()) {
-        if (rs.next()) {
-          Member member = new Member();
-          member.setNo(rs.getInt("member_id"));
-          member.setName(rs.getString("name"));
-          member.setRegisteredDate(rs.getDate("cdt"));
-          member.setPassword(rs.getString("pwd"));
-          member.setEmail(rs.getString("email"));
-          member.setPhoto(rs.getString("photo"));
-          member.setTel(rs.getString("tel"));
-          return member;
-        } else {
-          return null;
-        }
-      }
+    try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
+      return sqlSession.selectOne("MemberMapper.detailMember", no);
     }
   }
 
   @Override
   public int update(Member member) throws Exception {
-    try (Connection con = dataSource.getConnection();
-        PreparedStatement stmt = con.prepareStatement(//
-            "update lms_member"//
-                + " set name = ?, email = ?, pwd = password(?), photo = ?, tel = ?"//
-                + " where member_id=?")) {
-      stmt.setString(1, member.getName());
-      stmt.setString(2, member.getEmail());
-      stmt.setString(3, member.getPassword());
-      stmt.setString(4, member.getPhoto());
-      stmt.setString(5, member.getTel());
-      stmt.setInt(6, member.getNo());
-      return stmt.executeUpdate();
+    try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
+      int count = sqlSession.update("MemberMapper.updateMember", member);
+      sqlSession.commit();
+      return count;
     }
   }
 
   @Override
   public int delete(int no) throws Exception {
-    try (Connection con = dataSource.getConnection();
-        PreparedStatement stmt = con.prepareStatement("delete from lms_member where member_id=?")) {
-      stmt.setInt(1, no);
-      return stmt.executeUpdate();
+    try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
+      int count = sqlSession.delete("MemberMapper.deleteMember", no);
+      sqlSession.commit();
+      return count;
     }
   }
 
   @Override
   public List<Member> findByKeyword(String keyword) throws Exception {
-    try (Connection con = dataSource.getConnection();
-        PreparedStatement stmt = con.prepareStatement(//
-            "select member_id, name, email, pwd, photo, tel, cdt from lms_member"
-                + " where name like ?"//
-                + " or email like ?"//
-                + " or tel like concat('%',?,'%')")) {
-      String str = "%" + keyword + "%";
-      stmt.setString(1, str);
-      stmt.setString(2, str);
-      stmt.setString(3, keyword);
-
-      try (ResultSet rs = stmt.executeQuery()) {
-        ArrayList<Member> list = new ArrayList<>();
-        while (rs.next()) {
-          Member member = new Member();
-          member.setNo(rs.getInt("member_id"));
-          member.setName(rs.getString("name"));
-          member.setEmail(rs.getString("email"));
-          member.setPassword(rs.getString("pwd"));
-          member.setPhoto(rs.getString("photo"));
-          member.setTel(rs.getString("tel"));
-          member.setRegisteredDate(rs.getDate("cdt"));
-          list.add(member);
-        }
-        return list;
-      }
+    try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
+      return sqlSession.selectList("MemberMapper.searchMemberByKeyword", keyword);
     }
-
   }
 
   @Override
   public Member findByEmailAndPassword(String email, String password) throws Exception {
-    try (Connection con = dataSource.getConnection();
-        PreparedStatement stmt = con
-            .prepareStatement("select * from lms_member where email = ? and pwd = password(?)")) {
-      stmt.setString(1, email);
-      stmt.setString(2, password);
-      try (ResultSet rs = stmt.executeQuery()) {
-        if (rs.next()) {
-          Member member = new Member();
-          member.setNo(rs.getInt("member_id"));
-          member.setName(rs.getString("name"));
-          member.setEmail(rs.getString("email"));
-          member.setPassword(rs.getString("pwd"));
-          member.setPhoto(rs.getString("photo"));
-          member.setTel(rs.getString("tel"));
-          member.setRegisteredDate(rs.getDate("cdt"));
-          return member;
-        } else {
-          return null;
-        }
-      }
+    try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
+      HashMap<String, Object> map = new HashMap<>();
+      map.put("email", email);
+      map.put("password", password);
+      return sqlSession.selectOne("MemberMapper.searchMemberByEmailAndPassword", map);
     }
   }
 

@@ -9,6 +9,8 @@ repositories {
 }
 
 dependencies {
+    // 마이바티스 프레임워크 라이브러리
+    implementation 'org.mybatis:mybatis:3.5.4'
     implementation 'org.mariadb.jdbc:mariadb-java-client:2.5.4'
     implementation 'com.google.guava:guava:28.0-jre'
     testImplementation 'junit:junit:4.12'

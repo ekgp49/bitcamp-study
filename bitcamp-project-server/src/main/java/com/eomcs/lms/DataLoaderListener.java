@@ -1,6 +1,10 @@
 package com.eomcs.lms;
 
+import java.io.InputStream;
 import java.util.Map;
+import org.apache.ibatis.io.Resources;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import com.eomcs.lms.context.ApplicationContextListener;
 import com.eomcs.lms.dao.mariadb.BoardDaoImpl;
 import com.eomcs.lms.dao.mariadb.LessonDaoImpl;
@@ -25,11 +29,16 @@ public class DataLoaderListener implements ApplicationContextListener {
       DataSource dataSource = new DataSource(jdbcUrl, username, password);
       context.put("dataSource", dataSource);
 
-      context.put("boardDao", new BoardDaoImpl(dataSource));
-      context.put("lessonDao", new LessonDaoImpl(dataSource));
-      context.put("memberDao", new MemberDaoImpl(dataSource));
-      context.put("photoBoardDao", new PhotoBoardDaoImpl(dataSource));
-      context.put("photoFileDao", new PhotoFileDaoImpl(dataSource));
+      // Mybatis 객체 준비.
+      InputStream inputStream =
+          Resources.getResourceAsStream("com/eomcs/lms/conf/mybatis-config.xml");
+      SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
+
+      context.put("boardDao", new BoardDaoImpl(dataSource, sqlSessionFactory));
+      context.put("lessonDao", new LessonDaoImpl(dataSource, sqlSessionFactory));
+      context.put("memberDao", new MemberDaoImpl(dataSource, sqlSessionFactory));
+      context.put("photoBoardDao", new PhotoBoardDaoImpl(dataSource, sqlSessionFactory));
+      context.put("photoFileDao", new PhotoFileDaoImpl(dataSource, sqlSessionFactory));
 
       // 트랜잭션 관리자 준비
       context.put("transactionManager", new PlatformTransactionManager(dataSource));

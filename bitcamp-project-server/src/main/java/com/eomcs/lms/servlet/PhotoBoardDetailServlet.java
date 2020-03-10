@@ -1,7 +1,6 @@
 package com.eomcs.lms.servlet;
 
 import java.io.PrintStream;
-import java.util.List;
 import java.util.Scanner;
 import com.eomcs.lms.dao.PhotoBoardDao;
 import com.eomcs.lms.dao.PhotoFileDao;
@@ -33,8 +32,7 @@ public class PhotoBoardDetailServlet implements Servlet {
       out.printf("수업번호: %d\n", photoBoard.getLesson().getNo());
       out.println("사진파일: ");
 
-      List<PhotoFile> list = photoFileDao.findAll(no);
-      for (PhotoFile photoFile : list) {
+      for (PhotoFile photoFile : photoBoard.getFiles()) {
         out.printf("> %s\n", photoFile.getFilepath());
       }
 
