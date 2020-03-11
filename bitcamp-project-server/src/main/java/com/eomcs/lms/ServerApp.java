@@ -11,6 +11,7 @@ import java.util.Scanner;
 import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import org.apache.ibatis.session.SqlSessionFactory;
 import com.eomcs.lms.context.ApplicationContextListener;
 import com.eomcs.lms.dao.BoardDao;
 import com.eomcs.lms.dao.LessonDao;
@@ -26,6 +27,7 @@ import com.eomcs.lms.servlet.LessonAddServlet;
 import com.eomcs.lms.servlet.LessonDeleteServlet;
 import com.eomcs.lms.servlet.LessonDetailServlet;
 import com.eomcs.lms.servlet.LessonListServlet;
+import com.eomcs.lms.servlet.LessonSearchServlet;
 import com.eomcs.lms.servlet.LessonUpdateServlet;
 import com.eomcs.lms.servlet.LoginServlet;
 import com.eomcs.lms.servlet.MemberAddServlet;
@@ -40,8 +42,8 @@ import com.eomcs.lms.servlet.PhotoBoardDetailServlet;
 import com.eomcs.lms.servlet.PhotoBoardListServlet;
 import com.eomcs.lms.servlet.PhotoBoardUpdateServlet;
 import com.eomcs.lms.servlet.Servlet;
-import com.eomcs.sql.DataSource;
 import com.eomcs.sql.PlatformTransactionManager;
+import com.eomcs.sql.SqlSessionFactoryProxy;
 
 public class ServerApp {
 
@@ -84,8 +86,8 @@ public class ServerApp {
     MemberDao memberDao = (MemberDao) context.get("memberDao");
     PhotoBoardDao photoBoardDao = (PhotoBoardDao) context.get("photoBoardDao");
     PhotoFileDao photoFileDao = (PhotoFileDao) context.get("photoFileDao");
+    SqlSessionFactory sqlSessionFactory = (SqlSessionFactory) context.get("sqlSessionFactory");
 
-    DataSource dataSource = (DataSource) context.get("dataSource");
     PlatformTransactionManager txManager =
         (PlatformTransactionManager) context.get("transactionManager");
 
@@ -100,6 +102,7 @@ public class ServerApp {
     servletMap.put("/lesson/detail", new LessonDetailServlet(lessonDao));
     servletMap.put("/lesson/update", new LessonUpdateServlet(lessonDao));
     servletMap.put("/lesson/delete", new LessonDeleteServlet(lessonDao));
+    servletMap.put("/lesson/search", new LessonSearchServlet(lessonDao));
     //
     servletMap.put("/auth/login", new LoginServlet(memberDao));
     servletMap.put("/member/list", new MemberListServlet(memberDao));
@@ -126,7 +129,9 @@ public class ServerApp {
 
         executorService.submit(() -> {
           processRequest(socket);
-          dataSource.removeConnection();
+
+          // 스레드에 보관된 sqlSession 객체를 제거한다.
+          ((SqlSessionFactoryProxy) sqlSessionFactory).closeSession();
           System.out.println("------------------------------------------------");
         });
 

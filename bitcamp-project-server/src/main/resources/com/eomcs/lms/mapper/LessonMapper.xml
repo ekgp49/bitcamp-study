@@ -16,16 +16,28 @@
     <result column="conts" property="description"/>
   </resultMap>
 
-  <select id="selectLesson" resultMap="LessonMap">
-	  select
-	    lesson_id,
-	    sdt,
-	    edt,
-	    tot_hr, 
-	    day_hr, 
-	    titl, 
-	    conts 
-	  from lms_lesson
+  <sql id="select1">
+   select
+      lesson_id,
+      sdt,
+      edt,
+      tot_hr, 
+      day_hr, 
+      titl, 
+      conts 
+  </sql>
+
+  <select id="selectLesson" resultMap="LessonMap" parameterType="map"> 
+  <!-- 이렇게 파라미터 넣어놓고 파라미터 안넣어줘도 됨 그러면 그냥 where이 실행안돼서 전체 데이터가 출력됨 -->
+	  <include refid="select1"/>
+	   from lms_lesson
+	   <where>
+	     <if test="title != null">titl like concat('%', #{title}, '%')</if>
+	     <if test="startDate != null">and sdt >= #{startDate}</if>
+	     <if test="endDate != null">and edt &lt;= #{endDate}</if>
+	     <if test="totalHours != null">and tot_hr &lt;= #{totalHours}</if>
+	     <if test="dayHours != null">and day_hr &lt;= #{dayHours}</if>
+	   </where>
   </select>
   
   <insert id="insertLesson" parameterType="Lesson">
@@ -48,27 +60,21 @@
   </delete>
   
   <select id="detailLesson" resultMap="LessonMap" parameterType="int">
-    select 
-      lesson_id, 
-      titl, 
-      conts, 
-      sdt,
-      edt, 
-      tot_hr, 
-      day_hr
-    from lms_lesson
+    <include refid="select1"/>
+     from lms_lesson
     where lesson_id=#{no}
   </select>
   
   <update id="updateLesson" parameterType="lesson">
     update lms_lesson
-    set
-      titl=#{title}, 
-      conts=#{description}, 
-      sdt=#{startDate}, 
-      edt=#{endDate}, 
-      tot_hr=#{totalHours}, 
-      day_hr=#{dayHours} 
+    <set>
+      <if test="title != null and title != ''">titl=#{title},</if>
+      <if test="description != null and description != ''">conts=#{description},</if>
+			<if test="startDate != null">sdt=#{startDate},</if>
+			<if test="endDate != null">edt=#{endDate},</if>
+			<if test="totalHours > 0">tot_hr=#{totalHours},</if>
+			<if test="dayHours > 0">day_hr=#{dayHours}</if>      
+    </set>
     where lesson_id=#{no}
   </update>
   
