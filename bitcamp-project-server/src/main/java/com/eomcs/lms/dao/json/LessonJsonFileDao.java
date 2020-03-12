@@ -10,22 +10,22 @@ public class LessonJsonFileDao extends AbstractJsonFileDao<Lesson> implements Le
     super(filename);
   }
 
-  @Override
+  // 서블릿 객체들이 데이터를 다룰 때 사용할 메서드를 정의한다.
   public int insert(Lesson lesson) throws Exception {
-    if (indexOf(lesson.getNo()) == -1) {
-      list.add(lesson);
-      saveData();
-      return 1;
+
+    if (indexOf(lesson.getNo()) > -1) { // 같은 번호의 수업이 있다면,
+      return 0;
     }
-    return 0;
+
+    list.add(lesson); // 새 수업을 등록한다.
+    saveData();
+    return 1;
   }
 
-  @Override
   public List<Lesson> findAll() throws Exception {
     return list;
   }
 
-  @Override
   public Lesson findByNo(int no) throws Exception {
     int index = indexOf(no);
     if (index == -1) {
@@ -34,23 +34,24 @@ public class LessonJsonFileDao extends AbstractJsonFileDao<Lesson> implements Le
     return list.get(index);
   }
 
-  @Override
   public int update(Lesson lesson) throws Exception {
     int index = indexOf(lesson.getNo());
+
     if (index == -1) {
       return 0;
     }
-    list.set(index, lesson);
+
+    list.set(index, lesson); // 기존 객체를 파라미터로 받은 객체로 바꾼다.
     saveData();
     return 1;
   }
 
-  @Override
   public int delete(int no) throws Exception {
     int index = indexOf(no);
     if (index == -1) {
       return 0;
     }
+
     list.remove(index);
     saveData();
     return 1;
@@ -66,3 +67,5 @@ public class LessonJsonFileDao extends AbstractJsonFileDao<Lesson> implements Le
     return -1;
   }
 }
+
+

@@ -8,17 +8,12 @@ import com.eomcs.lms.dao.MemberDao;
 import com.eomcs.lms.domain.Member;
 
 public class MemberDaoImpl implements MemberDao {
+
   SqlSessionFactory sqlSessionFactory;
 
-  public MemberDaoImpl(SqlSessionFactory sqlSessionFactory) {
+  public MemberDaoImpl( //
+      SqlSessionFactory sqlSessionFactory) {
     this.sqlSessionFactory = sqlSessionFactory;
-  }
-
-  @Override
-  public List<Member> findAll() throws Exception {
-    try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
-      return sqlSession.selectList("MemberMapper.selectMember");
-    }
   }
 
   @Override
@@ -30,9 +25,16 @@ public class MemberDaoImpl implements MemberDao {
   }
 
   @Override
+  public List<Member> findAll() throws Exception {
+    try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
+      return sqlSession.selectList("MemberMapper.selectMember");
+    }
+  }
+
+  @Override
   public Member findByNo(int no) throws Exception {
     try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
-      return sqlSession.selectOne("MemberMapper.detailMember", no);
+      return sqlSession.selectOne("MemberMapper.selectDetail", no);
     }
   }
 
@@ -55,18 +57,17 @@ public class MemberDaoImpl implements MemberDao {
   @Override
   public List<Member> findByKeyword(String keyword) throws Exception {
     try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
-      return sqlSession.selectList("MemberMapper.searchMemberByKeyword", keyword);
+      return sqlSession.selectList("MemberMapper.selectByKeyword", keyword);
     }
   }
 
   @Override
   public Member findByEmailAndPassword(String email, String password) throws Exception {
     try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
-      HashMap<String, Object> map = new HashMap<>();
-      map.put("email", email);
-      map.put("password", password);
-      return sqlSession.selectOne("MemberMapper.searchMemberByEmailAndPassword", map);
+      HashMap<String, Object> params = new HashMap<>();
+      params.put("email", email);
+      params.put("password", password);
+      return sqlSession.selectOne("MemberMapper.selectByEmailPassword", params);
     }
   }
-
 }

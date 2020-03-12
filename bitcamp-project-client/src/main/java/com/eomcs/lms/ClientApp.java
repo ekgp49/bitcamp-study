@@ -9,7 +9,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Scanner;
-import com.eomcs.lms.util.Prompt;
+import com.eomcs.util.Prompt;
 
 public class ClientApp {
 
@@ -29,9 +29,9 @@ public class ClientApp {
     while (true) {
       String command;
       command = prompt.inputString("\n명령> ");
-      if (command.length() == 0) {
+
+      if (command.length() == 0)
         continue;
-      }
 
       if (command.equals("history")) {
         printCommandHistory(commandStack.iterator());
@@ -39,7 +39,7 @@ public class ClientApp {
       } else if (command.equals("history2")) {
         printCommandHistory(commandQueue.iterator());
         continue;
-      } else if (command.equalsIgnoreCase("quit")) {
+      } else if (command.equals("quit")) {
         break;
       }
 
@@ -48,8 +48,11 @@ public class ClientApp {
 
       processCommand(command);
 
+      // 사용자가 서버에 종료를 요청했다면,
       if (command.endsWith("/server/stop")) {
-        // 임의요청 또보내기
+        // 서버는 다음 클라이언트 요청이 들어 올 때 처리할 것이다.
+        // 이를 즉시 처리하도록 하기 위해,
+        // 임의 요청을 한 번 더 보내자.
         processCommand(command);
       }
     }
@@ -57,38 +60,59 @@ public class ClientApp {
   }
 
   private void processCommand(String command) {
-    // 명령어 형식을 변경한다.
-    // 기존 방식 :
-    // 예) /board/list
-    // 새 방식
-    // 예) bitcamp://localhost/photoboard/list
+    // 명령어 형식을 변경!
+    // [기존 방식]
+    // => 예) /board/list
+    // [새 방식]
+    // => 예) bitcamp://서버주소:포트번호/board/list
+    //
     String host = null;
     int port = 9999;
     String servletPath = null;
-    // 명령어를 분석하여 서버주소, 포트번호, 실행시킬 작업명을 분리한다.
+
+    // 명령어를 분석하여 서버주소와 포트번호, 실행시킬 작업명을 분리한다.
     try {
       if (!command.startsWith("bitcamp://")) {
-        throw new Exception("명령어 형식이 옳지 않습니다.");
+        throw new Exception("명령어 형식이 옳지 않습니다!");
       }
+
+      // System.out.println(command);
+      // command 예) bitcamp://localhost:9999/board/list
+
       String url = command.substring(10);
-      int index = url.indexOf("/");
-      String[] str = url.substring(0, index).split(":");
+      // => localhost:9999/board/list
+
+      // System.out.println(url);
+
+      int index = url.indexOf('/'); // 14
+      String[] str = //
+          url.substring(0, index) // localhost:9999
+              .split(":"); // {"localhost", "9999"}
+
       host = str[0];
       if (str.length == 2) {
         port = Integer.parseInt(str[1]);
       }
+      // System.out.printf("=> %s:%d\n", host, port); // => localhost:9999
 
       servletPath = url.substring(index);
+      // System.out.printf("=> %s\n", servletPath); // => /board/list
+
     } catch (Exception e) {
       System.out.println(e.getMessage());
+      return;
     }
 
+    // 서버에 연결한다.
     try (Socket socket = new Socket(host, port);
         PrintStream out = new PrintStream(socket.getOutputStream());
         Scanner in = new Scanner(socket.getInputStream())) {
+
       // 서버에 명령을 보낸다.
       out.println(servletPath);
       out.flush();
+
+      // 서버의 응답을 읽어서 출력한다.
       while (true) {
         String response = in.nextLine();
         if (response.equals("!end!")) {
@@ -96,22 +120,23 @@ public class ClientApp {
         } else if (response.equals("!{}!")) {
           String input = prompt.inputString("");
           out.println(input);
-          out.flush();
         } else {
           System.out.println(response);
         }
       }
+
     } catch (Exception e) {
       System.out.println(e.getMessage());
     }
-
   }
 
-  private void printCommandHistory(Iterator<String> command) {
+  private void printCommandHistory(Iterator<String> iterator) {
     int count = 0;
-    while (command.hasNext()) {
-      System.out.println(command.next());
-      if (++count % 5 == 0 && command.hasNext()) {
+    while (iterator.hasNext()) {
+      System.out.println(iterator.next());
+      count++;
+
+      if ((count % 5) == 0) {
         String str = prompt.inputString(":");
         if (str.equalsIgnoreCase("q")) {
           break;
@@ -121,7 +146,7 @@ public class ClientApp {
   }
 
   public static void main(String[] args) throws Exception {
-    System.out.println("클라이언트 수업 관리 시스템 입니다.");
+    System.out.println("클라이언트 수업 관리 시스템입니다.");
 
     ClientApp app = new ClientApp();
     app.service();

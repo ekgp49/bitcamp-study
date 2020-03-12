@@ -12,7 +12,6 @@
     <typeAlias type="com.eomcs.lms.domain.PhotoBoard" alias="PhotoBoard"/>
     <typeAlias type="com.eomcs.lms.domain.PhotoFile" alias="PhotoFile"/>
   </typeAliases>
-  
 
   <environments default="development">
     <environment id="development">

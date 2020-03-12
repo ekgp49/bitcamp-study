@@ -11,7 +11,7 @@ public class Board implements Serializable {
   private String title;
   private Date date;
   private int viewCount;
-  public String writer;
+  private String writer;
 
   @Override
   public String toString() {
@@ -20,31 +20,33 @@ public class Board implements Serializable {
   }
 
   // CSV 포맷:
-  // - 번호,제목,등록일,조회수
+  // - 번호,제목,등록일,조회수,작성자
+  //
   public static Board valueOf(String csv) {
     String[] data = csv.split(",");
+
     Board board = new Board();
     board.setNo(Integer.parseInt(data[0]));
     board.setTitle(data[1]);
     board.setDate(Date.valueOf(data[2]));
     board.setViewCount(Integer.parseInt(data[3]));
+    board.setWriter(data[4]);
     return board;
   }
 
   public String toCsvString() {
-    return String.format("%d,%s,%s,%d", this.getNo(), this.getTitle(), this.getDate(),
-        this.getViewCount());
+    return String.format("%d,%s,%s,%d,%s", this.getNo(), this.getTitle(), this.getDate(),
+        this.getViewCount(), this.getWriter());
   }
 
   @Override
   public int hashCode() {
     final int prime = 31;
     int result = 1;
-    result = prime * result + (date == null ? 0 : date.hashCode());
     result = prime * result + no;
-    result = prime * result + (title == null ? 0 : title.hashCode());
+    result = prime * result + ((title == null) ? 0 : title.hashCode());
     result = prime * result + viewCount;
-    result = prime * result + (writer == null ? 0 : writer.hashCode());
+    result = prime * result + ((writer == null) ? 0 : writer.hashCode());
     return result;
   }
 
@@ -57,11 +59,6 @@ public class Board implements Serializable {
     if (getClass() != obj.getClass())
       return false;
     Board other = (Board) obj;
-    if (date == null) {
-      if (other.date != null)
-        return false;
-    } else if (!date.equals(other.date))
-      return false;
     if (no != other.no)
       return false;
     if (title == null) {
@@ -118,6 +115,5 @@ public class Board implements Serializable {
   public void setWriter(String writer) {
     this.writer = writer;
   }
-
 
 }

@@ -2,7 +2,7 @@ package com.eomcs.lms.domain;
 
 import java.io.Serializable;
 
-// 사진 게시글에 사진 첨부 파일의 데이터를 저장하는 클래스
+// 사진 게시글의 사진 첨부 파일 데이터를 저장하는 클래스
 public class PhotoFile implements Serializable {
   private static final long serialVersionUID = 1L;
 
@@ -21,7 +21,6 @@ public class PhotoFile implements Serializable {
     this(filepath, boardNo);
     this.no = no;
   }
-
 
   @Override
   public String toString() {
@@ -54,5 +53,6 @@ public class PhotoFile implements Serializable {
     this.boardNo = boardNo;
     return this;
   }
+
 
 }

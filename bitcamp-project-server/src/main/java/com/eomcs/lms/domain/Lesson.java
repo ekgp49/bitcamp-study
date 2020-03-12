@@ -3,27 +3,32 @@ package com.eomcs.lms.domain;
 import java.io.Serializable;
 import java.sql.Date;
 
+// 객체를 serialize 하려면 이 기능을 활성화시켜야 한다.
+// - java.io.Serializable을 구현하라!
+// - serialize 데이터를 구분하기 위해 버전 번호를 명시하라.
+//
 public class Lesson implements Serializable {
 
-  private static final long serialVersionUID = 20200130L;
+  private static final long serialVersionUID = 20200131L;
 
+  private int no;
   private String title;
   private String description;
   private Date startDate;
   private Date endDate;
   private int totalHours;
   private int dayHours;
-  private int no;
 
   @Override
   public String toString() {
-    return "Lesson [title=" + title + ", description=" + description + ", startDate=" + startDate
-        + ", endDate=" + endDate + ", totalHours=" + totalHours + ", dayHours=" + dayHours + ", no="
-        + no + "]";
+    return "Lesson [no=" + no + ", title=" + title + ", description=" + description + ", startDate="
+        + startDate + ", endDate=" + endDate + ", totalHours=" + totalHours + ", dayHours="
+        + dayHours + "]";
   }
 
   public static Lesson valueOf(String csv) {
     String[] data = csv.split(",");
+
     Lesson lesson = new Lesson();
     lesson.setNo(Integer.parseInt(data[0]));
     lesson.setTitle(data[1]);
@@ -32,6 +37,7 @@ public class Lesson implements Serializable {
     lesson.setEndDate(Date.valueOf(data[4]));
     lesson.setTotalHours(Integer.parseInt(data[5]));
     lesson.setDayHours(Integer.parseInt(data[6]));
+
     return lesson;
   }
 
@@ -42,28 +48,63 @@ public class Lesson implements Serializable {
   }
 
   @Override
+  public int hashCode() {
+    final int prime = 31;
+    int result = 1;
+    result = prime * result + dayHours;
+    result = prime * result + ((description == null) ? 0 : description.hashCode());
+    result = prime * result + ((endDate == null) ? 0 : endDate.hashCode());
+    result = prime * result + no;
+    result = prime * result + ((startDate == null) ? 0 : startDate.hashCode());
+    result = prime * result + ((title == null) ? 0 : title.hashCode());
+    result = prime * result + totalHours;
+    return result;
+  }
+
+  @Override
   public boolean equals(Object obj) {
-    if (obj.getClass() != Lesson.class)
+    if (this == obj)
+      return true;
+    if (obj == null)
       return false;
-
+    if (getClass() != obj.getClass())
+      return false;
     Lesson other = (Lesson) obj;
-
-    if (this.no != other.no)
+    if (dayHours != other.dayHours)
       return false;
-    if (!this.title.equals(other.title))
+    if (description == null) {
+      if (other.description != null)
+        return false;
+    } else if (!description.equals(other.description))
       return false;
-    if (!this.description.equals(other.description))
+    if (endDate == null) {
+      if (other.endDate != null)
+        return false;
+    } else if (!endDate.equals(other.endDate))
       return false;
-    if (this.startDate.compareTo(other.startDate) != 0)
+    if (no != other.no)
       return false;
-    if (this.endDate.compareTo(other.endDate) != 0)
+    if (startDate == null) {
+      if (other.startDate != null)
+        return false;
+    } else if (!startDate.equals(other.startDate))
       return false;
-    if (this.totalHours != other.totalHours)
+    if (title == null) {
+      if (other.title != null)
+        return false;
+    } else if (!title.equals(other.title))
       return false;
-    if (this.dayHours != other.dayHours)
+    if (totalHours != other.totalHours)
       return false;
-
     return true;
+  }
+
+  public int getNo() {
+    return no;
+  }
+
+  public void setNo(int no) {
+    this.no = no;
   }
 
   public String getTitle() {
@@ -113,12 +154,6 @@ public class Lesson implements Serializable {
   public void setDayHours(int dayHours) {
     this.dayHours = dayHours;
   }
-
-  public void setNo(int no) {
-    this.no = no;
-  }
-
-  public int getNo() {
-    return no;
-  }
 }
+
+

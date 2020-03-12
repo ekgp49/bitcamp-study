@@ -6,6 +6,10 @@ import java.util.List;
 import com.eomcs.lms.dao.LessonDao;
 import com.eomcs.lms.domain.Lesson;
 
+// 프록시 객체는 항상 작업 객체와 동일한 인터페이스를 구현해야 한다.
+// => 마치 자신이 작업 객체인양 보이기 위함이다.
+// => LessonDao 작업 객체를 대행할 프록시를 정의한다.
+//
 public class LessonDaoProxy implements LessonDao {
 
   ObjectInputStream in;
@@ -16,33 +20,30 @@ public class LessonDaoProxy implements LessonDao {
     this.out = out;
   }
 
-  @SuppressWarnings("unchecked")
-  @Override
-  public List<Lesson> findAll() throws Exception {
-    out.writeUTF("/lesson/list");
-    out.flush();
-
-    String response = in.readUTF();
-    if (response.equals("FAIL")) {
-      throw new Exception(in.readUTF());
-    }
-
-    return (List<Lesson>) in.readObject();
-  }
-
   @Override
   public int insert(Lesson lesson) throws Exception {
     out.writeUTF("/lesson/add");
     out.writeObject(lesson);
     out.flush();
-    String response = in.readUTF();
 
+    String response = in.readUTF();
     if (response.equals("FAIL")) {
       throw new Exception(in.readUTF());
     }
-    System.out.println("저장하였습니다.");
 
     return 1;
+  }
+
+  @SuppressWarnings("unchecked")
+  @Override
+  public List<Lesson> findAll() throws Exception {
+    out.writeUTF("/lesson/list");
+    out.flush();
+    String response = in.readUTF();
+    if (response.equals("FAIL")) {
+      throw new Exception(in.readUTF());
+    }
+    return (List<Lesson>) in.readObject();
   }
 
   @Override
@@ -55,7 +56,6 @@ public class LessonDaoProxy implements LessonDao {
     if (response.equals("FAIL")) {
       throw new Exception(in.readUTF());
     }
-
     return (Lesson) in.readObject();
   }
 
@@ -77,11 +77,12 @@ public class LessonDaoProxy implements LessonDao {
     out.writeUTF("/lesson/delete");
     out.writeInt(no);
     out.flush();
-    if (in.readUTF().equals("FAIL")) {
+
+    String response = in.readUTF();
+    if (response.equals("FAIL")) {
       throw new Exception(in.readUTF());
     }
-    System.out.println(in.readUTF());
-    return 0;
+    return 1;
   }
 
 }

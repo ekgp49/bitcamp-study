@@ -9,15 +9,17 @@ public class MemberObjectFileDao extends AbstractObjectFileDao<Member> implement
     super(filename);
   }
 
+  // 서블릿 객체들이 데이터를 다룰 때 사용할 메서드를 정의한다.
   @Override
   public int insert(Member member) throws Exception {
-    if (indexOf(member.getNo()) == -1) {
-      list.add(member);
-      saveData();
-      return 1;
+
+    if (indexOf(member.getNo()) > -1) { // 같은 번호의 회원이 있다면,
+      return 0;
     }
 
-    return 0;
+    list.add(member); // 새 회원을 등록한다.
+    saveData();
+    return 1;
   }
 
   @Override
@@ -37,10 +39,12 @@ public class MemberObjectFileDao extends AbstractObjectFileDao<Member> implement
   @Override
   public int update(Member member) throws Exception {
     int index = indexOf(member.getNo());
+
     if (index == -1) {
       return 0;
     }
-    list.set(index, member);
+
+    list.set(index, member); // 기존 객체를 파라미터로 받은 객체로 바꾼다.
     saveData();
     return 1;
   }
@@ -51,6 +55,7 @@ public class MemberObjectFileDao extends AbstractObjectFileDao<Member> implement
     if (index == -1) {
       return 0;
     }
+
     list.remove(index);
     saveData();
     return 1;
@@ -65,5 +70,6 @@ public class MemberObjectFileDao extends AbstractObjectFileDao<Member> implement
     }
     return -1;
   }
-
 }
+
+

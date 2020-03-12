@@ -15,18 +15,18 @@ public class PhotoBoard implements Serializable {
   Lesson lesson;
   List<PhotoFile> files;
 
+  @Override
+  public String toString() {
+    return "PhotoBoard [no=" + no + ", title=" + title + ", createdDate=" + createdDate
+        + ", viewCount=" + viewCount + ", lesson=" + lesson + ", files=" + files + "]";
+  }
+
   public List<PhotoFile> getFiles() {
     return files;
   }
 
   public void setFiles(List<PhotoFile> files) {
     this.files = files;
-  }
-
-  @Override
-  public String toString() {
-    return "PhotoBoard [no=" + no + ", title=" + title + ", createdDate=" + createdDate
-        + ", viewCount=" + viewCount + ", lesson=" + lesson + "]";
   }
 
   public Lesson getLesson() {

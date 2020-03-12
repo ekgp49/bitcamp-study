@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="MemberMapper">
+
+  <resultMap type="Member" id="MemberMap">
+    <id column="member_id" property="no"/>
+    <result column="name" property="name"/>
+    <result column="email" property="email"/>
+    <result column="pwd" property="password"/>
+    <result column="photo" property="photo"/>
+    <result column="tel" property="tel"/>
+    <result column="cdt" property="registeredDate"/>
+  </resultMap>
+
+  <sql id="select1">
+   select 
+     member_id, 
+     name, 
+     email, 
+     tel, 
+  </sql>
+
+  <select id="selectMember" resultMap="MemberMap">
+	  <include refid="select1"/>
+	   pwd, 
+	   photo, 
+	   cdt 
+	  from lms_member
+  </select>
+  
+  <insert id="insertMember" parameterType="member">
+    insert 
+    into lms_member(
+	    name, 
+	    email, 
+	    pwd, 
+	    photo, 
+	    tel
+    ) 
+    values(
+      #{name}, #{email}, password(#{password}), #{photo}, #{tel}
+    )
+  </insert>
+  
+  <delete id="deleteMember" parameterType="int">
+    delete 
+     from
+      lms_member
+     where
+      member_id=#{no}
+  </delete>
+  
+  <select id="detailMember" resultMap="MemberMap" parameterType="int">
+    <include refid="select1"/>
+      pwd, 
+      photo, 
+      cdt
+    from
+      lms_member
+    where
+      member_id=#{no}
+  </select>
+  
+  <update id="updateMember" parameterType="member">
+    update
+      lms_member
+    <set>
+		  <if test="name != null and name != ''">name=#{name},</if> 
+	    <if test="email != null and email != ''">email=#{email},</if> 
+		  <if test="password != null and password != ''">pwd=password(#{password}), </if> 
+	    <if test="photo != null and photo != ''">photo=#{photo}, </if> 
+	    <if test="tel != null and tel != ''">tel=#{tel},</if> 
+    </set> 
+    where member_id = #{no}
+  </update>
+  
+  <select id="searchMemberByKeyword" resultMap="MemberMap" parameterType="string">
+    <include refid="select1"/>
+      pwd, 
+      photo, 
+      cdt
+    from
+      lms_member
+    where 1=0
+      <if test="name != null">or name like concat('%', #{keyword}, '%')</if>
+      <if test="email != null">or email like concat('%', #{keyword}, '%')</if>
+      <if test="tel != null">or tel like concat('%', #{keyword}, '%')</if>
+  </select>
+  
+  <select id="searchMemberByEmailAndPassword" resultMap="MemberMap" parameterType="map">
+   <include refid="select1"/>
+      pwd, 
+      photo, 
+      cdt
+    from
+      lms_member
+    where
+      email = #{email}
+      and pwd = password(#{password})
+  </select>
+  
+</mapper>
+
+
+
+
+

@@ -11,3 +11,5 @@ public interface PhotoFileDao {
 
   int deleteAll(int boardNo) throws Exception;
 }
+
+

@@ -7,39 +7,43 @@ import com.eomcs.lms.dao.PhotoBoardDao;
 import com.eomcs.lms.domain.PhotoBoard;
 
 public class PhotoBoardDaoImpl implements PhotoBoardDao {
+
   SqlSessionFactory sqlSessionFactory;
 
-  public PhotoBoardDaoImpl(SqlSessionFactory sqlSessionFactory) {
+  public PhotoBoardDaoImpl( //
+      SqlSessionFactory sqlSessionFactory) {
     this.sqlSessionFactory = sqlSessionFactory;
-  }
-
-
-  @Override
-  public List<PhotoBoard> findAllByLessonNo(int lessonNo) throws Exception {
-    try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
-      return sqlSession.selectList("PhotoBoardMapper.selectPhotoBoard", lessonNo);
-    }
   }
 
   @Override
   public int insert(PhotoBoard photoBoard) throws Exception {
     try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
-      int count = sqlSession.insert("PhotoBoardMapper.insertPhotoBoard", photoBoard);
+      int count = sqlSession.insert(//
+          "PhotoBoardMapper.insertPhotoBoard", photoBoard);
       return count;
+    }
+  }
+
+  @Override
+  public List<PhotoBoard> findAllByLessonNo(int lessonNo) throws Exception {
+    try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
+      return sqlSession.selectList(//
+          "PhotoBoardMapper.selectPhotoBoard", lessonNo);
     }
   }
 
   @Override
   public PhotoBoard findByNo(int no) throws Exception {
     try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
-      return sqlSession.selectOne("PhotoBoardMapper.detailPhotoBoard", no);
+      return sqlSession.selectOne("PhotoBoardMapper.selectDetail", no);
     }
   }
 
   @Override
   public int update(PhotoBoard photoBoard) throws Exception {
     try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
-      int count = sqlSession.update("PhotoBoardMapper.updatePhotoBoard", photoBoard);
+      int count = sqlSession.update(//
+          "PhotoBoardMapper.updatePhotoBoard", photoBoard);
       return count;
     }
   }

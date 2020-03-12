@@ -6,6 +6,9 @@ import java.util.List;
 import com.eomcs.lms.dao.BoardDao;
 import com.eomcs.lms.domain.Board;
 
+// 프록시 객체는 항상 작업 객체와 동일한 인터페이스를 구현해야 한다.
+// => 마치 자신이 작업 객체인양 보이기 위함이다.
+//
 public class BoardDaoProxy implements BoardDao {
 
   ObjectInputStream in;
@@ -16,31 +19,30 @@ public class BoardDaoProxy implements BoardDao {
     this.out = out;
   }
 
-  @SuppressWarnings("unchecked")
-  @Override
-  public List<Board> findAll() throws Exception {
-    out.writeUTF("/board/list");
-    out.flush();
-
-    String response = in.readUTF();
-    if (response.equals("FAIL")) {
-      throw new Exception(in.readUTF());
-    }
-
-    return (List<Board>) in.readObject();
-  }
-
   @Override
   public int insert(Board board) throws Exception {
     out.writeUTF("/board/add");
     out.writeObject(board);
     out.flush();
-    String response = in.readUTF();
 
+    String response = in.readUTF();
     if (response.equals("FAIL")) {
       throw new Exception(in.readUTF());
     }
+
     return 1;
+  }
+
+  @SuppressWarnings("unchecked")
+  @Override
+  public List<Board> findAll() throws Exception {
+    out.writeUTF("/board/list");
+    out.flush();
+    String response = in.readUTF();
+    if (response.equals("FAIL")) {
+      throw new Exception(in.readUTF());
+    }
+    return (List<Board>) in.readObject();
   }
 
   @Override
@@ -53,7 +55,6 @@ public class BoardDaoProxy implements BoardDao {
     if (response.equals("FAIL")) {
       throw new Exception(in.readUTF());
     }
-
     return (Board) in.readObject();
   }
 
@@ -75,11 +76,12 @@ public class BoardDaoProxy implements BoardDao {
     out.writeUTF("/board/delete");
     out.writeInt(no);
     out.flush();
-    if (in.readUTF().equals("FAIL")) {
+
+    String response = in.readUTF();
+    if (response.equals("FAIL")) {
       throw new Exception(in.readUTF());
     }
-    System.out.println(in.readUTF());
-    return 0;
+    return 1;
   }
 
 }

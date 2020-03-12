@@ -3,6 +3,10 @@ package com.eomcs.lms.domain;
 import java.io.Serializable;
 import java.sql.Date;
 
+// 객체를 serialize 하려면 이 기능을 활성화시켜야 한다.
+// - java.io.Serializable을 구현하라!
+// - serialize 데이터를 구분하기 위해 버전 번호를 명시하라.
+//
 public class Member implements Serializable {
 
   private static final long serialVersionUID = 20200131L;
@@ -23,6 +27,7 @@ public class Member implements Serializable {
 
   public static Member valueOf(String csv) {
     String[] data = csv.split(",");
+
     Member member = new Member();
     member.setNo(Integer.parseInt(data[0]));
     member.setName(data[1]);
@@ -31,6 +36,7 @@ public class Member implements Serializable {
     member.setPhoto(data[4]);
     member.setTel(data[5]);
     member.setRegisteredDate(Date.valueOf(data[6]));
+
     return member;
   }
 
@@ -39,17 +45,18 @@ public class Member implements Serializable {
         this.getPassword(), this.getPhoto(), this.getTel(), this.getRegisteredDate());
   }
 
+
   @Override
   public int hashCode() {
     final int prime = 31;
     int result = 1;
-    result = prime * result + (email == null ? 0 : email.hashCode());
-    result = prime * result + (name == null ? 0 : name.hashCode());
+    result = prime * result + ((email == null) ? 0 : email.hashCode());
+    result = prime * result + ((name == null) ? 0 : name.hashCode());
     result = prime * result + no;
-    result = prime * result + (password == null ? 0 : password.hashCode());
-    result = prime * result + (photo == null ? 0 : photo.hashCode());
-    result = prime * result + (registeredDate == null ? 0 : registeredDate.hashCode());
-    result = prime * result + (tel == null ? 0 : tel.hashCode());
+    result = prime * result + ((password == null) ? 0 : password.hashCode());
+    result = prime * result + ((photo == null) ? 0 : photo.hashCode());
+    result = prime * result + ((registeredDate == null) ? 0 : registeredDate.hashCode());
+    result = prime * result + ((tel == null) ? 0 : tel.hashCode());
     return result;
   }
 

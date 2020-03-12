@@ -2,15 +2,16 @@ package com.eomcs.lms.servlet;
 
 import java.io.PrintStream;
 import java.util.Scanner;
-import com.eomcs.lms.dao.MemberDao;
 import com.eomcs.lms.domain.Member;
+import com.eomcs.lms.service.MemberService;
 import com.eomcs.util.Prompt;
 
 public class MemberAddServlet implements Servlet {
-  MemberDao memberDao;
 
-  public MemberAddServlet(MemberDao memberDao) {
-    this.memberDao = memberDao;
+  MemberService memberService;
+
+  public MemberAddServlet(MemberService memberService) {
+    this.memberService = memberService;
   }
 
   @Override
@@ -22,10 +23,11 @@ public class MemberAddServlet implements Servlet {
     member.setPhoto(Prompt.getString(in, out, "사진? "));
     member.setTel(Prompt.getString(in, out, "전화? "));
 
-    if (memberDao.insert(member) > 0) {
-      out.println("새 회원을 등록했습니다.");
+    if (memberService.add(member) > 0) {
+      out.println("회원을 저장했습니다.");
+
     } else {
-      out.println("등록 실패했습니다.");
+      out.println("저장에 실패했습니다.");
     }
   }
 }
