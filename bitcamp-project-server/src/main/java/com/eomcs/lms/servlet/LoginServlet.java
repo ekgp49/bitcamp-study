@@ -1,6 +1,7 @@
 package com.eomcs.lms.servlet;
 
 import java.io.PrintStream;
+import java.util.HashMap;
 import java.util.Scanner;
 import com.eomcs.lms.domain.Member;
 import com.eomcs.lms.service.MemberService;
@@ -19,7 +20,11 @@ public class LoginServlet implements Servlet {
     String email = Prompt.getString(in, out, "이메일? ");
     String password = Prompt.getString(in, out, "암호? ");
 
-    Member member = memberService.get(email, password);
+    HashMap<String, Object> params = new HashMap<>();
+    params.put("email", email);
+    params.put("password", password);
+
+    Member member = memberService.get(params);
 
     if (member != null) {
       out.printf("'%s'님 환영합니다.\n", member.getName());

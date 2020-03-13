@@ -1,6 +1,7 @@
 package com.eomcs.lms.service.impl;
 
 import java.util.List;
+import java.util.Map;
 import com.eomcs.lms.dao.MemberDao;
 import com.eomcs.lms.domain.Member;
 import com.eomcs.lms.service.MemberService;
@@ -34,8 +35,8 @@ public class MemberServiceImpl implements MemberService {
   }
 
   @Override
-  public Member get(String email, String password) throws Exception {
-    return memberDao.findByEmailAndPassword(email, password);
+  public Member get(Map<String, Object> params) throws Exception {
+    return memberDao.findByEmailAndPassword(params);
   }
 
   @Override

@@ -1,6 +1,7 @@
 package com.eomcs.lms.service;
 
 import java.util.List;
+import java.util.Map;
 import com.eomcs.lms.domain.Member;
 
 public interface MemberService {
@@ -13,7 +14,7 @@ public interface MemberService {
 
   Member get(int no) throws Exception;
 
-  Member get(String email, String password) throws Exception;
+  Member get(Map<String, Object> params) throws Exception;
 
   List<Member> search(String keyword) throws Exception;
 

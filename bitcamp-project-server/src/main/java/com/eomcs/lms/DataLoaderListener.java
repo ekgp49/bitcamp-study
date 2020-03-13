@@ -11,15 +11,11 @@ import com.eomcs.lms.dao.LessonDao;
 import com.eomcs.lms.dao.MemberDao;
 import com.eomcs.lms.dao.PhotoBoardDao;
 import com.eomcs.lms.dao.PhotoFileDao;
-import com.eomcs.lms.dao.mariadb.BoardDaoImpl;
-import com.eomcs.lms.dao.mariadb.LessonDaoImpl;
-import com.eomcs.lms.dao.mariadb.MemberDaoImpl;
-import com.eomcs.lms.dao.mariadb.PhotoBoardDaoImpl;
-import com.eomcs.lms.dao.mariadb.PhotoFileDaoImpl;
-import com.eomcs.lms.service.impl.BoardServiceImpl;
-import com.eomcs.lms.service.impl.LessonServiceImpl;
+import com.eomcs.lms.service.impl.BoardServiceImpl2;
+import com.eomcs.lms.service.impl.LessonServiceImpl2;
 import com.eomcs.lms.service.impl.MemberServiceImpl;
 import com.eomcs.lms.service.impl.PhotoBoardServiceImpl;
+import com.eomcs.sql.MyBatisDaoFactory;
 import com.eomcs.sql.PlatformTransactionManager;
 import com.eomcs.sql.SqlSessionFactoryProxy;
 
@@ -41,22 +37,25 @@ public class DataLoaderListener implements ApplicationContextListener {
           new SqlSessionFactoryBuilder().build(inputStream));
       context.put("sqlSessionFactory", sqlSessionFactory);
 
+      // DAO 프록시 객체를 생성해줄 팩토리를 준비
+      MyBatisDaoFactory daoFactory = new MyBatisDaoFactory(sqlSessionFactory);
+
       // 서비스 객체가 사용할 DAO를 준비한다.
-      LessonDao lessonDao = new LessonDaoImpl(sqlSessionFactory);
-      BoardDao boardDao = new BoardDaoImpl(sqlSessionFactory);
-      MemberDao memberDao = new MemberDaoImpl(sqlSessionFactory);
-      PhotoBoardDao photoBoardDao = new PhotoBoardDaoImpl(sqlSessionFactory);
-      PhotoFileDao photoFileDao = new PhotoFileDaoImpl(sqlSessionFactory);
+      LessonDao lessonDao = daoFactory.createDao(LessonDao.class);
+      BoardDao boardDao = daoFactory.createDao(BoardDao.class);
+      MemberDao memberDao = daoFactory.createDao(MemberDao.class);
+      PhotoBoardDao photoBoardDao = daoFactory.createDao(PhotoBoardDao.class);
+      PhotoFileDao photoFileDao = daoFactory.createDao(PhotoFileDao.class);
 
       // 트랜잭션 관리자 준비
       PlatformTransactionManager txManager = new PlatformTransactionManager(//
           sqlSessionFactory);
 
       // 서블릿에서 사용할 서비스 객체를 준비한다.
-      context.put("lessonService", new LessonServiceImpl(lessonDao));
+      context.put("lessonService", new LessonServiceImpl2(sqlSessionFactory));
       context.put("photoBoardService", //
           new PhotoBoardServiceImpl(txManager, photoBoardDao, photoFileDao));
-      context.put("boardService", new BoardServiceImpl(boardDao));
+      context.put("boardService", new BoardServiceImpl2(sqlSessionFactory));
       context.put("memberService", new MemberServiceImpl(memberDao));
 
     } catch (Exception e) {

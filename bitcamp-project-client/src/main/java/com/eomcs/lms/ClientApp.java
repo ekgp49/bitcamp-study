@@ -9,7 +9,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Scanner;
-import com.eomcs.util.Prompt;
+import com.eomcs.lms.util.Prompt;
 
 public class ClientApp {
 
@@ -136,7 +136,7 @@ public class ClientApp {
       System.out.println(iterator.next());
       count++;
 
-      if ((count % 5) == 0) {
+      if (count % 5 == 0) {
         String str = prompt.inputString(":");
         if (str.equalsIgnoreCase("q")) {
           break;
