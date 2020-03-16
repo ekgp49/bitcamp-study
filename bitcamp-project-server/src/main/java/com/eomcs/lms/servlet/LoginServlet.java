@@ -5,8 +5,10 @@ import java.util.HashMap;
 import java.util.Scanner;
 import com.eomcs.lms.domain.Member;
 import com.eomcs.lms.service.MemberService;
+import com.eomcs.util.Component;
 import com.eomcs.util.Prompt;
 
+@Component("/auth/login")
 public class LoginServlet implements Servlet {
 
   MemberService memberService;
