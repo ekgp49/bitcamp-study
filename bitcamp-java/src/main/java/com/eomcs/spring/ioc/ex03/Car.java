@@ -9,14 +9,15 @@ public class Car {
     System.out.println("Car() 생성자 호출됨!");
   }
 
-  public Car(String model) {
-    System.out.println("Car(String) 생성자 호출됨!");
-    this.model = model;
-  }
 
   public Car(int cc) {
     System.out.println("Car(int) 생성자 호출됨!");
     this.cc = cc;
+  }
+
+  public Car(String model) {
+    System.out.println("Car(String) 생성자 호출됨!");
+    this.model = model;
   }
 
   public Car(int cc, String model) {
