@@ -2,6 +2,8 @@ package com.eomcs.lms;
 
 import java.lang.reflect.Method;
 import java.util.Map;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Component;
@@ -16,6 +18,8 @@ import com.eomcs.util.RequestMappingHandlerMapping;
 //
 public class ContextLoaderListener implements ApplicationContextListener {
 
+  static Logger logger = LogManager.getLogger(ContextLoaderListener.class);
+
   @Override
   public void contextInitialized(Map<String, Object> context) {
 
@@ -25,7 +29,7 @@ public class ContextLoaderListener implements ApplicationContextListener {
 
       context.put("iocContainer", appCtx);
       printBeans(appCtx);
-
+      logger.debug("----------------------------------------------");
       // @ComponentAnnotation이 붙은 객체 찾기
       RequestMappingHandlerMapping handlerMapper = new RequestMappingHandlerMapping();
       String[] beanNames = appCtx.getBeanNamesForAnnotation(Component.class);
@@ -47,10 +51,10 @@ public class ContextLoaderListener implements ApplicationContextListener {
 
   private void printBeans(ApplicationContext appCtx) {
     String[] beanNames = appCtx.getBeanDefinitionNames();
-    System.out.println("Spring IoC 컨테이너에 들어있는 객체");
+    logger.debug("Spring IoC 컨테이너에 들어있는 객체");
     for (String beanName : beanNames) {
-      System.out.printf("%s ===========> %s\n", beanName,
-          appCtx.getBean(beanName).getClass().getName());
+      logger.debug(String.format("%s ===========> %s", beanName,
+          appCtx.getBean(beanName).getClass().getName()));
     }
 
   }

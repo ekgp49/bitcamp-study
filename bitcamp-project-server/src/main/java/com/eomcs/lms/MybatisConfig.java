@@ -2,6 +2,8 @@ package com.eomcs.lms;
 
 import javax.sql.DataSource;
 import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.ApplicationContext;
@@ -12,9 +14,10 @@ import org.springframework.context.annotation.Configuration;
 @MapperScan("com.eomcs.lms.dao")
 @Configuration
 public class MybatisConfig {
+  static Logger logger = LogManager.getLogger(MybatisConfig.class);
 
   public MybatisConfig() {
-    System.out.println("MybatisConfig 객체 생성!");
+    logger.debug("MybatisConfig 객체 생성!");
   }
 
   @Bean
