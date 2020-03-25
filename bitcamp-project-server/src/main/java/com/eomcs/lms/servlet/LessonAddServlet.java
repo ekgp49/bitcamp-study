@@ -1,11 +1,13 @@
 package com.eomcs.lms.servlet;
 
 import java.io.PrintStream;
-import java.util.Scanner;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.sql.Date;
+import java.util.Map;
 import org.springframework.stereotype.Component;
 import com.eomcs.lms.domain.Lesson;
 import com.eomcs.lms.service.LessonService;
-import com.eomcs.util.Prompt;
 import com.eomcs.util.RequestMapping;
 
 
@@ -18,22 +20,60 @@ public class LessonAddServlet {
     this.lessonService = lessonService;
   }
 
+
   @RequestMapping("/lesson/add")
-  public void service(Scanner in, PrintStream out) throws Exception {
+  public void service(Map<String, String> params, PrintStream out) throws Exception {
     Lesson lesson = new Lesson();
+    for (Field field : Lesson.class.getDeclaredFields()) {
+      for (String key : params.keySet()) {
+        System.out.printf("필드명:%s, 키명:%s\n", field.getName(), key);
+        if (field.getName().equals(key)) {
+          System.out.println("같으면 메서드를 찾고 타입별로 매치시킨다.\n");
+          for (Method method : Lesson.class.getDeclaredMethods()) {
+            System.out.printf("메서드 명:%s\n", method.getName());
+            if (method.getName().startsWith("set")
+                && method.getName().toLowerCase().endsWith(key.toLowerCase())) {
+              System.out.println(field.getType().toString());
+              if (field.getType() == String.class) {
+                System.out.println("문자!");
+                method.setAccessible(true);
+                method.invoke(lesson, params.get(key));
+                System.out.println(lesson);
+              } else if (field.getType() == int.class) {
+                System.out.println("숫자!");
+                method.setAccessible(true);
+                System.out.println(params.get(key));
+                method.invoke(lesson, Integer.parseInt(params.get(key)));
+                System.out.println(lesson);
+              } else if (field.getType() == java.sql.Date.class) {
+                System.out.println("날짜!");
+                method.setAccessible(true);
+                System.out.println(params.get(key));
+                method.invoke(lesson, Date.valueOf(params.get(key)));
+                System.out.println(lesson);
+              }
+            }
+          }
+        }
+      }
+    }
 
-    lesson.setTitle(Prompt.getString(in, out, "강의명? "));
-    lesson.setDescription(Prompt.getString(in, out, "내용? "));
-    lesson.setStartDate(Prompt.getDate(in, out, "강의 시작일? "));
-    lesson.setEndDate(Prompt.getDate(in, out, "강의 종료일? "));
-    lesson.setTotalHours(Prompt.getInt(in, out, "총 강의시간? "));
-    lesson.setDayHours(Prompt.getInt(in, out, "일 강의시간? "));
-
+    out.println("<!DOCTYPE html>");
+    out.println("<html>");
+    out.println("<head>");
+    out.println("<meta charset='UTF-8'>");
+    out.println("<meta http-equiv='refresh' content='2;url=/lesson/list'>");
+    out.println("<title>수업 등록</title>");
+    out.println("</head>");
+    out.println("<body>");
+    out.println("<h1>수업 등록</h1>");
     if (lessonService.add(lesson) > 0) {
       out.println("강의를 저장했습니다.");
-
     } else {
       out.println("저장에 실패했습니다.");
     }
+    out.println("</body>");
+    out.println("</html>");
+
   }
 }
