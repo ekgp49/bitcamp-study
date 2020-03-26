@@ -22,6 +22,7 @@ public class LessonDeleteServlet {
     out.println("<html>");
     out.println("<head>");
     out.println("<meta charset='UTF-8'>");
+    out.println("<meta http-equiv='refresh' content='2;url=/lesson/list'>");
     out.println("<title>수업 삭제</title>");
     out.println("</head>");
     out.println("<body>");

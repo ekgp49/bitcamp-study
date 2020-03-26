@@ -18,7 +18,7 @@ public class MemberSearchServlet {
     this.memberService = memberService;
   }
 
-  @RequestMapping("/member/list")
+  @RequestMapping("/member/")
   public void service(Scanner in, PrintStream out) throws Exception {
     String keyword = Prompt.getString(in, out, "검색어? ");
 

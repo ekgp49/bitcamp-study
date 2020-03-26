@@ -171,9 +171,6 @@ public class ServerApp {
           requestHandler.getMethod().invoke(requestHandler.getBean(), params, out);
 
         } catch (Exception e) {
-          out.println("요청 처리 중 오류 발생!");
-          out.println(e.getMessage());
-
           logger.info("클라이언트 요청 처리 중 오류 발생:");
           logger.info(e.getMessage());
           StringWriter strWriter = new StringWriter();
@@ -208,8 +205,12 @@ public class ServerApp {
       for (String entry : entries) {
         logger.debug(String.format("parameter=> %s", entry));
         String[] kv = entry.split("=");
-        String value = URLDecoder.decode(kv[1], "UTF-8");
-        params.put(kv[0], value);
+        if (kv.length > 1) {
+          String value = URLDecoder.decode(kv[1], "UTF-8");
+          params.put(kv[0], value);
+        } else {
+          params.put(kv[0], "");
+        }
       }
     }
     return params;

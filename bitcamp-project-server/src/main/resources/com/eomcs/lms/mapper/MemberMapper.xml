@@ -20,6 +20,7 @@
       name, 
       email, 
       tel,
+      photo,
   </sql>
   
   <insert id="insert" parameterType="Member">
@@ -51,7 +52,8 @@
     select 
       <include refid="select1"/>
       pwd, 
-      photo
+      photo,
+      cdt
     from 
       lms_member
     where 

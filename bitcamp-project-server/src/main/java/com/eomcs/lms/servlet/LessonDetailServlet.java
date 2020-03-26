@@ -36,8 +36,8 @@ public class LessonDetailServlet {
       out.printf("<p>종료일: %s</p>\n", lesson.getEndDate());
       out.printf("<p>총수업시간: %d</p>\n", lesson.getTotalHours());
       out.printf("<p>일수업시간: %d</p>\n", lesson.getDayHours());
-      out.printf("<p><a href='/board/delete?no=%d'>삭제</a>\n", lesson.getNo());
-      out.printf("<a href='/board/updateForm?no=%d'>변경</a>\n", lesson.getNo());
+      out.printf("<p><a href='/lesson/delete?no=%d'>삭제</a>\n", lesson.getNo());
+      out.printf("<a href='/lesson/updateForm?no=%d'>변경</a>\n", lesson.getNo());
     } else {
       out.println("<p>해당 번호의 수업이 없습니다.</p>\n");
     }

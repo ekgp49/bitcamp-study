@@ -26,31 +26,19 @@ public class LessonAddServlet {
     Lesson lesson = new Lesson();
     for (Field field : Lesson.class.getDeclaredFields()) {
       for (String key : params.keySet()) {
-        System.out.printf("필드명:%s, 키명:%s\n", field.getName(), key);
         if (field.getName().equals(key)) {
-          System.out.println("같으면 메서드를 찾고 타입별로 매치시킨다.\n");
           for (Method method : Lesson.class.getDeclaredMethods()) {
-            System.out.printf("메서드 명:%s\n", method.getName());
             if (method.getName().startsWith("set")
                 && method.getName().toLowerCase().endsWith(key.toLowerCase())) {
-              System.out.println(field.getType().toString());
               if (field.getType() == String.class) {
-                System.out.println("문자!");
                 method.setAccessible(true);
                 method.invoke(lesson, params.get(key));
-                System.out.println(lesson);
               } else if (field.getType() == int.class) {
-                System.out.println("숫자!");
                 method.setAccessible(true);
-                System.out.println(params.get(key));
                 method.invoke(lesson, Integer.parseInt(params.get(key)));
-                System.out.println(lesson);
               } else if (field.getType() == java.sql.Date.class) {
-                System.out.println("날짜!");
                 method.setAccessible(true);
-                System.out.println(params.get(key));
                 method.invoke(lesson, Date.valueOf(params.get(key)));
-                System.out.println(lesson);
               }
             }
           }

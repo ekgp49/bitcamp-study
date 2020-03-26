@@ -7,30 +7,31 @@ import com.eomcs.lms.service.MemberService;
 import com.eomcs.util.RequestMapping;
 
 @Component
-public class MemberDeleteServlet {
+public class LoginFormServlet {
 
   MemberService memberService;
 
-  public MemberDeleteServlet(MemberService memberService) {
+  public LoginFormServlet(MemberService memberService) {
     this.memberService = memberService;
   }
 
-  @RequestMapping("/member/delete")
+  @RequestMapping("/auth/loginForm")
   public void service(Map<String, String> params, PrintStream out) throws Exception {
-    int no = Integer.parseInt(params.get("no"));
     out.println("<!DOCTYPE html>");
     out.println("<html>");
     out.println("<head>");
     out.println("<meta charset='UTF-8'>");
-    out.println("<meta http-equiv='refresh' content='2;url=/member/list'>");
-    out.println("<title>수업 삭제</title>");
+    out.println("<title>로그인</title>");
     out.println("</head>");
     out.println("<body>");
-    if (memberService.delete(no) > 0) { // 삭제했다면,
-      out.println("<h2>회원정보를 삭제했습니다.</h2>");
-    } else {
-      out.println("<p>해당 번호의 회원이 없습니다.</p>");
-    }
+    out.println("<h1>로그인</h1>");
+    out.println("<form action='/auth/login'>");
+    out.println("<table border='3'>");
+    out.println("<tr><td>아이디:</td><td><input name='email' type='text'></td></tr>"//
+        + "<tr><td>패스워드:</td><td><input name='password' type='text'></td></tr>\n");
+    out.println("</table>");
+    out.println("<button>로그인</button>");
+    out.println("<form>");
     out.println("</body>");
     out.println("</html>");
   }
