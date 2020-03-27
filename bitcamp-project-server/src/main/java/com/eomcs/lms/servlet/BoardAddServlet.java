@@ -1,6 +1,6 @@
 package com.eomcs.lms.servlet;
 
-import java.io.PrintStream;
+import java.io.PrintWriter;
 import java.util.Map;
 import org.springframework.stereotype.Component;
 import com.eomcs.lms.domain.Board;
@@ -17,8 +17,10 @@ public class BoardAddServlet {
   }
 
   @RequestMapping("/board/add")
-  public void service(Map<String, String> params, PrintStream out) throws Exception {
-
+  public void service(Map<String, String> params, PrintWriter out) throws Exception {
+    Board board = new Board();
+    board.setTitle(params.get("title"));
+    boardService.add(board);
 
     out.println("<!DOCTYPE html>");
     out.println("<html>");
@@ -28,12 +30,8 @@ public class BoardAddServlet {
     out.println("<title>게시글 입력</title>");
     out.println("</head>");
     out.println("<body>");
-    out.println("<h1>게시글 입력 결과</h1>");
-    Board board = new Board();
-    board.setTitle(params.get("title"));
-    boardService.add(board);
+    out.println("<h1>게시물 입력 결과</h1>");
     out.println("<p>새 게시글을 등록했습니다.</p>");
-    out.println("</form>");
     out.println("</body>");
     out.println("</html>");
   }

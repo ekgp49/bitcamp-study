@@ -15,7 +15,7 @@
     - 파일의 마지막 스냅샷만 받는다(checkout).
     - 스냅샷(snapshot)? 특정 시점의 파일 버전을 기록한 것.
     - 만약 서버에 문제가 생기면 모든 변경 내력(history)을 잃는다.
-    - 예) CVS, Subversion, Perforce 등
+    - 예) CVS, Subversion(SVN), Perforce 등
   - 분산 버전 관리 시스템
     - 저장소 전부를 복제한다.
     - 변경 내력(history)까지 모두 복제한다.

@@ -1,6 +1,6 @@
 package com.eomcs.lms.servlet;
 
-import java.io.PrintStream;
+import java.io.PrintWriter;
 import java.util.List;
 import java.util.Map;
 import org.springframework.stereotype.Component;
@@ -18,36 +18,53 @@ public class LessonListServlet {
   }
 
   @RequestMapping("/lesson/list")
-  public void service(Map<String, String> params, PrintStream out) throws Exception {
-    out.printf("<!DOCTYPE html>");
-    out.printf("<html>");
-    out.printf("<head>");
-    out.printf("<meta charset='UTF-8'>");
-    out.printf("<title>수업 리스트</title>");
-    out.printf("</head>");
-    out.printf("<body>");
-    out.printf("<h1>강의 리스트</h1>");
-    out.println("<a href='/lesson/addForm'>새 수업 등록하기</a>");
-    out.printf("<table border='5'>");
-    out.printf("<tr><th>번호</th><th>수업명</th><th>시작일 ~ 종료일</th><th>총강의시간</th></tr>");
+  public void service(Map<String, String> params, PrintWriter out) throws Exception {
+    out.println("<!DOCTYPE html>");
+    out.println("<html>");
+    out.println("<head>");
+    out.println("  <meta charset='UTF-8'>");
+    out.println("  <title>강의 목록</title>");
+    out.println("</head>");
+    out.println("<body>");
+    out.println("  <h1>강의</h1>");
+    out.println("  <a href='/lesson/addForm'>새 강의</a><br>");
+    out.println("  <table border='1'>");
+    out.println("  <tr>");
+    out.println("    <th>번호</th>");
+    out.println("    <th>강의</th>");
+    out.println("    <th>기간</th>");
+    out.println("    <th>총강의시간</th>");
+    out.println("  </tr>");
+
     List<Lesson> lessons = lessonService.list();
     for (Lesson l : lessons) {
-      out.printf("<tr><td>%d</td> "//
-          + "<td><a href='/lesson/detail?no=%1$d'>%s</td> "//
+      out.printf("  <tr>"//
+          + "<td>%d</td> "//
+          + "<td><a href='/lesson/detail?no=%d'>%s</a></td> "//
           + "<td>%s ~ %s</td> "//
-          + "<td>%d</td></tr>\n", //
-          l.getNo(), l.getTitle(), l.getStartDate(), l.getEndDate(), l.getTotalHours());
+          + "<td>%d</td>"//
+          + "</tr>\n", //
+          l.getNo(), //
+          l.getNo(), //
+          l.getTitle(), //
+          l.getStartDate(), //
+          l.getEndDate(), //
+          l.getTotalHours() //
+      );
     }
-    out.printf("</table>");
-    out.printf("<form action='/lesson/search'>");
-    out.println("검색키워드: <input name='keyword' type='text'/><br>\n");
-    out.println("시작일: <input name='startDate' type='date'/><br>\n");
-    out.println("종료일: <input name='endDate' type='date'/><br>\n");
-    out.println("총강의시간: <input name='totalHours' type='number'/><br>\n");
-    out.println("일강의시간: <input name='dayHours' type='number'/><br>\n");
+    out.println("</table>");
+
+    out.println("<hr>");
+
+    out.println("<form action='/lesson/search'>");
+    out.println("강의명: <input name='title' type='text'><br>");
+    out.println("강의 시작일: <input name='startDate' type='date'><br>");
+    out.println("강의 종료일: <input name='endDate' type='date'><br>");
+    out.println("총 강의시간: <input name='totalHours' type='number'><br>");
+    out.println("일 강의시간: <input name='dayHours' type='number'><br>");
     out.println("<button>검색</button>");
-    out.printf("</form>");
-    out.printf("</body>");
-    out.printf("</html>");
+
+    out.println("</body>");
+    out.println("</html>");
   }
 }
