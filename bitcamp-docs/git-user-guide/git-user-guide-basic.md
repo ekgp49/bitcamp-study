@@ -219,7 +219,7 @@ $ git add LICENSE
 $ git add .
 ```
 
-### git commit -m '이번 스냅샷을 저장하는 이유'
+### git commit -m "이번 스냅샷을 저장하는 이유"
 
 - Staging Area에 기록된 파일들(스냅샷)을 로컬 저장소에 보관한다.
 - 파일을 새로 추가하거나 변경하였다면 반드시 `git add`를 실행하여 Staging Area에 기록해야 한다.
@@ -232,7 +232,7 @@ $ git commit -m '첫 번째 버전'
 ```
 
 ```
-예2) git add + git commit = git commit -a -m '설명'
+예2) git add + git commit = git commit -a -m "설명"
     저장소에 넣기 전에 매번 Staging Area에 기록하는 것은 매우 귀찮은 일이다.
     이를 한 번에 할 수 있다.
     단 Tracked 파일(Staging Area에 있거나 저장소에 있는 파일)만 대상으로 한다.
