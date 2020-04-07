@@ -32,7 +32,8 @@ public class Hello2 {
 
 
     int[] answer = new int[d.size()];
-    answer = d.stream().mapToInt(item -> item).toArray();
+    answer = d.stream().mapToInt(i -> i).toArray();
     return answer;
   }
+
 }

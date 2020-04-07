@@ -9,8 +9,8 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebServlet;
 
-@WebServlet("/ex04/s6")
-public class Servlet06 extends GenericServlet {
+@WebServlet("/ex04/s6_2")
+public class Servlet06_2 extends GenericServlet {
 
   private static final long serialVersionUID = 1L;
 
@@ -29,33 +29,14 @@ public class Servlet06 extends GenericServlet {
 
     // 같은 이름으로 여러 개의 데이터를 보낼 수 있다.
     // => 예) name=aaa&name=bbb&name=ccc
-    String genre1 = req.getParameter("genre1");
-    String genre2 = req.getParameter("genre2");
-    String genre3 = req.getParameter("genre3");
-    String genre4 = req.getParameter("genre4");
-    String genre5 = req.getParameter("genre5");
-    String genre6 = req.getParameter("genre6");
+    String[] genres = req.getParameterValues("genre");
+    String[] genreData = {"", "로맨틱", "스릴러", "호러", "드라마", "액션", "SF"};
 
     res.setContentType("text/plain;charset=UTF-8");
     PrintWriter out = res.getWriter();
     out.println("선택한 장르: ");
-    if (genre1 != null) {
-      out.println("로맨틱");
-    }
-    if (genre2 != null) {
-      out.println("스릴러");
-    }
-    if (genre3 != null) {
-      out.println("호러");
-    }
-    if (genre4 != null) {
-      out.println("드라마");
-    }
-    if (genre5 != null) {
-      out.println("액션");
-    }
-    if (genre6 != null) {
-      out.println("SF");
+    for (String genre : genres) {
+      out.println(genreData[Integer.parseInt(genre)]);
     }
   }
 }
