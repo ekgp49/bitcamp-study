@@ -3,27 +3,27 @@ package com.eomcs.lms.servlet;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
-import javax.servlet.GenericServlet;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import org.springframework.context.ApplicationContext;
 import com.eomcs.lms.domain.Lesson;
 import com.eomcs.lms.service.LessonService;
 
 @WebServlet("/lesson/list")
-public class LessonListServlet extends GenericServlet {
+public class LessonListServlet extends HttpServlet {
   private static final long serialVersionUID = 1L;
 
   @Override
-  public void service(ServletRequest req, ServletResponse res)
+  protected void doGet(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
     try {
-      res.setContentType("text/html;charset=UTF-8");
-      PrintWriter out = res.getWriter();
-      ServletContext servletContext = req.getServletContext();
+      response.setContentType("text/html;charset=UTF-8");
+      PrintWriter out = response.getWriter();
+      ServletContext servletContext = request.getServletContext();
       ApplicationContext iocContainer =
           (ApplicationContext) servletContext.getAttribute("iocContainer");
 
@@ -36,7 +36,7 @@ public class LessonListServlet extends GenericServlet {
       out.println("</head>");
       out.println("<body>");
       out.println("  <h1>강의</h1>");
-      out.println("  <a href='addForm'>새 강의</a><br>");
+      out.println("  <a href='add'>새 강의</a><br>");
       out.println("  <table border='1'>");
       out.println("  <tr>");
       out.println("    <th>번호</th>");

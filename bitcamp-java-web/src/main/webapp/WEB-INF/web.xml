@@ -122,4 +122,12 @@
     <servlet-name>ex06.Servlet04</servlet-name>
     <url-pattern>/ex06/s4</url-pattern>
   </servlet-mapping> 
+  
+  <!-- 세션의 timeout 설정하기 -->
+  <!-- 단위는 분이다. -->
+  <!-- 
+  <session-config>
+    <session-timeout>1</session-timeout> 
+  </session-config>
+   -->
 </web-app>

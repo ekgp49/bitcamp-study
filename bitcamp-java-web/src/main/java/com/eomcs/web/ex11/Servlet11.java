@@ -1,5 +1,5 @@
 // 세션(session)의 활용
-package bitcamp.ex11;
+package com.eomcs.web.ex11;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -12,12 +12,11 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/ex11/s11")
 @SuppressWarnings("serial")
 public class Servlet11 extends HttpServlet {
-  
+
   @Override
-  protected void doGet(
-      HttpServletRequest request, HttpServletResponse response)
+  protected void doGet(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
-    
+
     response.setContentType("text/html;charset=UTF-8");
     PrintWriter out = response.getWriter();
     out.println("<html><head><title>페이지1</title></head><body>");
