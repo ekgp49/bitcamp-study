@@ -1,7 +1,6 @@
 package com.eomcs.lms.servlet;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.Date;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -22,7 +21,6 @@ public class LessonUpdateServlet extends HttpServlet {
       throws ServletException, IOException {
     try {
       response.setContentType("text/html;charset=UTF-8");
-      PrintWriter out = response.getWriter();
       ServletContext servletContext = request.getServletContext();
       ApplicationContext iocContainer =
           (ApplicationContext) servletContext.getAttribute("iocContainer");
@@ -38,27 +36,15 @@ public class LessonUpdateServlet extends HttpServlet {
       lesson.setTotalHours(Integer.parseInt(request.getParameter("totalHours")));
       lesson.setDayHours(Integer.parseInt(request.getParameter("dayHours")));
 
-      out.println("<!DOCTYPE html>");
-      out.println("<html>");
-      out.println("<head>");
-      out.println("<meta charset='UTF-8'>");
-      out.println("<meta http-equiv='refresh' content='2;url=list'>");
-      out.println("<title>강의 변경</title>");
-      out.println("</head>");
-      out.println("<body>");
-      out.println("<h1>강의 변경 결과</h1>");
-
       if (lessonService.update(lesson) > 0) {
-        out.println("<p>강의를 변경했습니다.</p>");
-
+        response.sendRedirect("list");
       } else {
-        out.println("<p>변경에 실패했습니다.</p>");
+        throw new Exception("변경할 수업 번호가 유효하지 않습니다");
       }
-
-      out.println("</body>");
-      out.println("</html>");
     } catch (Exception e) {
-      throw new ServletException(e);
+      request.setAttribute("error", e);
+      request.setAttribute("url", "list");
+      request.getRequestDispatcher("/error").forward(request, response);
     }
   }
 }

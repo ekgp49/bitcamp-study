@@ -27,16 +27,9 @@ public class MemberListServlet extends HttpServlet {
       ApplicationContext iocContainer =
           (ApplicationContext) servletContext.getAttribute("iocContainer");
       MemberService memberService = iocContainer.getBean(MemberService.class);
-
-      out.println("<!DOCTYPE html>");
-      out.println("<html>");
-      out.println("<head>");
-      out.println("  <meta charset='UTF-8'>");
-      out.println("  <title>회원 목록</title>");
-      out.println("</head>");
-      out.println("<body>");
+      request.getRequestDispatcher("/header").include(request, response);
       out.println("  <h1>회원</h1>");
-      out.println("  <a href='addForm'>새 회원</a><br>");
+      out.println("  <a href='add'>새 회원</a><br>");
       out.println("  <table border='1'>");
       out.println("  <tr>");
       out.println("    <th>번호</th>");
@@ -70,10 +63,11 @@ public class MemberListServlet extends HttpServlet {
       out.println("<form action='search'>");
       out.println("검색어: <input name='keyword' type='text'>");
       out.println("<button>검색</button>");
-      out.println("</body>");
-      out.println("</html>");
+      request.getRequestDispatcher("/footer").include(request, response);
     } catch (Exception e) {
-      throw new ServletException(e);
+      request.setAttribute("error", e);
+      request.setAttribute("url", "list");
+      request.getRequestDispatcher("/error").forward(request, response);
     }
   }
 }

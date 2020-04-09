@@ -58,12 +58,14 @@ public class MemberDetailServlet extends HttpServlet {
             member.getNo());
         out.println("</form>");
       } else {
-        out.println("<p>해당 번호의 회원이 없습니다.</p>");
+        throw new Exception("해당 번호의 회원이 없습니다.");
       }
       out.println("</body>");
       out.println("</html>");
     } catch (Exception e) {
-      throw new ServletException(e);
+      request.setAttribute("error", e);
+      request.setAttribute("url", "list");
+      request.getRequestDispatcher("/error").forward(request, response);
     }
   }
 }

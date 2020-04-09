@@ -1,13 +1,95 @@
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Deque;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
 public class Hello2 {
   public static void main(String[] args) {
-    System.out.println(solution()[4]);
-    System.out.println(solution2()[4]);
+    Integer[] a = {2, 3, 5, 5, 7, 3, 55, 4, 3, 2, 5, 5, 3, 5, 4, 6, 2, 5, 4, 1, 3};
+    int[] b = {2, 4, 5};
+
+    List<Integer> list = new ArrayList<>();
+    list.addAll(Arrays.asList(a));
+    list.addAll(Arrays.asList(a));
+    list.addAll(Arrays.asList(a));
+    list.addAll(Arrays.asList(a));
+    list.addAll(Arrays.asList(a));
+    list.addAll(Arrays.asList(a));
+    list.addAll(Arrays.asList(a));
+    list.addAll(Arrays.asList(a));
+    list.addAll(Arrays.asList(a));
+    list.addAll(Arrays.asList(a));
+    list.addAll(Arrays.asList(a));
+    list.addAll(Arrays.asList(a));
+    list.addAll(Arrays.asList(a));
+    list.addAll(Arrays.asList(a));
+    list.addAll(Arrays.asList(a));
+    list.addAll(Arrays.asList(a));
+    list.addAll(Arrays.asList(a));
+    list.addAll(Arrays.asList(a));
+    list.addAll(Arrays.asList(a));
+    list.addAll(Arrays.asList(a));
+    list.addAll(Arrays.asList(a));
+    list.addAll(Arrays.asList(a));
+    list.addAll(Arrays.asList(a));
+    list.addAll(Arrays.asList(a));
+    list.addAll(Arrays.asList(a));
+    list.addAll(Arrays.asList(a));
+    list.addAll(Arrays.asList(a));
+    list.addAll(Arrays.asList(a));
+    list.addAll(Arrays.asList(a));
+    list.addAll(Arrays.asList(a));
+    list.addAll(Arrays.asList(a));
+    list.addAll(Arrays.asList(a));
+    list.addAll(Arrays.asList(a));
+    list.addAll(Arrays.asList(a));
+    list.addAll(Arrays.asList(a));
+    list.addAll(Arrays.asList(a));
+    list.addAll(Arrays.asList(a));
+    list.addAll(Arrays.asList(a));
+    list.addAll(Arrays.asList(a));
+    list.addAll(Arrays.asList(a));
+    list.addAll(Arrays.asList(a));
+    list.addAll(Arrays.asList(a));
+    list.addAll(Arrays.asList(a));
+    list.addAll(Arrays.asList(a));
+    list.addAll(Arrays.asList(a));
+    list.addAll(Arrays.asList(a));
+    list.addAll(Arrays.asList(a));
+    list.addAll(Arrays.asList(a));
+    list.addAll(Arrays.asList(a));
+    list.addAll(Arrays.asList(a));
+    list.addAll(Arrays.asList(a));
+    list.addAll(Arrays.asList(a));
+    list.addAll(Arrays.asList(a));
+    list.addAll(Arrays.asList(a));
+    list.addAll(Arrays.asList(a));
+    list.addAll(Arrays.asList(a));
+    list.addAll(Arrays.asList(a));
+    list.addAll(Arrays.asList(a));
+    list.addAll(Arrays.asList(a));
+    list.addAll(Arrays.asList(a));
+    list.addAll(Arrays.asList(a));
+    list.addAll(Arrays.asList(a));
+    list.addAll(Arrays.asList(a));
+    list.addAll(Arrays.asList(a));
+    list.addAll(Arrays.asList(a));
+    list.addAll(Arrays.asList(a));
+
+    list.addAll(Arrays.asList(a));
+    list.addAll(Arrays.asList(a));
+
+    list.addAll(Arrays.asList(a));
+    list.addAll(Arrays.asList(a));
+
+
+
+    b = list.stream().mapToInt(i -> i).toArray();
+
+
+    System.out.println(solution222(b)[1]);
   }
 
   public static Integer[] solution() {
@@ -39,28 +121,25 @@ public class Hello2 {
     return answer;
   }
 
-
   // 체육복
-  public int solution(int n, int[] lost, int[] reserve) {
+  public static int solution(int n, int[] lost, int[] reserve) {
+    List<Integer> lostList = new LinkedList<>();
+    List<Integer> have2 = new LinkedList<>();
 
-    List<String> lostList = new ArrayList<>();
-    List<String> have2 = new ArrayList<>();
-
-    // 번호를 문자열로 바꾼다.
     for (int i = 0; i < lost.length; i++) {
-      lostList.add(String.valueOf(lost[i]));
+      lostList.add(lost[i]);
     }
 
     for (int i = 0; i < reserve.length; i++) {
-      have2.add(String.valueOf(reserve[i]));
+      have2.add(reserve[i]);
     }
 
     // 두개있는데 하나 잃어버린애들
     for (int i = 0; i < lost.length; i++) {
-      String lostNo = String.valueOf(lost[i]);
+      int lostNo = lost[i];
       if (have2.contains(lostNo)) {
-        have2.remove(lostNo); // 이제 하나가짐
-        lostList.remove(lostNo); // 적어도 한개 가졌으니 제외함
+        have2.remove(have2.indexOf(lostNo)); // 이제 하나가짐
+        lostList.remove(lostList.indexOf(lostNo)); // 적어도 한개 가졌으니 제외함
       }
     }
 
@@ -68,14 +147,12 @@ public class Hello2 {
     // 번호 +-1인 애가 2개 있으면 하나 받아먹음
     int count = 0; // 받아먹는 놈들 있으면 카운트
     for (int i = 0; i < lostList.size(); i++) {
-      int lostNo = Integer.parseInt(lostList.get(i));
-      String formerNo = String.valueOf(lostNo - 1);
-      String nextNo = String.valueOf(lostNo + 1);
-      if (have2.contains(formerNo)) {
-        have2.remove(formerNo);
+      int lostNo = lostList.get(i);
+      if (have2.contains(lostNo - 1)) {
+        have2.remove(have2.indexOf(lostNo - 1));
         count++;
-      } else if (have2.contains(nextNo)) {
-        have2.remove(nextNo);
+      } else if (have2.contains(lostNo + 1)) {
+        have2.remove(have2.indexOf(lostNo + 1));
         count++;
       }
     }
@@ -101,6 +178,7 @@ public class Hello2 {
     return answer;
   }
 
+  // 나누어 떨어지는 숫자 배열
   public int[] solution(int[] arr, int divisor) {
     List<Integer> arr1 = new ArrayList<>();
     for (int no : arr) {
@@ -114,5 +192,112 @@ public class Hello2 {
     Arrays.sort(answer);
     return answer;
   }
+
+  public static int[] solution222(int[] answers) {
+    List<Integer> first = new LinkedList<>();
+    List<Integer> second = new LinkedList<>();
+    List<Integer> third = new LinkedList<>();
+
+    for (int i = 1; i <= 5; i++) {
+      first.add(i);
+    }
+
+    Integer[] int2 = {2, 1, 2, 3, 2, 4, 2, 5};
+    second.addAll(Arrays.asList(int2));
+
+
+    for (int i = 0; i < 10; i++) {
+      if (i < 2) {
+        third.add(i, 3);
+      } else if (i < 4) {
+        third.add(i, 1);
+      } else if (i < 6) {
+        third.add(i, 2);
+      } else if (i < 8) {
+        third.add(i, 4);
+      } else if (i < 10) {
+        third.add(i, 5);
+      }
+    }
+
+    int questions = answers.length;
+    List<Integer> person1 = new ArrayList<>();
+    List<Integer> person2 = new ArrayList<>();
+    List<Integer> person3 = new ArrayList<>();
+
+    for (; person1.size() < questions;) {
+      person1.addAll(first);
+    }
+    for (; person2.size() < questions;) {
+      person2.addAll(second);
+    }
+    for (; person3.size() < questions;) {
+      person3.addAll(third);
+    }
+
+
+    System.out.println(person1.size());
+    System.out.println(person2.size());
+    System.out.println(person3.size());
+    Integer count1 = 0;
+    Integer count2 = 0;
+    Integer count3 = 0;
+
+    for (int i = 0; i < questions; i++) {
+      if (person1.get(i) == answers[i]) {
+        count1++;
+      }
+      if (person2.get(i) == answers[i]) {
+        count2++;
+      }
+      if (person3.get(i) == answers[i]) {
+        count3++;
+      }
+    }
+    System.out.println(count1);
+    System.out.println(count2);
+    System.out.println(count3);
+    HashMap<String, Integer> map = new HashMap<>();
+    map.put("1", count1);
+    map.put("2", count2);
+    map.put("3", count3);
+
+    Integer[] mems = {map.get("1"), map.get("2"), map.get("3")};
+    Arrays.sort(mems);
+    System.out.println("---------");
+    System.out.println(mems[0]);
+    System.out.println(mems[1]);
+    System.out.println(mems[2]);
+
+    List<String> answer1 = new ArrayList<>();
+    answer1.add("1");
+    answer1.add("2");
+    answer1.add("3");
+
+    if (mems[0] == mems[2]) {
+      //
+    } else if (mems[1] == mems[2]) {
+      for (String key : map.keySet()) {
+        if (mems[0] == map.get(key)) {
+          System.out.println(key);
+          answer1.remove(key);
+        }
+      }
+    } else {
+      for (String key : map.keySet()) {
+        if (mems[0] == map.get(key)) {
+          answer1.remove(key);
+        }
+        if (mems[1] == map.get(key)) {
+          answer1.remove(key);
+        }
+      }
+    }
+    System.out.println("---------------------");
+    int[] answer = answer1.stream().mapToInt(i -> Integer.parseInt(i)).toArray();
+    return answer;
+  }
+
+
 
 }

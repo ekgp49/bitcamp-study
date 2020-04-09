@@ -65,12 +65,14 @@ public class LessonDetailServlet extends HttpServlet {
         out.println("</p>");
         out.println("</form>");
       } else {
-        out.println("<p>해당 번호의 강의가 없습니다.</p>");
+        throw new Exception("해당 번호의 강의가 없습니다.");
       }
       out.println("</body>");
       out.println("</html>");
     } catch (Exception e) {
-      throw new ServletException(e);
+      request.setAttribute("error", e);
+      request.setAttribute("url", "list");
+      request.getRequestDispatcher("/error").forward(request, response);
     }
   }
 }

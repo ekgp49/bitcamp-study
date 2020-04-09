@@ -21,21 +21,14 @@ public class BoardAddServlet extends HttpServlet {
       throws ServletException, IOException {
     response.setContentType("text/html;charset=UTF-8");
     PrintWriter out = response.getWriter();
-    out.println("<!DOCTYPE html>");
-    out.println("<html>");
-    out.println("<head>");
-    out.println("<meta charset='UTF-8'>");
-    out.println("<title>게시글 입력</title>");
-    out.println("</head>");
-    out.println("<body>");
+    request.getRequestDispatcher("/header").include(request, response);
     out.println("<h1>게시물 입력</h1>");
     out.println("<form action='add' method='post'>");
     out.println("내용:<br>");
     out.println("<textarea name='title' rows='5' cols='60'></textarea><br>");
     out.println("<button>등록</button>");
     out.println("</form>");
-    out.println("</body>");
-    out.println("</html>");
+    request.getRequestDispatcher("/footer").include(request, response);
   }
 
   @Override
@@ -44,9 +37,7 @@ public class BoardAddServlet extends HttpServlet {
     try {
       request.setCharacterEncoding("UTF-8");
       response.setContentType("text/html;charset=UTF-8");
-      PrintWriter out = response.getWriter();
 
-      // 서블릿 컨테이너에 보관된 스프링 컨테이너를 꺼낸다
       ServletContext servletContext = request.getServletContext();
       ApplicationContext iocContainer =
           (ApplicationContext) servletContext.getAttribute("iocContainer");
@@ -56,21 +47,11 @@ public class BoardAddServlet extends HttpServlet {
       Board board = new Board();
       board.setTitle(request.getParameter("title"));
       boardService.add(board);
-
-      out.println("<!DOCTYPE html>");
-      out.println("<html>");
-      out.println("<head>");
-      out.println("<meta charset='UTF-8'>");
-      out.println("<meta http-equiv='refresh' content='2;url=list'>");
-      out.println("<title>게시글 입력</title>");
-      out.println("</head>");
-      out.println("<body>");
-      out.println("<h1>게시물 입력 결과</h1>");
-      out.println("<p>새 게시글을 등록했습니다.</p>");
-      out.println("</body>");
-      out.println("</html>");
+      response.sendRedirect("list");
     } catch (Exception e) {
-      throw new ServletException(e);
+      request.setAttribute("error", e);
+      request.setAttribute("url", "list");
+      request.getRequestDispatcher("/error").forward(request, response);
     }
   }
 }

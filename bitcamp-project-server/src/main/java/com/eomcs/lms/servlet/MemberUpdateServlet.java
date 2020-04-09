@@ -1,7 +1,6 @@
 package com.eomcs.lms.servlet;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -22,7 +21,6 @@ public class MemberUpdateServlet extends HttpServlet {
     try {
       request.setCharacterEncoding("UTF-8");
       response.setContentType("text/html;charset=UTF-8");
-      PrintWriter out = response.getWriter();
       ServletContext servletContext = request.getServletContext();
       ApplicationContext iocContainer =
           (ApplicationContext) servletContext.getAttribute("iocContainer");
@@ -35,27 +33,15 @@ public class MemberUpdateServlet extends HttpServlet {
       member.setPhoto(request.getParameter("photo"));
       member.setTel(request.getParameter("tel"));
 
-      out.println("<!DOCTYPE html>");
-      out.println("<html>");
-      out.println("<head>");
-      out.println("<meta charset='UTF-8'>");
-      out.println("<meta http-equiv='refresh' content='2;url=list'>");
-      out.println("<title>회원 변경</title>");
-      out.println("</head>");
-      out.println("<body>");
-      out.println("<h1>회원 변경 결과</h1>");
-
       if (memberService.update(member) > 0) {
-        out.println("<p>회원을 변경했습니다.</p>");
-
+        response.sendRedirect("list");
       } else {
-        out.println("<p>변경에 실패했습니다.</p>");
+        throw new Exception("변경할 회원 번호가 유효하지 않습니다");
       }
-
-      out.println("</body>");
-      out.println("</html>");
     } catch (Exception e) {
-      throw new ServletException(e);
+      request.setAttribute("error", e);
+      request.setAttribute("url", "list");
+      request.getRequestDispatcher("/error").forward(request, response);
     }
   }
 }

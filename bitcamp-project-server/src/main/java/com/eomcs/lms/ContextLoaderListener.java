@@ -3,7 +3,6 @@ package com.eomcs.lms;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
-import javax.servlet.annotation.WebListener;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.context.ApplicationContext;
@@ -13,7 +12,7 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 // 데이터를 로딩하고 저장하는 일을 한다.
 // => 이제 데이터 로딩 이상의 일을 해서 ContextLoarderListener로 이름바꿈
 //
-@WebListener // 서블릿 컨테이너가 관리
+// @WebListener // 서블릿 컨테이너가 관리
 public class ContextLoaderListener implements ServletContextListener {
 
   static Logger logger = LogManager.getLogger(ContextLoaderListener.class);
@@ -27,15 +26,17 @@ public class ContextLoaderListener implements ServletContextListener {
     // => 이 프로젝트에서는 Spring IoC Container를 준비한다.
 
     // 준비한 객체를 담을 공용바구니
-    ServletContext servletContext = sce.getServletContext();
     try {
       // Spring IoC 컨테이너 준비
       ApplicationContext iocContainer = new AnnotationConfigApplicationContext(AppConfig.class);
 
+
+      // ServletContext는 모든 서블릿이 사용하는 객체를 보관하는 저장소
+      // IoC Container는 모든 서블릿이 사용할 수 있어야 한다.
+      ServletContext servletContext = sce.getServletContext();
       servletContext.setAttribute("iocContainer", iocContainer);
       printBeans(iocContainer);
       logger.debug("----------------------------------------------");
-
 
     } catch (Exception e) {
       e.printStackTrace();

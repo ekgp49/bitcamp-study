@@ -72,13 +72,15 @@ public class LoginServlet extends HttpServlet {
       if (member != null) {
         out.printf("<p>'%s'님 환영합니다.</p>\n", member.getName());
       } else {
-        out.println("<p>사용자 정보가 유효하지 않습니다.</p>");
+        throw new Exception("사용자 정보가 유효하지 않습니다.");
       }
 
       out.println("</body>");
       out.println("</html>");
     } catch (Exception e) {
-      throw new ServletException(e);
+      request.setAttribute("error", e);
+      request.setAttribute("url", "login");
+      request.getRequestDispatcher("/error").forward(request, response);
     }
   }
 }
