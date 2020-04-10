@@ -20,11 +20,11 @@ public class LessonUpdateServlet extends HttpServlet {
   protected void doPost(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
     try {
-      response.setContentType("text/html;charset=UTF-8");
-      ServletContext servletContext = request.getServletContext();
+      request.setCharacterEncoding("UTF-8");
+
+      ServletContext servletContext = getServletContext();
       ApplicationContext iocContainer =
           (ApplicationContext) servletContext.getAttribute("iocContainer");
-
       LessonService lessonService = iocContainer.getBean(LessonService.class);
 
       Lesson lesson = new Lesson();
@@ -39,8 +39,9 @@ public class LessonUpdateServlet extends HttpServlet {
       if (lessonService.update(lesson) > 0) {
         response.sendRedirect("list");
       } else {
-        throw new Exception("변경할 수업 번호가 유효하지 않습니다");
+        throw new Exception("변경할 수업 번호가 유효하지 않습니다.");
       }
+
     } catch (Exception e) {
       request.setAttribute("error", e);
       request.setAttribute("url", "list");

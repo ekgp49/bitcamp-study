@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -13,6 +14,7 @@ import com.eomcs.lms.domain.Member;
 import com.eomcs.lms.service.MemberService;
 
 @WebServlet("/member/detail")
+@MultipartConfig(maxFileSize = 10000000)
 public class MemberDetailServlet extends HttpServlet {
   private static final long serialVersionUID = 1L;
 
@@ -22,7 +24,8 @@ public class MemberDetailServlet extends HttpServlet {
     try {
       response.setContentType("text/html;charset=UTF-8");
       PrintWriter out = response.getWriter();
-      ServletContext servletContext = request.getServletContext();
+
+      ServletContext servletContext = getServletContext();
       ApplicationContext iocContainer =
           (ApplicationContext) servletContext.getAttribute("iocContainer");
       MemberService memberService = iocContainer.getBean(MemberService.class);
@@ -31,17 +34,13 @@ public class MemberDetailServlet extends HttpServlet {
 
       Member member = memberService.get(no);
 
-      out.println("<!DOCTYPE html>");
-      out.println("<html>");
-      out.println("<head>");
-      out.println("<meta charset='UTF-8'>");
-      out.println("<title>회원 상세정보</title>");
-      out.println("</head>");
-      out.println("<body>");
+      request.getRequestDispatcher("/header").include(request, response);
+
       out.println("<h1>회원 상세정보</h1>");
 
       if (member != null) {
-        out.println("<form action='update' method='post'>");
+        out.println("<form action='update' method='post' enctype='multipart/form-data'>");
+        out.printf("<img src='../upload/member/%s' height='80'><br>\n", member.getPhoto());
         out.printf("번호: <input name='no' type='text' readonly value='%d'><br>\n", //
             member.getNo());
         out.printf("이름: <input name='name' type='text' value='%s'><br>\n", //
@@ -49,7 +48,7 @@ public class MemberDetailServlet extends HttpServlet {
         out.printf("이메일: <input name='email' type='email' value='%s'><br>\n", //
             member.getEmail());
         out.println("암호: <input name='password' type='password'><br>");
-        out.printf("사진: <input name='photo' type='text' value='%s'><br>\n", //
+        out.printf("사진: <input name='photo' type='file'><br>\n", //
             member.getPhoto());
         out.printf("전화: <input name='tel' type='tel' value='%s'><br>\n", //
             member.getTel());
@@ -58,10 +57,11 @@ public class MemberDetailServlet extends HttpServlet {
             member.getNo());
         out.println("</form>");
       } else {
-        throw new Exception("해당 번호의 회원이 없습니다.");
+        out.println("<p>해당 번호의 회원이 없습니다.</p>");
       }
-      out.println("</body>");
-      out.println("</html>");
+
+      request.getRequestDispatcher("/footer").include(request, response);
+
     } catch (Exception e) {
       request.setAttribute("error", e);
       request.setAttribute("url", "list");

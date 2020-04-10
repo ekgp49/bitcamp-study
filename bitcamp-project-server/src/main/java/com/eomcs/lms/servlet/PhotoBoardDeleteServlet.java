@@ -14,25 +14,25 @@ import com.eomcs.lms.service.PhotoBoardService;
 public class PhotoBoardDeleteServlet extends HttpServlet {
   private static final long serialVersionUID = 1L;
 
-
   @Override
   protected void doGet(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
+
+    int lessonNo = Integer.parseInt(request.getParameter("lessonNo"));
+    int no = Integer.parseInt(request.getParameter("no"));
+
     try {
-      response.setContentType("text/html;charset=UTF-8");
       ServletContext servletContext = request.getServletContext();
       ApplicationContext iocContainer =
           (ApplicationContext) servletContext.getAttribute("iocContainer");
-
       PhotoBoardService photoBoardService = iocContainer.getBean(PhotoBoardService.class);
 
-      int no = Integer.parseInt(request.getParameter("no"));
       photoBoardService.delete(no);
-      response.sendRedirect("list");
+      response.sendRedirect("list?lessonNo=" + lessonNo);
 
     } catch (Exception e) {
       request.setAttribute("error", e);
-      request.setAttribute("url", "list");
+      request.setAttribute("url", "list?lessonNo=" + lessonNo);
       request.getRequestDispatcher("/error").forward(request, response);
     }
   }

@@ -15,22 +15,22 @@ public class ErrorServlet extends HttpServlet {
   @Override
   protected void service(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
+
     response.setContentType("text/html;charset=UTF-8");
     PrintWriter out = response.getWriter();
-    out.println("<!DOCTYPE html>");
-    out.println("<html>");
-    out.println("<head>");
-    out.println("<meta charset='UTF-8'>");
-    out.println("<title>실행오류</title>");
-    out.println("</head>");
-    out.println("<body>");
-    out.println("<h1>오류내용</h1>");
-    out.printf("<p>%s</p>", ((Exception) request.getAttribute("error")).getMessage());
+
+    request.getRequestDispatcher("/header").include(request, response);
+
+    out.println("<h1>오류 내용</h1>");
+
+    Exception error = (Exception) request.getAttribute("error");
+    out.printf("<p>%s</p>", error.getMessage());
+
     String url = (String) request.getAttribute("url");
     if (url != null) {
-      out.printf("<p><a href='%s'>뒤로가기</a></p>", url);
+      out.printf("<p><a href='%s'>뒤로 가기</a></p>", url);
     }
-    out.println("</body>");
-    out.println("</html>");
+
+    request.getRequestDispatcher("/footer").include(request, response);
   }
 }

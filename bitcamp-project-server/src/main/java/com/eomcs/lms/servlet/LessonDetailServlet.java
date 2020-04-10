@@ -20,23 +20,19 @@ public class LessonDetailServlet extends HttpServlet {
   protected void doGet(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
     try {
-      request.setCharacterEncoding("UTF-8");
       response.setContentType("text/html;charset=UTF-8");
       PrintWriter out = response.getWriter();
-      ServletContext servletContext = request.getServletContext();
+
+      ServletContext servletContext = getServletContext();
       ApplicationContext iocContainer =
           (ApplicationContext) servletContext.getAttribute("iocContainer");
-
       LessonService lessonService = iocContainer.getBean(LessonService.class);
-      Lesson lesson = lessonService.get(Integer.parseInt(request.getParameter("no")));
 
-      out.println("<!DOCTYPE html>");
-      out.println("<html>");
-      out.println("<head>");
-      out.println("<meta charset='UTF-8'>");
-      out.println("<title>수업 상세정보</title>");
-      out.println("</head>");
-      out.println("<body>");
+      int no = Integer.parseInt(request.getParameter("no"));
+      Lesson lesson = lessonService.get(no);
+
+      request.getRequestDispatcher("/header").include(request, response);
+
       out.println("<h1>수업 상세정보</h1>");
 
       if (lesson != null) {
@@ -65,10 +61,11 @@ public class LessonDetailServlet extends HttpServlet {
         out.println("</p>");
         out.println("</form>");
       } else {
-        throw new Exception("해당 번호의 강의가 없습니다.");
+        out.println("<p>해당 번호의 강의가 없습니다.</p>");
       }
-      out.println("</body>");
-      out.println("</html>");
+
+      request.getRequestDispatcher("/footer").include(request, response);
+
     } catch (Exception e) {
       request.setAttribute("error", e);
       request.setAttribute("url", "list");

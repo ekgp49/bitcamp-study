@@ -1,5 +1,7 @@
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Deque;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -9,87 +11,6 @@ public class Hello2 {
   public static void main(String[] args) {
     Integer[] a = {2, 3, 5, 5, 7, 3, 55, 4, 3, 2, 5, 5, 3, 5, 4, 6, 2, 5, 4, 1, 3};
     int[] b = {2, 4, 5};
-
-    List<Integer> list = new ArrayList<>();
-    list.addAll(Arrays.asList(a));
-    list.addAll(Arrays.asList(a));
-    list.addAll(Arrays.asList(a));
-    list.addAll(Arrays.asList(a));
-    list.addAll(Arrays.asList(a));
-    list.addAll(Arrays.asList(a));
-    list.addAll(Arrays.asList(a));
-    list.addAll(Arrays.asList(a));
-    list.addAll(Arrays.asList(a));
-    list.addAll(Arrays.asList(a));
-    list.addAll(Arrays.asList(a));
-    list.addAll(Arrays.asList(a));
-    list.addAll(Arrays.asList(a));
-    list.addAll(Arrays.asList(a));
-    list.addAll(Arrays.asList(a));
-    list.addAll(Arrays.asList(a));
-    list.addAll(Arrays.asList(a));
-    list.addAll(Arrays.asList(a));
-    list.addAll(Arrays.asList(a));
-    list.addAll(Arrays.asList(a));
-    list.addAll(Arrays.asList(a));
-    list.addAll(Arrays.asList(a));
-    list.addAll(Arrays.asList(a));
-    list.addAll(Arrays.asList(a));
-    list.addAll(Arrays.asList(a));
-    list.addAll(Arrays.asList(a));
-    list.addAll(Arrays.asList(a));
-    list.addAll(Arrays.asList(a));
-    list.addAll(Arrays.asList(a));
-    list.addAll(Arrays.asList(a));
-    list.addAll(Arrays.asList(a));
-    list.addAll(Arrays.asList(a));
-    list.addAll(Arrays.asList(a));
-    list.addAll(Arrays.asList(a));
-    list.addAll(Arrays.asList(a));
-    list.addAll(Arrays.asList(a));
-    list.addAll(Arrays.asList(a));
-    list.addAll(Arrays.asList(a));
-    list.addAll(Arrays.asList(a));
-    list.addAll(Arrays.asList(a));
-    list.addAll(Arrays.asList(a));
-    list.addAll(Arrays.asList(a));
-    list.addAll(Arrays.asList(a));
-    list.addAll(Arrays.asList(a));
-    list.addAll(Arrays.asList(a));
-    list.addAll(Arrays.asList(a));
-    list.addAll(Arrays.asList(a));
-    list.addAll(Arrays.asList(a));
-    list.addAll(Arrays.asList(a));
-    list.addAll(Arrays.asList(a));
-    list.addAll(Arrays.asList(a));
-    list.addAll(Arrays.asList(a));
-    list.addAll(Arrays.asList(a));
-    list.addAll(Arrays.asList(a));
-    list.addAll(Arrays.asList(a));
-    list.addAll(Arrays.asList(a));
-    list.addAll(Arrays.asList(a));
-    list.addAll(Arrays.asList(a));
-    list.addAll(Arrays.asList(a));
-    list.addAll(Arrays.asList(a));
-    list.addAll(Arrays.asList(a));
-    list.addAll(Arrays.asList(a));
-    list.addAll(Arrays.asList(a));
-    list.addAll(Arrays.asList(a));
-    list.addAll(Arrays.asList(a));
-    list.addAll(Arrays.asList(a));
-
-    list.addAll(Arrays.asList(a));
-    list.addAll(Arrays.asList(a));
-
-    list.addAll(Arrays.asList(a));
-    list.addAll(Arrays.asList(a));
-
-
-
-    b = list.stream().mapToInt(i -> i).toArray();
-
-
-    System.out.println(solution222(b)[1]);
   }
 
   public static Integer[] solution() {
@@ -193,6 +114,7 @@ public class Hello2 {
     return answer;
   }
 
+  // 모의고사
   public static int[] solution222(int[] answers) {
     List<Integer> first = new LinkedList<>();
     List<Integer> second = new LinkedList<>();
@@ -270,20 +192,34 @@ public class Hello2 {
     System.out.println(mems[2]);
 
     List<String> answer1 = new ArrayList<>();
-    answer1.add("1");
-    answer1.add("2");
-    answer1.add("3");
 
-    if (mems[0] == mems[2]) {
+    if (mems[0].equals(mems[2])) {
+      answer1.add("1");
+      answer1.add("2");
+      answer1.add("3");
       //
-    } else if (mems[1] == mems[2]) {
+    } else if (mems[1].equals(mems[2])) {
+      System.out.println(mems[1] == mems[2]);
+      // false. 이래서 ==말고 equals 써야함 127 이하의 값 비교는 true
+      System.out.println(mems[1].equals(mems[2])); // true
       for (String key : map.keySet()) {
-        if (mems[0] == map.get(key)) {
-          System.out.println(key);
-          answer1.remove(key);
+        if (mems[0].equals(map.get(key))) {
+          if (key == "1") {
+            answer1.add("2");
+            answer1.add("3");
+          } else if (key == "2") {
+            answer1.add("1");
+            answer1.add("3");
+          } else if (key == "3") {
+            answer1.add("1");
+            answer1.add("2");
+          }
         }
       }
     } else {
+      answer1.add("1");
+      answer1.add("2");
+      answer1.add("3");
       for (String key : map.keySet()) {
         if (mems[0] == map.get(key)) {
           answer1.remove(key);
@@ -299,5 +235,70 @@ public class Hello2 {
   }
 
 
+  public static int solution1(String[] s) {
+    int answer = -100;
+    Integer.valueOf("-100");
+    return answer;
+  }
+
+  public static String[] solution(String[] strings, int n) {
+    List<String> list = Arrays.asList(strings);
+
+    HashMap<String, List<String>> charMap = new HashMap<>();
+    List<String> keySort = new ArrayList<>();
+
+    for (String str : list) {
+      char s = str.charAt(n);
+      String ss = Character.toString(s);
+      // 인덱스 n의 문자 값이 같은 문자열끼리 모은다.
+      if (!charMap.containsKey(ss)) {
+        charMap.put(ss, new ArrayList<String>());
+        charMap.get(ss).add(str);
+      } else {
+        charMap.get(ss).add(str);
+      }
+      if (!keySort.contains(ss)) {
+        keySort.add(ss);
+      }
+    }
+
+    // 인덱스 n의 문자 값이 같은 문자열끼리 모은거를 각각 정렬해준다.
+    for (String key : charMap.keySet()) {
+      List<String> string = charMap.get(key);
+      Collections.sort(string);
+    }
+
+    // 키를 정렬해준다 => a, b, c, d ...
+    Collections.sort(keySort);
+
+    List<String> answers = new ArrayList<>();
+    for (String s : keySort) {
+      answers.addAll(charMap.get(s));
+    }
+
+    String[] answer = new String[answers.size()];
+    for (int i = 0; i < answers.size(); i++) {
+      answer[i] = answers.get(i);
+    }
+
+    return answer;
+  }
+
+  public String[] solutionxx(String[] strings, int n) {
+    Arrays.sort(strings, new Comparator<String>() {
+      @Override
+      public int compare(String s1, String s2) {
+        if (s1.charAt(n) > s2.charAt(n))
+          return 1;
+        else if (s1.charAt(n) == s2.charAt(n))
+          return s1.compareTo(s2);
+        else if (s1.charAt(n) < s2.charAt(n))
+          return -1;
+        else
+          return 0;
+      }
+    });
+    return strings;
+  }
 
 }
