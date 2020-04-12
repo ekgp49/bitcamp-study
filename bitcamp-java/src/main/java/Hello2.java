@@ -6,11 +6,14 @@ import java.util.Deque;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Stack;
+import java.util.regex.Pattern;
 
 public class Hello2 {
   public static void main(String[] args) {
-    Integer[] a = {2, 3, 5, 5, 7, 3, 55, 4, 3, 2, 5, 5, 3, 5, 4, 6, 2, 5, 4, 1, 3};
+    int[] a = {2, 3, 5, 5, 7, 3, 55, 4, 3, 2, 5, 5, 3, 5, 4, 6, 2, 5, 4, 1, 3};
     int[] b = {2, 4, 5};
+    System.out.println(solution9999(10));
   }
 
   public static Integer[] solution() {
@@ -46,31 +49,24 @@ public class Hello2 {
   public static int solution(int n, int[] lost, int[] reserve) {
     List<Integer> lostList = new LinkedList<>();
     List<Integer> have2 = new LinkedList<>();
-
     for (int i = 0; i < lost.length; i++) {
       lostList.add(lost[i]);
     }
-
     for (int i = 0; i < reserve.length; i++) {
       have2.add(reserve[i]);
     }
-
-    // 두개있는데 하나 잃어버린애들
     for (int i = 0; i < lost.length; i++) {
       int lostNo = lost[i];
       if (have2.contains(lostNo)) {
-        have2.remove(have2.indexOf(lostNo)); // 이제 하나가짐
-        lostList.remove(lostList.indexOf(lostNo)); // 적어도 한개 가졌으니 제외함
+        have2.remove(have2.indexOf(lostNo)); // 두개에서 하나 잃어버림
+        lostList.remove(lostList.indexOf(lostNo)); // 그래도 적어도 한개 가졌으니 lostList에서 제외함
       }
     }
-
-    // lostList엔 이제 0개인 애들만 있음
-    // 번호 +-1인 애가 2개 있으면 하나 받아먹음
-    int count = 0; // 받아먹는 놈들 있으면 카운트
+    int count = 0; // lostList중에서 have2에서 받아먹는 놈들 있으면 카운트
     for (int i = 0; i < lostList.size(); i++) {
-      int lostNo = lostList.get(i);
-      if (have2.contains(lostNo - 1)) {
-        have2.remove(have2.indexOf(lostNo - 1));
+      int lostNo = lostList.get(i); // 번호 얻어서
+      if (have2.contains(lostNo - 1)) { // 앞의 번호인애들 중 have2에 있는애면 하나 줌
+        have2.remove(have2.indexOf(lostNo - 1)); // 하나 줘서 have2에서 제외
         count++;
       } else if (have2.contains(lostNo + 1)) {
         have2.remove(have2.indexOf(lostNo + 1));
@@ -78,7 +74,6 @@ public class Hello2 {
       }
     }
     int lostPeople = lostList.size() - count;
-
     return n - lostPeople;
   }
 
@@ -91,6 +86,7 @@ public class Hello2 {
         Integer.parseInt(s);
       } else {
         answer = false;
+        Pattern.compile("");
       }
     } catch (Exception e) {
       answer = false;
@@ -301,4 +297,100 @@ public class Hello2 {
     return strings;
   }
 
+  public static int solution998(int n, int[] lost, int[] reserve) {
+    int[] state1 = new int[n];
+    int[] state2 = new int[n];
+
+    init(state1, lost, reserve); // [2, 0, 2, 0, 2]
+    init(state2, lost, reserve); // [2, 0, 2, 0, 2]
+
+    return Math.max(fOrder(state1, n), bOrder(state2, n));
+  }
+
+  public static void init(int[] state, int[] lost, int[] reserve) {
+    // 5 lost=[2, 4] reserve=[1, 3, 5]
+    Arrays.fill(state, 1); // [1, 1, 1, 1, 1]
+    for (int idx : lost)
+      state[idx - 1]--; // [1, 0, 1, 0 , 1]
+    for (int idx : reserve)
+      state[idx - 1]++; // [2, 0, 2, 0, 2]
+  }
+
+  public static int fOrder(int[] state, int n) {
+    fRent(state, n);
+    bRent(state, n);
+    return (int) Arrays.stream(state).filter(i -> i > 0).count();
+  }
+
+  public static int bOrder(int[] state, int n) {
+    bRent(state, n);
+    fRent(state, n);
+    return (int) Arrays.stream(state).filter(i -> i > 0).count();
+  }
+
+  public static void fRent(int[] state, int n) {
+    for (int i = 0; i < n - 1; i++) {
+      if (state[i] == 2 && state[i + 1] == 0) {
+        state[i]--;
+        state[i + 1]++;
+      }
+    }
+  }
+
+  public static void bRent(int[] state, int n) {
+    for (int i = 1; i < n; i++) {
+      if (state[i] == 2 && state[i - 1] == 0) {
+        state[i]--;
+        state[i - 1]++;
+      }
+    }
+  }
+
+
+  public int solution999(int[] numbers, int target) {
+    Stack<Integer> stack = new Stack<>();
+    stack.push(0);
+
+    for (int num : numbers) {
+      Stack<Integer> tmp = new Stack<>();
+      while (!stack.isEmpty()) {
+        int value = stack.pop();
+        tmp.push(value + num);
+        tmp.push(value - num);
+      }
+      stack.addAll(tmp);
+    }
+    return (int) stack.stream().filter(i -> i == target).count();
+  }
+
+  // 소수찾기
+  public static int solution9999(int n) {
+    List<Integer> list = new LinkedList<>();
+    for (int i = 2; i <= n; i++) {
+      list.add(i);
+    }
+
+    for (int j = 3; j < list.size(); j++) {
+      for (int i = 2; i < j; i++) {
+        if (j % i == 0) {
+          list.remove(Integer.valueOf(j));
+        }
+      }
+    }
+    return list.size();
+  }
+
+  public static int[] solution00000(int[] arr) {
+    List<Integer> list = new LinkedList<>();
+    for (int i : arr) {
+      list.add(i);
+    }
+    Arrays.sort(arr);
+    list.remove(Integer.valueOf(arr[0]));
+    if (list.size() == 0) {
+      return new int[] {-1};
+    }
+    arr = list.stream().mapToInt(i -> i).toArray();
+    return arr;
+  }
 }
