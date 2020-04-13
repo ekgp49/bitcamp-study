@@ -3,8 +3,7 @@
     contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"
     trimDirectiveWhitespaces="true"%>
-<%@ page import="bitcamp.vo.Board"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page import="com.eomcs.web.vo.Board"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -26,8 +25,14 @@ pageContext.setAttribute("s4", "윤봉길");
   String s1 = (String)application.getAttribute("s1");
  --%>
 <jsp:useBean id="s2" type="java.lang.String" scope="session"/>
+<%-- 자바코드로 표현해보면,
+  String s2 = (String)session.getAttribute("s2"); --%>
 <jsp:useBean id="s3" type="java.lang.String" scope="request"/>
+<%-- 자바코드로 표현해보면,
+  String s3 = (String)request.getAttribute("s3"); --%>
 <jsp:useBean id="s4" type="java.lang.String" scope="page"/>
+<%-- 자바코드로 표현해보면,
+  String s4 = (String)pageContext.getAttribute("s4"); --%>
 
 <%=s1%><br>
 <%=s2%><br>
@@ -35,7 +40,9 @@ pageContext.setAttribute("s4", "윤봉길");
 <%=s4%><br>
 
 <%-- 보관소에 없는 객체를 꺼내려 하면 예외 발생! --%>
-<%-- <jsp:useBean id="s5" type="java.lang.String" scope="page"/> --%>
+<%-- 
+<jsp:useBean id="s5" type="java.lang.String" scope="page"/>
+ --%>
 
 </body>
 </html>

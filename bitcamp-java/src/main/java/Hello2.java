@@ -365,19 +365,23 @@ public class Hello2 {
 
   // 소수찾기
   public static int solution9999(int n) {
-    List<Integer> list = new LinkedList<>();
+    boolean[] bools = new boolean[n + 1];
+    bools[0] = true;
+    bools[1] = true;
     for (int i = 2; i <= n; i++) {
-      list.add(i);
-    }
-
-    for (int j = 3; j < list.size(); j++) {
-      for (int i = 2; i < j; i++) {
-        if (j % i == 0) {
-          list.remove(Integer.valueOf(j));
-        }
+      for (int j = 2; j * i <= n && j <= i; j++) {
+        bools[j * i] = true;
       }
     }
-    return list.size();
+
+    int count = 0;
+    for (int i = 0; i <= n; i++) {
+      if (bools[i] == false) {
+        count++;
+      }
+    }
+
+    return count;
   }
 
   public static int[] solution00000(int[] arr) {

@@ -2,16 +2,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"
     trimDirectiveWhitespaces="true"%>
-    
+
 <jsp:include page="/header.jsp"/>
 
 <h1>게시물 변경(JSP)</h1>
-<% 
-Board board = (Board) request.getAttribute("board");
-if (board == null) {
-%>
-<p>해당 번호의 게시글이 없습니다.</p>
+
+<jsp:useBean id="board" 
+    class="com.eomcs.lms.domain.Board" 
+    scope="request"/>
 <%
+if (board.getNo() == 0) {
+%>
+  <p>해당 번호의 게시글이 없습니다.</p>
+<% 
 } else {
 %>
 <form action='update' method='post'>
@@ -23,7 +26,7 @@ if (board == null) {
 <button>변경</button>
 </form>
 <%
-  }
+}
 %>
-
-<jsp:include page="/footer.jsp"></jsp:include>
+<jsp:include page="/footer.jsp"/>
+    
