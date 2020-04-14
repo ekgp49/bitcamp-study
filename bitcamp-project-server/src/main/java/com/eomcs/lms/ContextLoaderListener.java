@@ -1,12 +1,18 @@
 package com.eomcs.lms;
 
+import java.lang.reflect.Method;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
+import javax.servlet.annotation.WebListener;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.stereotype.Component;
+import com.eomcs.util.RequestHandler;
+import com.eomcs.util.RequestMapping;
+import com.eomcs.util.RequestMappingHandlerMapping;
 
 // 서블릿 컨테이너가 시작하거나 종료할 때
 // 이 클래스의 객체에 대해 메서드를 호출한다.
@@ -14,7 +20,7 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 // 조건:
 // => javax.servlet.ServletContextListener 인터페이스를 구현해야 한다.
 //
-// @WebListener // 이 애노테이션을 붙이면 서블릿 컨테이너가 이 객체를 관리한다.
+@WebListener // 이 애노테이션을 붙이면 서블릿 컨테이너가 이 객체를 관리한다.
 public class ContextLoaderListener implements ServletContextListener {
 
   static Logger logger = LogManager.getLogger(ContextLoaderListener.class);
@@ -48,9 +54,21 @@ public class ContextLoaderListener implements ServletContextListener {
 
       logger.debug("----------------------------");
 
-      // 서블릿 객체는 더이상 'Spring IoC 컨테이너'에서 관리하지 않는다.
-      // 서블릿 객체의 관리 주체가 서블릿 컨테이너로 넘어갔다.
-      //
+      RequestMappingHandlerMapping handlerMapper = //
+          new RequestMappingHandlerMapping();
+      String[] beanNames = iocContainer.getBeanNamesForAnnotation(Component.class);
+      for (String beanName : beanNames) {
+        Object component = iocContainer.getBean(beanName);
+
+        Method method = getRequestHandler(component.getClass());
+        if (method != null) {
+          RequestHandler requestHandler = new RequestHandler(method, component);
+          handlerMapper.addHandler(requestHandler.getPath(), requestHandler);
+        }
+      }
+
+      servletContext.setAttribute("handlerMapper", handlerMapper);
+
     } catch (Exception e) {
       e.printStackTrace();
     }
@@ -67,9 +85,24 @@ public class ContextLoaderListener implements ServletContextListener {
 
   }
 
+  private Method getRequestHandler(Class<?> type) {
+    // 클라이언트 명령을 처리할 메서드는 public 이기 때문에
+    // 클래스에서 public 메서드만 조사한다.
+    Method[] methods = type.getMethods();
+    for (Method m : methods) {
+      // 메서드에 @RequestMapping 애노테이션이 붙었는지 검사한다.
+      RequestMapping anno = m.getAnnotation(RequestMapping.class);
+      if (anno != null) {
+        return m;
+      }
+    }
+
+    return null;
+  }
+
   @Override
   public void contextDestroyed(ServletContextEvent sce) {
-    // 서블릿 컨테이너가 종료되기 직전에 호출된다.
-    // 주로 서블릿이 사용한 자원을 해제시키는 코드를 둔다.
+    // TODO Auto-generated method stub
+    ServletContextListener.super.contextDestroyed(sce);
   }
 }

@@ -9,6 +9,7 @@ repositories {
 }
 
 dependencies {
+    implementation 'jstl:jstl:1.2'
     // servlet-api : 컴파일 할 때만 사용한다. 배치할때는 서버에 이미 이 라이브러리가 있기 때문에
     // 배치할 때는 포함하지 않는다
     compileOnly 'javax.servlet:javax.servlet-api:4.0.1'
