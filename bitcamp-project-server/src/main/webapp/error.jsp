@@ -9,6 +9,5 @@
 <p>${error.message}</p>
 <pre>${errorDetail}</pre>
 
-
 <jsp:include page="/footer.jsp"/>
     
