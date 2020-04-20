@@ -67,7 +67,7 @@ dependencies {
     //    다음과 같이 이 클래스가 들어있는 의존 라이브러리를 추가해야 한다.
     // => 만약 동시에 추가한다면 기본으로 Jackson 라이브러리를 사용한다. 
     // 
-  //  implementation group: 'com.google.code.gson', name: 'gson', version: '2.8.5'
+    implementation group: 'com.google.code.gson', name: 'gson', version: '2.8.5'
     
 // implementation?
 // - 배치에 포함된다.

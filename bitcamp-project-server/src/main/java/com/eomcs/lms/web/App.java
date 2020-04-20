@@ -1,17 +1,18 @@
-package bitcamp.config;
+package com.eomcs.lms.web;
 
-import java.io.File;
+import javax.servlet.Filter;
+import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
+import com.eomcs.lms.AppConfig;
 
-public class App1WebApplicationInitializer
-    extends AbstractAnnotationConfigDispatcherServletInitializer {
+public class App extends AbstractAnnotationConfigDispatcherServletInitializer {
 
-  String uploadTmpDir;
-
-  public App1WebApplicationInitializer() {
-    uploadTmpDir = new File(System.getProperty("java.io.tmpdir")).getAbsolutePath();
-    System.out.println("업로드 임시 폴더: " + uploadTmpDir);
-  }
+  // String uploadTmpDir;
+  //
+  // public App() {
+  // uploadTmpDir = new File(System.getProperty("java.io.tmpdir")).getAbsolutePath();
+  // System.out.println("업로드 임시 폴더: " + uploadTmpDir);
+  // }
 
   @Override
   protected Class<?>[] getRootConfigClasses() {
@@ -19,18 +20,23 @@ public class App1WebApplicationInitializer
   }
 
   @Override
+  protected Filter[] getServletFilters() {
+    return new Filter[] {new CharacterEncodingFilter("UTF-8")};
+  }
+
+  @Override
   protected Class<?>[] getServletConfigClasses() {
-    return new Class<?>[] {App1Config.class};
+    return new Class<?>[] {AppConfig.class};
   }
 
   @Override
   protected String[] getServletMappings() {
-    return new String[] {"/app1/*"};
+    return new String[] {"/app/*"};
   }
 
   @Override
   protected String getServletName() {
-    return "app1";
+    return "app";
   }
 
 

@@ -24,7 +24,8 @@ public class Controller04_3 {
   @GetMapping("h1")
   @ResponseBody
   public void handler1(PrintWriter out, String model, String maker,
-      @RequestParam(defaultValue = "100") int capacity, // 프론트 컨트롤러가 String 값을 int로 변환해 준다.
+      @RequestParam(defaultValue = "100") int capacity, //
+      // 프론트 컨트롤러가 String 값을 int로 변환해 준다.
       // 단 변환할 수 없을 경우 예외가 발생한다.
       boolean auto, // 프론트 컨트롤러가 String 값을 boolean으로 변환해 준다.
                     // 단 변환할 수 없을 경우 예외가 발생한다.
