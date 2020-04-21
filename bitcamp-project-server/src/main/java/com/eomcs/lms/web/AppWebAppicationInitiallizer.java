@@ -5,7 +5,8 @@ import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 import com.eomcs.lms.AppConfig;
 
-public class App extends AbstractAnnotationConfigDispatcherServletInitializer {
+public class AppWebAppicationInitiallizer
+    extends AbstractAnnotationConfigDispatcherServletInitializer {
 
   // String uploadTmpDir;
   //
@@ -15,8 +16,8 @@ public class App extends AbstractAnnotationConfigDispatcherServletInitializer {
   // }
 
   @Override
-  protected Class<?>[] getRootConfigClasses() {
-    return null;
+  protected Class<?>[] getRootConfigClasses() { // 디스패처서블릿이 공통으로 사용할 객체들
+    return new Class<?>[] {AppConfig.class};
   }
 
   @Override
@@ -25,8 +26,8 @@ public class App extends AbstractAnnotationConfigDispatcherServletInitializer {
   }
 
   @Override
-  protected Class<?>[] getServletConfigClasses() {
-    return new Class<?>[] {AppConfig.class};
+  protected Class<?>[] getServletConfigClasses() { // 이 디스패처 서블릿만 사용할 객체들
+    return new Class<?>[] {AppWebConfig.class};
   }
 
   @Override
