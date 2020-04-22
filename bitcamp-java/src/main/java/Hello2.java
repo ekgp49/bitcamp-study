@@ -153,10 +153,6 @@ public class Hello2 {
       person3.addAll(third);
     }
 
-
-    System.out.println(person1.size());
-    System.out.println(person2.size());
-    System.out.println(person3.size());
     Integer count1 = 0;
     Integer count2 = 0;
     Integer count3 = 0;
@@ -172,9 +168,6 @@ public class Hello2 {
         count3++;
       }
     }
-    System.out.println(count1);
-    System.out.println(count2);
-    System.out.println(count3);
     HashMap<String, Integer> map = new HashMap<>();
     map.put("1", count1);
     map.put("2", count2);
@@ -182,10 +175,6 @@ public class Hello2 {
 
     Integer[] mems = {map.get("1"), map.get("2"), map.get("3")};
     Arrays.sort(mems);
-    System.out.println("---------");
-    System.out.println(mems[0]);
-    System.out.println(mems[1]);
-    System.out.println(mems[2]);
 
     List<String> answer1 = new ArrayList<>();
 
@@ -225,7 +214,6 @@ public class Hello2 {
         }
       }
     }
-    System.out.println("---------------------");
     int[] answer = answer1.stream().mapToInt(i -> Integer.parseInt(i)).toArray();
     return answer;
   }
