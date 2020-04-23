@@ -19,14 +19,17 @@ public class MemberController {
 
   @Autowired
   ServletContext servletContext;
+
   @Autowired
   MemberService memberService;
 
-  @RequestMapping("form")
+  @GetMapping("form")
   public void form() {}
 
   @PostMapping("add")
-  public String add(Member member, MultipartFile photoFile) throws Exception {
+  public String add( //
+      Member member, //
+      MultipartFile photoFile) throws Exception {
     if (photoFile.getSize() > 0) {
       String dirPath = servletContext.getRealPath("/upload/member");
       String filename = UUID.randomUUID().toString();
@@ -66,7 +69,10 @@ public class MemberController {
   }
 
   @PostMapping("update")
-  public String update(Member member, MultipartFile photoFile) throws Exception {
+  public String update( //
+      Member member, //
+      MultipartFile photoFile) throws Exception {
+
     if (photoFile.getSize() > 0) {
       String dirPath = servletContext.getRealPath("/upload/member");
       String filename = UUID.randomUUID().toString();

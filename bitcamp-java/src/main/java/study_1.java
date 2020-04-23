@@ -39,7 +39,6 @@ public class study_1 {
   // 문자열 내림차순 정렬2
   public static String solution2(String s) {
     String[] strs = s.split("");
-    Arrays.sort(strs);
     Arrays.sort(strs, Collections.reverseOrder());
     return String.join("", strs);
   }
@@ -154,6 +153,7 @@ public class study_1 {
   }
 
 
+
   // 모의고사2
   public int[] solution(int[] answers) {
     int[] answer = {0, 0, 0};
@@ -182,6 +182,6 @@ public class study_1 {
   }
 
   public static void main(String[] args) {
-    System.out.println(solution2("ZasdAZaabcdZe"));
+    System.out.println(solution2("ZasdAZaabcdZeBSAD"));
   }
 }

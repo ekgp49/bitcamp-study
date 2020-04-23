@@ -20,7 +20,7 @@ import bitcamp.app2.Controller04_1_Interceptor4;
 
 @EnableWebMvc
 // => Web MVC 관련 객체를 등록하고 설정한다.
-// => WebMvcConfigurer 구현체를 찾아 메서드를 호출한다.
+// => DispatcherServlet이 WebMvcConfigurer 구현체를 찾아 메서드를 호출한다.
 //
 public class App2Config implements WebMvcConfigurer {
 
@@ -77,6 +77,7 @@ public class App2Config implements WebMvcConfigurer {
   }
 
   // 이 설정을 사용하는 프론트 컨트롤러에 적용할 인터셉터 설정하기
+  // @Override
   @Override
   public void addInterceptors(InterceptorRegistry registry) {
 

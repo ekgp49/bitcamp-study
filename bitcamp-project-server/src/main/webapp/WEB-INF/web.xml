@@ -6,7 +6,7 @@
   version="4.0" metadata-complete="false">
 
   <description>
-    수업관리시스템
+    수업 관리 시스템
   </description>
 
   <display-name>수업관리시스템</display-name>
@@ -16,20 +16,5 @@
     <welcome-file>index.htm</welcome-file>
     <welcome-file>default.htm</welcome-file>
   </welcome-file-list>
-
+  
 </web-app>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

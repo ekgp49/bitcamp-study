@@ -19,6 +19,7 @@ public class Controller01_1 {
 
     model.addAttribute("name", "홍길동");
     model.addAttribute("age", 20);
+    // 여기에 저장되는건 servletRequest 보관소임.
 
     return "/jsp/c01_1.jsp";
     // 기본 ViewResolver는 리턴 값으로 URL을 받아
