@@ -181,7 +181,151 @@ public class study_1 {
     return list.stream().mapToInt(i -> i).toArray();
   }
 
+  public long solution(long n) {
+    if (Math.sqrt(n) == Math.round(Math.sqrt(n))) {
+      return (long) ((Math.sqrt(n) + 1) * (Math.sqrt(n) + 1));
+    }
+    return -1;
+  }
+
+  // 두 수의 최대공약수, 최소공배수 리턴하기 => 두 수의 곱/최대공약수 = 최소공배수
+  public static int[] solution(int n, int m) {
+    int min = 1;
+    int max = n * m; // 최대공약수가 1인 경우
+    if (n > m) {
+      int temp = n;
+      n = m;
+      m = temp;
+    }
+    for (int i = 2; i <= n; i++) {
+      if (m % i == 0 && n % i == 0) {
+        min = i;
+      }
+    }
+    return new int[] {min, max / min};
+  }
+
+
+
+  public static long[] solution1(int x, int n) {
+    List<Long> list = new ArrayList<>();
+    long y = x;
+    for (int i = 0; i < n; i++) {
+      list.add(y);
+      y += x;
+    }
+    return list.stream().mapToLong(i -> i).toArray();
+  }
+
+  // 배열 갯수가 정해졌는데 굳이 List 만들필요가 없음, List 안쓰는게 훨씬 빠르기도 함
+  public static long[] solution2(int x, int n) {
+    long[] answer = new long[n];
+    answer[0] = x;
+    for (int i = 1; i < n; i++) {
+      answer[i] = answer[i - 1] + x;
+    }
+    return answer;
+  }
+
+  // 콜라츠 추측 => 곱하기를 하면 int값이 너무 길어져서 짤릴수 있음 -> long으로 바꿔줘야 함
+  public static int solution(int num) {
+    int answer = 0;
+    long longNum = num;
+    while (longNum != 1) {
+      if (answer > 500) {
+        return -1;
+      }
+      if (longNum % 2 == 0) {
+        longNum = longNum / 2;
+      } else if (longNum % 2 != 0) {
+        longNum = longNum * 3 + 1;
+      }
+      answer++;
+    }
+    return answer;
+  }
+
+  public static String solution111(String phone_number) {
+    String answer = "";
+    for (int i = 0; i < phone_number.length() - 4; i++) {
+      answer += "*";
+    }
+    return answer + phone_number.substring(phone_number.length() - 4);
+  }
+
+  public static String solution1111(String phone_number) {
+    return phone_number.replaceAll(".(?=.{4})", "*");
+  }
+
+  public static boolean solution2(int x) {
+    int sum = 0;
+    int y = x;
+    while (x > 0) {
+      sum += x % 10;
+      x = x / 10;
+    }
+    if (y % sum == 0) {
+      System.out.println(sum);
+      return true;
+    }
+    return false;
+  }
+
+  public int[][] solution(int[][] arr1, int[][] arr2) {
+    int[][] answer = new int[arr1.length][arr1[0].length];
+    for (int i = 0; i < arr1.length; i++) {
+      for (int j = 0; j < arr1[0].length; j++) {
+        answer[i][j] = arr1[i][j] + arr2[i][j];
+      }
+    }
+    return answer;
+  }
+
+  public int solution(int[] d, int budget) {
+    int answer = 0;
+    Arrays.sort(d);
+    for (int i = 0; i < d.length && d[i] <= budget; i++) {
+      budget -= d[i];
+      answer++;
+    }
+    return answer;
+  }
+
+  public static int[] solution5(int N, int[] stages) {
+    int[] answer = new int[N + 1];
+    int[] failRate = new int[N + 1]; /* 인덱스를 1~N 까지 쓸것임 */
+    for (int i = 1; i <= N; i++) {
+      int clear = 0;
+      int fail = 0;
+      for (int j = 1; j < stages.length/* 플레이어 수 */; j++) {
+        System.out.println(i);
+        System.out.println(j);
+        if (stages[j] >= i) {
+          clear++;
+        }
+        if (stages[j] == i) {
+          fail++;
+        }
+      }
+      failRate[i] = fail / clear;
+    }
+    int[] arr = Arrays.copyOf(failRate, failRate.length);
+    Arrays.sort(arr);
+    System.out.println(arr.length);
+    System.out.println(failRate.length);
+    System.out.println(answer.length);
+    // int no = 0;
+    // for (int i = arr.length - 1; i > 0; i--) {
+    // for (int j : arr) {
+    // if (failRate[i] == j) {
+    // answer[no++] = i;
+    // }
+    // }
+    // }
+    return answer;
+  }
+
   public static void main(String[] args) {
-    System.out.println(solution2("ZasdAZaabcdZeBSAD"));
+    System.out.println(solution5(5, new int[] {2, 1, 2, 6, 2, 4, 3, 3}));
   }
 }

@@ -11,7 +11,8 @@
        여백이 큰 값으로 겹친다.
   */
   body {
-    border: 2px solid blue;
+    border: 10px solid blue;
+    padding: 0;
   }
   div {
     margin: 10px;
@@ -29,6 +30,10 @@
     border-style: dashed;
     border-color: navy;
     background-color: yellow;
+  }
+
+  #linkbar {
+    margin: 10px 0 0 0;
   }
   </style>
 </head>
@@ -54,9 +59,11 @@
   암호: <input type="password" name="pwd"><br>
   <button>로그인</button>
   <button>회원가입</button><br>
-  <a href="http://www.facebook.com/bit">페이스북</a>
-  <a href="http://www.google.com/bit">구글</a>
-  <a href="http://www.twitter.com/bit">트위터</a>
+    <div id="linkbar">
+      <a href="http://www.facebook.com/bit">페이스북</a>
+      <a href="http://www.google.com/bit">구글</a>
+      <a href="http://www.twitter.com/bit">트위터</a>
+    </div>
   </div>
 
   <div id="content">
