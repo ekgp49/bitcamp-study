@@ -33,7 +33,7 @@ obj.sum = function() {
 };
 
 obj.aver = function() {
-	return this.sum() / 3; // 항상 같은 객체의 멤버를 가리킬 때는 this를 붙여야 한다.
+	return this.sum() / 3; // 항상 같은 객체의 멤버를 가리킬 때는 this를 붙여야 한다. 안붙으면 글로벌 변수&함수를 찾는다.
 };
 
 console.log(obj.sum(), obj.aver());
