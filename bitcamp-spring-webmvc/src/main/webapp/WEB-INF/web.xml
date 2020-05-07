@@ -16,6 +16,18 @@
     <welcome-file>index.htm</welcome-file>
     <welcome-file>default.htm</welcome-file>
   </welcome-file-list>
+  
+  <!-- 오류처리 방법 1: 서블릿 컨테이너에서 요청을 처리하는 중에 오류가 발생 했을 때 
+       오류 내용을 출력하는 기본 페이지를 교체하기-->
+   <!-- 
+     <error-page>
+      <location>/WEB-INF/jsp2/error1.jsp</location>
+    </error-page>
+    -->
+    <!-- 2: 페이지 컨트롤러 경유하는 방법 -->
+    <error-page>
+      <location>/app2/error</location>
+    </error-page>
 
 </web-app>
 

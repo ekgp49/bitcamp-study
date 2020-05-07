@@ -9,6 +9,7 @@ repositories {
 }
 
 dependencies {
+implementation 'org.apache.tiles:tiles-jsp:3.0.8'
     implementation 'commons-fileupload:commons-fileupload:1.4'
     implementation 'org.reflections:reflections:0.9.12'
 
