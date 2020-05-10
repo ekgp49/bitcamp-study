@@ -54,6 +54,9 @@ scores[0] = new Score("홍길동", 100, 100, 100);
 scores[1] = new Score("임꺽정", 90, 90, 90);
 scores[2] = new Score("유관순", 80, 80, 80);
 
+// Score() 생성자가 초기화 시킨 객체에 어떤 프로퍼티가 있는지 알아보자
+console.log(scores[0]);
+
 for (var score of scores) {
     // Score() 함수로 초기화시킨 객체에는 sum()과 aver() 함수가 들어 있지 않다.
     // 그런데도 오류없이 함수가 호출된다.

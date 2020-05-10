@@ -28,7 +28,7 @@
 <script>
 "use strict"
 
-document.querySelector("#form1").onsubmit = () => {
+document.querySelector("#form1").onsubmit = () => { // 버튼 타입이 submit이면 이벤트를 폼에 건다.
   // submit 타입의 버튼을 클릭하면 onsubmit 으로 등록한 함수가 호출된다.
   // 여기에서 입력 폼 값을 검증하는 일을 한다.
   //
@@ -43,7 +43,7 @@ document.querySelector("#form1").onsubmit = () => {
   // 입력 폼의 값을 서버에 제출한다. 즉 HTTP 요청을 수행한다.
 }
 
-document.querySelector("#btn2").onclick = () => {
+document.querySelector("#btn2").onclick = () => { // 버튼 타입이 그냥 버튼일땐 이벤트를 버튼에 건다.
   var name = document.querySelector("#name2");
   if (name.value == "") {
     alert("필수 입력 항목이 비어 있습니다.");
