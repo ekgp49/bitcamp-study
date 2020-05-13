@@ -35,7 +35,7 @@ var ta = document.querySelector("#ta");
 
 document.querySelector("#btn1").onclick = () => {
     var xhr = new XMLHttpRequest();
-    xhr.open("GET", "http://www.zdnet.co.kr", false);
+    xhr.open("GET", "https://www.zdnet.co.kr", false);
     xhr.send();
     ta.value = xhr.responseText;
     
