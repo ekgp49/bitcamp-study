@@ -23,6 +23,8 @@ public interface MemberDao {
   List<Member> findByKeyword(String keyword) throws Exception;
 
   Member findByEmailAndPassword(Map<String, Object> params) throws Exception;
+
+  Member findByEmail(String email) throws Exception;
 }
 
 

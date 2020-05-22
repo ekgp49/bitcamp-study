@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>jquery 만들기</title>
+</head>
+<body>
+<h1>jquery 사용</h1>
+<button id="btn1">버튼 추가</button>
+<div id="d1">
+<button class="mybtn">버튼!</button>
+<button>버튼xxxx</button>
+</div>
+
+<script src="jquery13.js"></script>
+<script>
+var d1 = $('#d1')
+          .css('border', '2px dashed red')
+          .css('margin', '5px')
+          .css('min-height', '100px');
+
+$('#btn1').click(function() {
+  $('<button>')
+    .html('추가버튼')
+    .addClass('mybtn')
+    .appendTo(d1);
+})
+
+// 아래 얘는 현재 존재하는 태그에 대해서만 리스너를 등록한다. 나중에 버튼이 생겨도 당시에 없었으면 이벤트 등록이 안됨.
+// on(이벤트명, 리스너)
+$('.mybtn').on('click', (e) => {
+  alert('오호라..');
+})
+
+// 부모.on(이벤트명, 부모에 소속된 자식 셀렉터, 리스너) => 앞으로 생길거에도 이벤트 등록 버블단계로 올라오는거 이용
+//$('#d1').on('click', '.mybtn', (e) => {
+//  alert('오호라 우헤헤');
+//})
+</script>
+</body>
+</html>
