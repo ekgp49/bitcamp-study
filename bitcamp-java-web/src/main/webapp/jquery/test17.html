@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>jquery 만들기</title>
+</head>
+<body>
+<h1>jquery 사용</h1>
+<h3>ajax Post 요청</h3>
+<input id="v1" type="text">
+<select id="op">
+  <option value="+">+</option>
+  <option value="-">-</option>
+  <option value="*">*</option>
+  <option value="/">/</option>
+</select>
+<input id="v2" type="text">
+<button id="computeBtn">=</button>
+<input id="result" type="text">
+
+<script src="jquery17.js"></script>
+<script>
+$('#computeBtn').click(function() {
+  $.post('test16.jsp',
+   {
+     v1:$('#v1').val(),
+     v2:$('#v2').val(),
+     op:$('#op').val()
+   },
+   (data) => {
+     $('#result').val(data);
+   }); 
+})
+
+</script>
+</body>
+</html>

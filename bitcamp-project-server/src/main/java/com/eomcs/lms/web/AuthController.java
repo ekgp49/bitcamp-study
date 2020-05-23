@@ -1,20 +1,27 @@
 package com.eomcs.lms.web;
 
+import java.util.Map;
+import java.util.UUID;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.client.RestTemplate;
 import com.eomcs.lms.domain.Member;
 import com.eomcs.lms.service.MemberService;
 
 @Controller
 @RequestMapping("/auth")
 public class AuthController {
+
+  static Logger logger = LogManager.getLogger(AuthController.class);
 
   @Autowired
   MemberService memberService;
@@ -55,5 +62,70 @@ public class AuthController {
   public String logout(HttpSession session) {
     session.invalidate();
     return "redirect:../../index.html";
+  }
+
+  @SuppressWarnings({"unchecked"})
+  @GetMapping("facebookLogin")
+  public String facebookLogin( //
+      String accessToken, //
+      HttpSession session, //
+      Model model) throws Exception {
+
+    // 액세스 토큰을 가지고 페이스북 서버에 사용자 정보를 요청한다.
+    // 1) Facebook Graph API 실행하기
+    // => JSON 또는 XML을 리턴하는 HTTP 요청하는 방법?
+    // 스프링에서 제공하는 RestTemplate 클래스를 사용하라.
+    // JSON 또는 XML을 자바객체로 자동변환해줌
+    RestTemplate restTemplate = new RestTemplate();
+
+    // 2) 서버에 요청하기
+    // => 첫번째 파라미터는 요청 URL
+    // => 두번째 파라미터는 서버가 응답한 JSON을 어떤 타입의 객체로 만들지 지정
+    Map<String, Object> response =
+        restTemplate.getForObject("https://graph.facebook.com/v7.0/me?access_token={1}&fields={2}",
+            Map.class, accessToken, "id,name,email");
+
+    // 3) 사용자 정보 확인
+    String email = (String) response.get("name");
+
+    logger.info("페이스북 로그인 사용자 이메일: {}", email);
+
+    if (email == null) {
+
+      logger.info("페이스북 accessToken이 무효하다.");
+      // 액세스 토큰이 무효하다면, 다시 로그인 입력폼으로 보낸다.
+      session.invalidate();
+      model.addAttribute("refreshUrl", "2;url=form");
+      return "auth/form";
+    }
+
+    // 페이스북에 정상적으로 로그인되었다면
+    // 현재 서버에 등록된 사용자를 이메일로 찾는다
+    Member member = memberService.get(email);
+    if (member == null) {
+      // 현재 서버에 등록되지 않았다면 새 사용자로 자동등록한다.
+      member = new Member();
+      member.setName(email);
+      member.setEmail(email);
+      member.setPassword(UUID.randomUUID().toString());
+      memberService.add(member);
+      logger.info("페이스북 사용자를 회원으로 등록한다.");
+    }
+    System.out.println(member);
+
+    session.setAttribute("loginUser", member);
+    model.addAttribute("refreshUrl", "2;url=../../index.html");
+
+    return "auth/login";
+
+    //
+    // Member member = memberService.get(email, password);
+    // if (member != null) {
+    // session.setAttribute("loginUser", member);
+    // model.addAttribute("refreshUrl", "2;url=../../index.html");
+    // } else {
+    // session.invalidate();
+    // model.addAttribute("refreshUrl", "2;url=form");
+    // }
   }
 }
